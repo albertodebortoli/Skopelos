@@ -7,30 +7,119 @@
 //
 
 import XCTest
+import CoreData
 @testable import Skopelos
+
+struct SkopelosTestsConsts {
+    static let UnitTestTimeout = 10.0
+}
 
 class SkopelosTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var skopelos: Skopelos = Skopelos(inMemoryStack: "DataModel")
+    
+    func test_Chaining() {
+    
+        let expectation = expectationWithDescription("\(#function)")
+    
+        skopelos.write({ (context: NSManagedObjectContext) in
+            var user = User.SK_create(context) as! User
+            user = user.SK_inContext(context) as! User
+            User.SK_create(context) as! User
+            let users = User.SK_all(context)
+            XCTAssertEqual(users.count, 2)
+        }).write({ (context: NSManagedObjectContext) in
+            let user = User.SK_first(context) as! User
+            user.SK_remove(context)
+            let users = User.SK_all(context)
+            XCTAssertEqual(users.count, 1);
+        }).read { (context: NSManagedObjectContext) in
+            let users = User.SK_all(context)
+            XCTAssertEqual(users.count, 1);
+            expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func test_DispatchAyncOnMainQueue() {
+        
+        let expectation = expectationWithDescription("\(#function)")
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            self.skopelos.write({ (context: NSManagedObjectContext) in
+                User.SK_removeAll(context)
+            }).read({ (context: NSManagedObjectContext) in
+                let users = User.SK_all(context)
+                XCTAssertEqual(users.count, 0)
+            }).write({ (context: NSManagedObjectContext) in
+                let user = User.SK_create(context) as! User
+                user.firstname = "John"
+                user.lastname = "Doe"
+            }).read({ (context: NSManagedObjectContext) in
+                let users = User.SK_all(context)
+                XCTAssertEqual(users.count, 1)
+                expectation.fulfill()
+            })
+            
+        })
+        
+        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
+        
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func test_DispatchAyncOnBackgroundQueue() {
+        
+        let expectation = expectationWithDescription("\(#function)")
+        
+        let q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+        dispatch_async(q, {
+            
+            self.skopelos.write({ (context: NSManagedObjectContext) in
+                User.SK_removeAll(context)
+            }).read({ (context: NSManagedObjectContext) in
+                let users = User.SK_all(context)
+                XCTAssertEqual(users.count, 0)
+            }).write({ (context: NSManagedObjectContext) in
+                let user = User.SK_create(context) as! User
+                user.firstname = "John"
+                user.lastname = "Doe"
+            }).read({ (context: NSManagedObjectContext) in
+                let users = User.SK_all(context)
+                XCTAssertEqual(users.count, 1)
+                expectation.fulfill()
+            })
+            
+        })
+        
+        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
+        
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
+    func test_performance() {
+        measureBlock { 
+            let sem = dispatch_semaphore_create(0)
+            var count = 3
+            
+            while (count > 0)
+            {
+                dispatch_semaphore_wait(sem, DISPATCH_TIME_NOW)
+                NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 0.2))
+                
+                self.skopelos.write({ (context: NSManagedObjectContext) in
+                    let user = User.SK_create(context) as! User
+                    user.firstname = "John"
+                    user.lastname = "Doe"
+                }).write({ (context: NSManagedObjectContext) in
+                    User.SK_removeAll(context)
+                }).write({ (context: NSManagedObjectContext) in
+                    User.SK_all(context)
+                    }, completion: { (error: NSError?) in
+                    count-=1
+                    dispatch_semaphore_signal(sem);
+                })
+            }
         }
     }
-    
 }

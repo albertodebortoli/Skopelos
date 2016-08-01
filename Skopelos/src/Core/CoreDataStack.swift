@@ -154,14 +154,14 @@ class CoreDataStack: NSObject, CoreDataStackProtocol, AppStateReactorDelegate {
     
     // MARK: ADBAppStateReactorDelegate
     
-    func registerBackgroundTask() {
+    private func registerBackgroundTask() {
         backgroundTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler {
             [unowned self] in
             self.endBackgroundTask()
         }
     }
     
-    func endBackgroundTask() {
+    private func endBackgroundTask() {
         UIApplication.sharedApplication().endBackgroundTask(backgroundTask!)
         backgroundTask = UIBackgroundTaskInvalid
     }

@@ -18,8 +18,8 @@ extension NSManagedObject {
                 try self.managedObjectContext?.obtainPermanentIDsForObjects([self])
                 let inContext = try otherContext.existingObjectWithID(self.objectID)
                 return inContext
-            } catch _ /*let error as NSError*/ {
-                // HandleDALServiceError(error)
+            } catch let error as NSError {
+                NSManagedObject.handleDALServiceError(error)
             }
         }
         
@@ -37,7 +37,7 @@ extension NSManagedObject {
         var error: NSError?
         let result = context.countForFetchRequest(request, error: &error)
         if error != nil {
-            //        HandleDALServiceError(error);
+            handleDALServiceError(error!)
         }
         return result
     }
@@ -50,7 +50,7 @@ extension NSManagedObject {
         var error: NSError?
         let result = context.countForFetchRequest(request, error: &error)
         if error != nil {
-            //        HandleDALServiceError(error);
+            handleDALServiceError(error!)
         }
         return result
     }
@@ -70,8 +70,8 @@ extension NSManagedObject {
                 context.deleteObject(obj as! NSManagedObject)
             }
         }
-        catch _ {
-            //            HandleDALServiceError(error);
+        catch let error as NSError {
+            handleDALServiceError(error)
         }
     }
     
@@ -80,8 +80,8 @@ extension NSManagedObject {
         do {
             let results = try context.executeFetchRequest(request) as! [NSManagedObject]
             return results
-        } catch _ {
-            //            HandleDALServiceError(error);
+        } catch let error as NSError {
+            handleDALServiceError(error)
         }
         return []
     }
@@ -92,8 +92,8 @@ extension NSManagedObject {
         do {
             let results = try context.executeFetchRequest(request) as! [NSManagedObject]
             return results
-        } catch _ {
-            //            HandleDALServiceError(error);
+        } catch let error as NSError {
+            handleDALServiceError(error)
         }
         return []
     }
@@ -106,8 +106,8 @@ extension NSManagedObject {
         do {
             let results = try context.executeFetchRequest(request) as! [NSManagedObject]
             return results
-        } catch _ {
-            //            HandleDALServiceError(error);
+        } catch let error as NSError {
+            handleDALServiceError(error)
         }
         return []
     }
@@ -120,8 +120,8 @@ extension NSManagedObject {
         do {
             let results = try context.executeFetchRequest(request) as! [NSManagedObject]
             return results
-        } catch _ {
-            //            HandleDALServiceError(error);
+        } catch let error as NSError {
+            handleDALServiceError(error)
         }
         return []
     }
@@ -134,8 +134,8 @@ extension NSManagedObject {
         do {
             let results = try context.executeFetchRequest(request) as! [NSManagedObject]
             return results.first
-        } catch _ {
-            //            HandleDALServiceError(error);
+        } catch let error as NSError {
+            handleDALServiceError(error)
         }
         return nil
     }
@@ -149,8 +149,8 @@ extension NSManagedObject {
         do {
             let results = try context.executeFetchRequest(request) as! [NSManagedObject]
             return results.first
-        } catch _ {
-            //            HandleDALServiceError(error);
+        } catch let error as NSError {
+            handleDALServiceError(error)
         }
         return nil
     }
@@ -166,22 +166,22 @@ extension NSManagedObject {
         do {
             let results = try context.executeFetchRequest(request) as! [NSManagedObject]
             return results.first
-        } catch _ {
-            //            HandleDALServiceError(error);
+        } catch let error as NSError {
+            handleDALServiceError(error)
         }
         return nil
     }
     
     // MARK: Private
     
-    class func SK_basicFetchRequestInContext(context: NSManagedObjectContext) -> NSFetchRequest {
+    private class func SK_basicFetchRequestInContext(context: NSManagedObjectContext) -> NSFetchRequest {
         let request = NSFetchRequest()
         let entityDescription = NSEntityDescription.entityForName(self.nameOfClass, inManagedObjectContext: context)
         request.entity = entityDescription
         return request
     }
     
-    class func SK_sortDescriptors(sortTerms: String, ascending:Bool) -> [NSSortDescriptor] {
+    private class func SK_sortDescriptors(sortTerms: String, ascending:Bool) -> [NSSortDescriptor] {
         var sortDescriptors = [NSSortDescriptor]()
         for (_, value) in sortTerms.componentsSeparatedByString(",").enumerate() {
             
@@ -198,6 +198,10 @@ extension NSManagedObject {
             sortDescriptors.append(sortDescriptor)
         }
         return sortDescriptors
+    }
+    
+    private class func handleDALServiceError(error: NSError) -> Void {
+        NSNotificationCenter.defaultCenter().postNotificationName(DALServiceConstants.handleDALServiceErrorNotification, object: self, userInfo: ["error": error])
     }
     
 }

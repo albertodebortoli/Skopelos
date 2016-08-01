@@ -10,4 +10,14 @@ import Foundation
 
 class Skopelos: DALService {
     
+    convenience init(sqliteStack dataModelFileName: String) {
+        let cds = CoreDataStack(storeType: .SQLite, dataModelFileName:dataModelFileName)
+        self.init(coreDataStack: cds)
+    }
+    
+    convenience init(inMemoryStack dataModelFileName: String) {
+        let cds = CoreDataStack(storeType: .InMemory, dataModelFileName:dataModelFileName)
+        self.init(coreDataStack: cds)
+    }
+    
 }

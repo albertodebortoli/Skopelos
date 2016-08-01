@@ -22,7 +22,6 @@
 		4F401D4E1D4EA2F600635945 /* AppStateReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D401D4EA2F600635945 /* AppStateReactor.swift */; };
 		4F401D501D4EA2F600635945 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D421D4EA2F600635945 /* CoreDataStack.swift */; };
 		4F401D511D4EA2F600635945 /* DALService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D431D4EA2F600635945 /* DALService.swift */; };
-		4F401D521D4EA2F600635945 /* DALService+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D451D4EA2F600635945 /* DALService+Helpers.swift */; };
 		4F401D531D4EA2F600635945 /* NSManagedObject+Skopelos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D461D4EA2F600635945 /* NSManagedObject+Skopelos.swift */; };
 		4F401D541D4EA2F600635945 /* NSObject+Introspection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D471D4EA2F600635945 /* NSObject+Introspection.swift */; };
 		4F401D551D4EA2F600635945 /* CommandModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D491D4EA2F600635945 /* CommandModelProtocol.swift */; };
@@ -31,6 +30,7 @@
 		4F401D581D4EA2F600635945 /* QueryModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D4C1D4EA2F600635945 /* QueryModelProtocol.swift */; };
 		4F401D591D4EA2F600635945 /* Skopelos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D4D1D4EA2F600635945 /* Skopelos.swift */; };
 		4F401D5B1D4EA4B100635945 /* String+Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D5A1D4EA4B100635945 /* String+Bool.swift */; };
+		4F401D5D1D4FDEB200635945 /* NSManagedObject_SkopelosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D5C1D4FDEB200635945 /* NSManagedObject_SkopelosTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +64,6 @@
 		4F401D401D4EA2F600635945 /* AppStateReactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateReactor.swift; sourceTree = "<group>"; };
 		4F401D421D4EA2F600635945 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		4F401D431D4EA2F600635945 /* DALService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DALService.swift; sourceTree = "<group>"; };
-		4F401D451D4EA2F600635945 /* DALService+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DALService+Helpers.swift"; sourceTree = "<group>"; };
 		4F401D461D4EA2F600635945 /* NSManagedObject+Skopelos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Skopelos.swift"; sourceTree = "<group>"; };
 		4F401D471D4EA2F600635945 /* NSObject+Introspection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Introspection.swift"; sourceTree = "<group>"; };
 		4F401D491D4EA2F600635945 /* CommandModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandModelProtocol.swift; sourceTree = "<group>"; };
@@ -73,6 +72,7 @@
 		4F401D4C1D4EA2F600635945 /* QueryModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryModelProtocol.swift; sourceTree = "<group>"; };
 		4F401D4D1D4EA2F600635945 /* Skopelos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skopelos.swift; sourceTree = "<group>"; };
 		4F401D5A1D4EA4B100635945 /* String+Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Bool.swift"; sourceTree = "<group>"; };
+		4F401D5C1D4FDEB200635945 /* NSManagedObject_SkopelosTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObject_SkopelosTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				4F25DF781D4A7C8B00E5446E /* SkopelosTests.swift */,
+				4F401D5C1D4FDEB200635945 /* NSManagedObject_SkopelosTests.swift */,
 				4F25DF7A1D4A7C8B00E5446E /* Info.plist */,
 			);
 			path = SkopelosTests;
@@ -174,7 +175,6 @@
 		4F401D441D4EA2F600635945 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				4F401D451D4EA2F600635945 /* DALService+Helpers.swift */,
 				4F401D461D4EA2F600635945 /* NSManagedObject+Skopelos.swift */,
 				4F401D471D4EA2F600635945 /* NSObject+Introspection.swift */,
 				4F401D5A1D4EA4B100635945 /* String+Bool.swift */,
@@ -303,7 +303,6 @@
 				4F401D511D4EA2F600635945 /* DALService.swift in Sources */,
 				4F401D551D4EA2F600635945 /* CommandModelProtocol.swift in Sources */,
 				4F401D561D4EA2F600635945 /* CoreDataStackProtocol.swift in Sources */,
-				4F401D521D4EA2F600635945 /* DALService+Helpers.swift in Sources */,
 				4F25DF641D4A7C8B00E5446E /* AppDelegate.swift in Sources */,
 				4F401D501D4EA2F600635945 /* CoreDataStack.swift in Sources */,
 				4F25DFAA1D4D531900E5446E /* Pet+CoreDataProperties.swift in Sources */,
@@ -322,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F25DF791D4A7C8B00E5446E /* SkopelosTests.swift in Sources */,
+				4F401D5D1D4FDEB200635945 /* NSManagedObject_SkopelosTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
