@@ -9,11 +9,11 @@
 import Foundation
 import CoreData
 
-struct DALServiceConstants {
+public struct DALServiceConstants {
     static let handleDALServiceErrorNotification = "handleDALServiceErrorNotification"
 }
 
-class DALService: NSObject, DALProtocol {
+public class DALService: NSObject, DALProtocol {
     
     let coreDataStack: CoreDataStackProtocol
     
@@ -21,7 +21,7 @@ class DALService: NSObject, DALProtocol {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: DALServiceConstants.handleDALServiceErrorNotification, object: nil)
     }
     
-    init(coreDataStack cds: CoreDataStackProtocol) {
+    public init(coreDataStack cds: CoreDataStackProtocol) {
         coreDataStack = cds
         super.init()
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -31,10 +31,8 @@ class DALService: NSObject, DALProtocol {
     }
     
     @objc func receiveErrorNotification(notification: NSNotification) {
-        let userInfo: [NSObject : AnyObject] = notification.userInfo!
-        if let error = userInfo["error"] {
-            handleError(error as! NSError)
-        }
+        guard let userInfo = notification.userInfo, error = userInfo["error"]  else { return }
+        handleError(error as! NSError)
     }
     
     func handleError(error: NSError) {
@@ -46,12 +44,14 @@ class DALService: NSObject, DALProtocol {
         context.performBlockAndWait {
             statements(context)
         }
-        return self;
+
+        return self
     }
     
     private func slaveContext() -> NSManagedObjectContext {
         let slaveContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         slaveContext.parentContext = coreDataStack.mainContext
+
         return slaveContext
     }
     
@@ -61,7 +61,6 @@ class DALService: NSObject, DALProtocol {
     }
     
     func write(changes: NSManagedObjectContext -> Void, completion: (NSError? -> Void)?) -> Self {
-        
         let context = slaveContext()
         context.performBlockAndWait {
             changes(context)
@@ -69,13 +68,10 @@ class DALService: NSObject, DALProtocol {
                 try context.save()
                 self.coreDataStack.save(completion)
             } catch _ {
-                //                fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
+                // fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
             }
-            
         }
         
         return self
     }
-    
 }
-

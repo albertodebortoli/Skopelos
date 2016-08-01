@@ -6,11 +6,9 @@
 //  Copyright © 2016 Alberto De Bortoli. All rights reserved.
 //
 
-import Foundation
 import CoreData
 
 protocol QueryModelProtocol {
     
     func read(statements: NSManagedObjectContext -> Void) -> Self
-    
 }

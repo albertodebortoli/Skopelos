@@ -6,10 +6,9 @@
 //  Copyright © 2016 Alberto De Bortoli. All rights reserved.
 //
 
-import Foundation
 import CoreData
 
-protocol CoreDataStackProtocol {
+public protocol CoreDataStackProtocol {
     
     var mainContext: NSManagedObjectContext { get set }
     var privateContext: NSManagedObjectContext { get set }
