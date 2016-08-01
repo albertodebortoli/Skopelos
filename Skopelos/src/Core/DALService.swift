@@ -13,9 +13,7 @@ struct DALServiceConstants {
     static let handleDALServiceErrorNotification = "handleDALServiceErrorNotification"
 }
 
-// [[NSNotificationCenter defaultCenter] postNotificationName:kSkiathosHandleErrorNotification object:self userInfo:@{@"error":__VA_ARGS__}];
-
-class DALService: DALProtocol {
+class DALService: NSObject, DALProtocol {
     
     let coreDataStack: CoreDataStackProtocol
     
@@ -23,8 +21,9 @@ class DALService: DALProtocol {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: DALServiceConstants.handleDALServiceErrorNotification, object: nil)
     }
     
-    init(coreDataStack: CoreDataStackProtocol) {
-        self.coreDataStack = coreDataStack
+    init(coreDataStack cds: CoreDataStackProtocol) {
+        coreDataStack = cds
+        super.init()
         NSNotificationCenter.defaultCenter().addObserver(self,
                                                          selector:#selector(receiveErrorNotification),
                                                          name: DALServiceConstants.handleDALServiceErrorNotification,
@@ -50,7 +49,7 @@ class DALService: DALProtocol {
         return self;
     }
     
-    func slaveContext() -> NSManagedObjectContext {
+    private func slaveContext() -> NSManagedObjectContext {
         let slaveContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         slaveContext.parentContext = coreDataStack.mainContext
         return slaveContext
