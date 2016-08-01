@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SkopelosClient: Skopelos {
+final class SkopelosClient: Skopelos {
     
     static let sharedInstance = Skopelos(sqliteStack: "DataModel")
     

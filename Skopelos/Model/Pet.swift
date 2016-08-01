@@ -6,12 +6,10 @@
 //  Copyright © 2016 Alberto De Bortoli. All rights reserved.
 //
 
-import Foundation
 import CoreData
 
 @objc(Pet)
-class Pet: NSManagedObject {
+final class Pet: NSManagedObject {
 
-// Insert code here to add functionality to your managed object subclass
-
+    // Insert code here to add functionality to your managed object subclass
 }

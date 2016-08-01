@@ -9,12 +9,10 @@
 //  to delete and recreate this implementation file for your updated model.
 //
 
-import Foundation
 import CoreData
 
 extension Pet {
 
     @NSManaged var name: String?
     @NSManaged var relationship: User?
-
 }

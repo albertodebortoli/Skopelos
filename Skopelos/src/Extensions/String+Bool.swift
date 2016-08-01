@@ -9,6 +9,7 @@
 import Foundation
 
 extension String {
-    var boolValue: Bool {
+    public var boolValue: Bool {
         return NSString(string: self).boolValue
-    }}
+    }
+}

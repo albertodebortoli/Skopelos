@@ -6,29 +6,28 @@
 //  Copyright © 2016 Alberto De Bortoli. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-protocol AppStateReactorDelegate {
+public protocol AppStateReactorDelegate {
     func didReceiveStateChange(appStateReactor: AppStateReactor) -> Void
 }
 
-class AppStateReactor: NSObject {
-    
-    var delegate: AppStateReactorDelegate?
-    
+public final class AppStateReactor: NSObject {
+
+    public var delegate: AppStateReactorDelegate?
+
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillTerminateNotification, object: nil)
     }
-    
-    override init() {
+
+    public override init() {
         super.init()
         initialize()
     }
-    
-    func initialize() {
+
+   private func initialize() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillResignActive), name: UIApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplicationDidEnterBackgroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillTerminate), name: UIApplicationWillTerminateNotification, object: nil)
@@ -47,9 +46,6 @@ class AppStateReactor: NSObject {
     }
     
     func forwardStatusChange() {
-        if let delegate = delegate {
-            delegate.didReceiveStateChange(self)
-        }
+        delegate?.didReceiveStateChange(self)
     }
-    
 }

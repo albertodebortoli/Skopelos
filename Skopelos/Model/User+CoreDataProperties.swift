@@ -9,7 +9,6 @@
 //  to delete and recreate this implementation file for your updated model.
 //
 
-import Foundation
 import CoreData
 
 extension User {
@@ -17,5 +16,4 @@ extension User {
     @NSManaged var firstname: String?
     @NSManaged var lastname: String?
     @NSManaged var relationship: NSSet?
-
 }
