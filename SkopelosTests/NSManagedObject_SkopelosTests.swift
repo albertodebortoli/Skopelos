@@ -39,7 +39,7 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             let users = User.SK_all(context)
             XCTAssertEqual(users.count, 2)
         }).write( { (context: NSManagedObjectContext) in
-            let user = User.SK_first(context) as! User
+            let user = User.SK_first(context)!
             user.SK_remove(context)
             XCTAssertEqual(User.SK_numberOfEntities(context), 1)
         }).read({ (context: NSManagedObjectContext) in
@@ -95,8 +95,8 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     func test_numberOfEntitiesWithPredicate() {
         let expectation = expectationWithDescription("\(#function)")
         skopelos.write( { (context: NSManagedObjectContext) in
-            let u1 = User.SK_create(context) as! User
-            let u2 = User.SK_create(context) as! User
+            let u1 = User.SK_create(context)
+            let u2 = User.SK_create(context)
             u1.firstname = "John"
             u2.firstname = "Jane"
         }).read({ (context: NSManagedObjectContext) in
@@ -123,16 +123,16 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     func test_allWithPredicate() {
         let expectation = expectationWithDescription("\(#function)")
         skopelos.write( { (context: NSManagedObjectContext) in
-            let u1 = User.SK_create(context) as! User
-            let u2 = User.SK_create(context) as! User
+            let u1 = User.SK_create(context)
+            let u2 = User.SK_create(context)
             u1.firstname = "John"
             u2.firstname = "Jane"
         }).read({ (context: NSManagedObjectContext) in
             let predicate = NSPredicate(format:"%K == %@", "firstname", "John")
             let users = User.SK_all(predicate, context: context)
             XCTAssertEqual(users.count, 1)
-            let user = users.first as! User
-            XCTAssertEqual(user.firstname, "John")
+            let user = users.first
+            XCTAssertEqual(user?.firstname ?? "", "John")
             expectation.fulfill()
         })
         waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
@@ -141,9 +141,9 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     func test_allWithPredicateSortedBy() {
         let expectation = expectationWithDescription("\(#function)")
         skopelos.write( { (context: NSManagedObjectContext) in
-            let u1 = User.SK_create(context) as! User
-            let u2 = User.SK_create(context) as! User
-            let u3 = User.SK_create(context) as! User
+            let u1 = User.SK_create(context)
+            let u2 = User.SK_create(context)
+            let u3 = User.SK_create(context)
             u1.firstname = "John"
             u1.lastname = "Doe"
             u2.firstname = "Jane"
@@ -154,8 +154,8 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             let predicate = NSPredicate(format: "%K == %@", "lastname", "Doe")
             let users = User.SK_all(context, predicate: predicate, sortTerm: "firstname", ascending: true)
             XCTAssertEqual(users.count, 2)
-            let user = users.first as! User
-            XCTAssertEqual(user.firstname, "Jane")
+            let user = users.first
+            XCTAssertEqual(user?.firstname ?? "", "Jane")
             expectation.fulfill()
         })
         waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
@@ -164,9 +164,9 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     func test_allWhereAttributeIsEqualToSortedBy() {
         let expectation = expectationWithDescription("\(#function)")
         skopelos.write( { (context: NSManagedObjectContext) in
-            let u1 = User.SK_create(context) as! User
-            let u2 = User.SK_create(context) as! User
-            let u3 = User.SK_create(context) as! User
+            let u1 = User.SK_create(context)
+            let u2 = User.SK_create(context)
+            let u3 = User.SK_create(context)
             u1.firstname = "John"
             u1.lastname = "Doe"
             u2.firstname = "Jane"
@@ -175,10 +175,10 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             u3.lastname = "Smith"
         }).read({ (context: NSManagedObjectContext) in
             XCTAssertEqual(User.SK_all("lastname", isEqualTo: "Doe", sortTerms: "firstname", ascending: false, context: context).count, 2)
-            let u1 = User.SK_all("lastname", isEqualTo: "Doe", sortTerms: "firstname", ascending: false, context: context).first as! User
-            let u2 = User.SK_all("lastname", isEqualTo: "Doe", sortTerms: "firstname", ascending: true, context: context).first as! User
-            XCTAssertEqual(u1.firstname, "John");
-            XCTAssertEqual(u2.firstname, "Jane");
+            let u1 = User.SK_all("lastname", isEqualTo: "Doe", sortTerms: "firstname", ascending: false, context: context).first
+            let u2 = User.SK_all("lastname", isEqualTo: "Doe", sortTerms: "firstname", ascending: true, context: context).first
+            XCTAssertEqual(u1!.firstname, "John");
+            XCTAssertEqual(u2!.firstname, "Jane");
             expectation.fulfill()
         })
         waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
@@ -187,8 +187,8 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     func test_first() {
         let expectation = expectationWithDescription("\(#function)")
         skopelos.write( { (context: NSManagedObjectContext) in
-            let u1 = User.SK_create(context) as! User
-            let u2 = User.SK_create(context) as! User
+            let u1 = User.SK_create(context)
+            let u2 = User.SK_create(context)
             u1.firstname = "John"
             u2.firstname = "Jane"
         }).read({ (context: NSManagedObjectContext) in
@@ -202,16 +202,16 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     func test_firstWithPredicate() {
         let expectation = expectationWithDescription("\(#function)")
         skopelos.write( { (context: NSManagedObjectContext) in
-            let u1 = User.SK_create(context) as! User
-            let u2 = User.SK_create(context) as! User
+            let u1 = User.SK_create(context)
+            let u2 = User.SK_create(context)
             u1.firstname = "John"
             u2.lastname = "Doe"
             u2.firstname = "Jane"
             u2.lastname = "Doe"
         }).read({ (context: NSManagedObjectContext) in
             let predicate = NSPredicate(format: "%K == %@", "lastname", "Doe")
-            let user = User.SK_first(predicate, sortTerms: "firstname", ascending: true, context: context) as! User
-            XCTAssertEqual(user.firstname, "Jane")
+            let user = User.SK_first(predicate, sortTerms: "firstname", ascending: true, context: context)
+            XCTAssertEqual(user?.firstname ?? "", "Jane")
             expectation.fulfill()
         })
         waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
@@ -220,8 +220,8 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     func test_firstWhereAttribute() {
         let expectation = expectationWithDescription("\(#function)")
         skopelos.write( { (context: NSManagedObjectContext) in
-            let u1 = User.SK_create(context) as! User
-            let u2 = User.SK_create(context) as! User
+            let u1 = User.SK_create(context)
+            let u2 = User.SK_create(context)
             u1.firstname = "John"
             u2.lastname = "Doe"
             u2.firstname = "Jane"
