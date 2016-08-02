@@ -115,11 +115,11 @@
 		4F25DF621D4A7C8B00E5446E /* Skopelos */ = {
 			isa = PBXGroup;
 			children = (
+				4F25DF961D4D4DD400E5446E /* SkopelosClient.swift */,
 				4F401D3E1D4EA2F600635945 /* src */,
 				4F25DFAC1D4D531F00E5446E /* Model */,
 				4F25DF631D4A7C8B00E5446E /* AppDelegate.swift */,
 				4F25DF651D4A7C8B00E5446E /* ViewController.swift */,
-				4F25DF961D4D4DD400E5446E /* SkopelosClient.swift */,
 				4F25DF671D4A7C8B00E5446E /* Main.storyboard */,
 				4F25DF6A1D4A7C8B00E5446E /* Assets.xcassets */,
 				4F25DF6C1D4A7C8B00E5446E /* LaunchScreen.storyboard */,

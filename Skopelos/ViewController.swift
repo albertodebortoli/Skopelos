@@ -11,9 +11,9 @@ import CoreData
 
 class ViewController: UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        
 //        let sem = dispatch_semaphore_create(0)
 //        
 //        while (true) {
@@ -32,7 +32,7 @@ class ViewController: UIViewController {
 //                    dispatch_semaphore_signal(sem)
 //            })
 //        }
-    }
+//    }
     
 }
 
