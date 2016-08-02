@@ -6,8 +6,4 @@
 //  Copyright © 2016 Alberto De Bortoli. All rights reserved.
 //
 
-import Foundation
-
-protocol DALProtocol: QueryModelProtocol, CommandModelProtocol {
-    
-}
+typealias DALProtocol = protocol<QueryModelProtocol, CommandModelProtocol>

@@ -67,8 +67,13 @@ public class DALService: NSObject, DALProtocol {
             do {
                 try context.save()
                 self.coreDataStack.save(completion)
+<<<<<<< HEAD
             } catch let error as NSError {
                 fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
+=======
+            } catch _ {
+                // fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
             }
         }
         

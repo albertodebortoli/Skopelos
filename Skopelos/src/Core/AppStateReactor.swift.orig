@@ -26,11 +26,28 @@ public final class AppStateReactor: NSObject {
         super.init()
         initialize()
     }
+<<<<<<< HEAD
+    
+    func initialize() {
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(applicationWillResignActive),
+                                                         name: UIApplicationWillResignActiveNotification,
+                                                         object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(applicationDidEnterBackground),
+                                                         name: UIApplicationDidEnterBackgroundNotification,
+                                                         object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(applicationWillTerminate),
+                                                         name: UIApplicationWillTerminateNotification,
+                                                         object: nil)
+=======
 
    private func initialize() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillResignActive), name: UIApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplicationDidEnterBackgroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillTerminate), name: UIApplicationWillTerminateNotification, object: nil)
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
     }
     
     @objc func applicationWillResignActive(notification: NSNotification) {
@@ -45,7 +62,14 @@ public final class AppStateReactor: NSObject {
         forwardStatusChange()
     }
     
+<<<<<<< HEAD
     private func forwardStatusChange() {
+        if let delegate = delegate {
+            delegate.didReceiveStateChange(self)
+        }
+=======
+    func forwardStatusChange() {
         delegate?.didReceiveStateChange(self)
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
     }
 }

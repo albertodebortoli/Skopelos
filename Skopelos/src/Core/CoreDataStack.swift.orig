@@ -16,9 +16,15 @@ public enum StoreType {
 
 public final class CoreDataStack: NSObject {
     
+<<<<<<< HEAD
+    var mainContext: NSManagedObjectContext
+    var rootContext: NSManagedObjectContext
+    var appStateReactor: AppStateReactor
+=======
     public var mainContext: NSManagedObjectContext
-    public var rootContext: NSManagedObjectContext
-    private let appStateReactor: AppStateReactor
+    public var privateContext: NSManagedObjectContext
+    let appStateReactor: AppStateReactor
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
     var backgroundTask: UIBackgroundTaskIdentifier?
     
     convenience init(storeType: StoreType, dataModelFileName: String) {
@@ -67,7 +73,7 @@ public final class CoreDataStack: NSObject {
         }
     }
 
-    private static func addSQLiteStore(coordinator: NSPersistentStoreCoordinator, dataModelFileName: String) {
+   static func addSQLiteStore(coordinator: NSPersistentStoreCoordinator, dataModelFileName: String) {
 
         let fileManager = NSFileManager.defaultManager()
         let documentsURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last
@@ -76,20 +82,20 @@ public final class CoreDataStack: NSObject {
         
         do {
             try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options)
-        } catch let error as NSError {
-            fatalError("Error adding Persistent Store: \(error.localizedDescription)\n\(error.userInfo)")
+        } catch _ {
+            // handle error @"Error adding Persistent Store: %@\n%@", [error localizedDescription], [error userInfo]);
         }
     }
     
-    private static func addInMemoryStore(coordinator: NSPersistentStoreCoordinator) {
+    static func addInMemoryStore(coordinator: NSPersistentStoreCoordinator) {
         do {
             try coordinator.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil)
-        } catch let error as NSError {
-            fatalError("Error adding Persistent Store: \(error.localizedDescription)\n\(error.userInfo)")
+        } catch _ {
+            // handle error @"Error adding Persistent Store: %@\n%@", [error localizedDescription], [error userInfo]);
         }
     }
     
-    private static func autoMigratingOptions() -> [NSObject: AnyObject] {
+    static func autoMigratingOptions() -> [NSObject: AnyObject] {
         let options = [NSMigratePersistentStoresAutomaticallyOption: true,
                        NSInferMappingModelAutomaticallyOption: true,
                        NSSQLitePragmasOption: ["journal_mode": "WAL"]]
@@ -174,4 +180,60 @@ extension CoreDataStack: CoreDataStackProtocol {
             }
         }
     }
+<<<<<<< HEAD
+    
+    // MARK: Private
+    
+    private class func addSQLiteStore(coordinator: NSPersistentStoreCoordinator, dataModelFileName: String) {
+        let fileManager = NSFileManager.defaultManager()
+        let documentsURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last
+        let storeURL = documentsURL?.URLByAppendingPathComponent(String("\(dataModelFileName).sqlite"))
+        let options = autoMigratingOptions()
+        
+        do {
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options)
+        } catch let error as NSError {
+            fatalError("Error adding Persistent Store: \(error.localizedDescription)\n\(error.userInfo)")
+        }
+    }
+    
+    private class func addInMemoryStore(coordinator: NSPersistentStoreCoordinator) {
+        do {
+            try coordinator.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil)
+        } catch let error as NSError {
+            fatalError("Error adding Persistent Store: \(error.localizedDescription)\n\(error.userInfo)")
+        }
+    }
+    
+    private class func autoMigratingOptions() -> [NSObject: AnyObject] {
+        let options = [NSMigratePersistentStoresAutomaticallyOption: true,
+                       NSInferMappingModelAutomaticallyOption: true,
+                       NSSQLitePragmasOption: ["journal_mode": "WAL"]]
+        return options
+    }
+    
+    // MARK: ADBAppStateReactorDelegate
+    
+    private func registerBackgroundTask() {
+        backgroundTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler {
+            [unowned self] in
+            self.endBackgroundTask()
+        }
+    }
+    
+    private func endBackgroundTask() {
+        UIApplication.sharedApplication().endBackgroundTask(backgroundTask!)
+        backgroundTask = UIBackgroundTaskInvalid
+    }
+    
+    func didReceiveStateChange(appStateReactor: AppStateReactor) -> Void {
+        registerBackgroundTask()
+        return save({ (error: NSError?) in
+            self.endBackgroundTask()
+            self.backgroundTask = UIBackgroundTaskInvalid
+        })
+    }
+    
+=======
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
 }
