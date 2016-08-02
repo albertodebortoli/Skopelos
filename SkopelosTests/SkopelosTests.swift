@@ -23,13 +23,13 @@ class SkopelosTests: XCTestCase {
         let expectation = expectationWithDescription("\(#function)")
     
         skopelos.write({ (context: NSManagedObjectContext) in
-            var user = User.SK_create(context) as! User
-            user = user.SK_inContext(context) as! User
-            User.SK_create(context) as! User
+            var user = User.SK_create(context)
+            user = user.SK_inContext(context)!
+            User.SK_create(context)
             let users = User.SK_all(context)
             XCTAssertEqual(users.count, 2)
         }).write({ (context: NSManagedObjectContext) in
-            let user = User.SK_first(context) as! User
+            let user = User.SK_first(context)!
             user.SK_remove(context)
             let users = User.SK_all(context)
             XCTAssertEqual(users.count, 1);
@@ -54,7 +54,7 @@ class SkopelosTests: XCTestCase {
                 let users = User.SK_all(context)
                 XCTAssertEqual(users.count, 0)
             }).write({ (context: NSManagedObjectContext) in
-                let user = User.SK_create(context) as! User
+                let user = User.SK_create(context)
                 user.firstname = "John"
                 user.lastname = "Doe"
             }).read({ (context: NSManagedObjectContext) in
@@ -82,7 +82,7 @@ class SkopelosTests: XCTestCase {
                 let users = User.SK_all(context)
                 XCTAssertEqual(users.count, 0)
             }).write({ (context: NSManagedObjectContext) in
-                let user = User.SK_create(context) as! User
+                let user = User.SK_create(context)
                 user.firstname = "John"
                 user.lastname = "Doe"
             }).read({ (context: NSManagedObjectContext) in
@@ -108,7 +108,7 @@ class SkopelosTests: XCTestCase {
                 NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 0.2))
                 
                 self.skopelos.write({ (context: NSManagedObjectContext) in
-                    let user = User.SK_create(context) as! User
+                    let user = User.SK_create(context)
                     user.firstname = "John"
                     user.lastname = "Doe"
                 }).write({ (context: NSManagedObjectContext) in
