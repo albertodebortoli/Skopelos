@@ -29,10 +29,17 @@ extension NSManagedObject {
     public static func SK_create(context: NSManagedObjectContext) -> NSManagedObject {
         return  NSEntityDescription.insertNewObjectForEntityForName(self.nameOfClass, inManagedObjectContext: context)
     }
+<<<<<<< HEAD
+    
+    class func SK_numberOfEntities(context: NSManagedObjectContext) -> Int {
+        
+        let request = basicFetchRequestInContext(context)
+=======
 
     public static func SK_numberOfEntities(context: NSManagedObjectContext) -> Int {
 
-        let request = basicFetchRequestInContext(context)
+        let request = SK_basicFetchRequestInContext(context)
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
         
         var error: NSError?
         let result = context.countForFetchRequest(request, error: &error)
@@ -42,10 +49,17 @@ extension NSManagedObject {
 
         return result
     }
+<<<<<<< HEAD
+    
+    class func SK_numberOfEntities(predicate: NSPredicate, context: NSManagedObjectContext) -> Int {
+        
+        let request = basicFetchRequestInContext(context)
+=======
 
     public static func SK_numberOfEntities(predicate: NSPredicate, context: NSManagedObjectContext) -> Int {
 
-        let request =_basicFetchRequestInContext(context)
+        let request = SK_basicFetchRequestInContext(context)
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
         request.predicate = predicate
         
         var error: NSError?
@@ -60,9 +74,15 @@ extension NSManagedObject {
     public func SK_remove(context: NSManagedObjectContext) -> Void {
         context.deleteObject(self)
     }
+<<<<<<< HEAD
+    
+    class func SK_removeAll(context: NSManagedObjectContext) -> Void {
+        let request = basicFetchRequestInContext(context)
+=======
 
     public static func SK_removeAll(context: NSManagedObjectContext) -> Void {
-        let request = basicFetchRequestInContext(context)
+        let request = SK_basicFetchRequestInContext(context)
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
         request.returnsObjectsAsFaults = true
         request.includesPropertyValues = false
 
@@ -76,10 +96,16 @@ extension NSManagedObject {
             handleDALServiceError(error)
         }
     }
+<<<<<<< HEAD
+    
+    class func SK_all(context: NSManagedObjectContext) -> [NSManagedObject] {
+        let request = basicFetchRequestInContext(context)
+=======
 
     public static func SK_all(context: NSManagedObjectContext) -> [NSManagedObject] {
-        let request = basicFetchRequestInContext(context)
+        let request = SK_basicFetchRequestInContext(context)
 
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
         do {
             let results = try context.executeFetchRequest(request) as! [NSManagedObject]
             return results
@@ -89,9 +115,15 @@ extension NSManagedObject {
 
         return []
     }
+<<<<<<< HEAD
+    
+    class func SK_all(predicate: NSPredicate, context:NSManagedObjectContext) -> [NSManagedObject] {
+        let request = basicFetchRequestInContext(context)
+=======
 
     public static func SK_all(predicate: NSPredicate, context:NSManagedObjectContext) -> [NSManagedObject] {
-        let request = basicFetchRequestInContext(context)
+        let request = SK_basicFetchRequestInContext(context)
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
         request.predicate = predicate
 
         do {
@@ -103,9 +135,15 @@ extension NSManagedObject {
 
         return []
     }
+<<<<<<< HEAD
+    
+    class func SK_all(context: NSManagedObjectContext, predicate: NSPredicate, sortTerm: String, ascending: Bool) -> [NSManagedObject] {
+        let request = basicFetchRequestInContext(context)
+=======
 
     public static func SK_all(context: NSManagedObjectContext, predicate: NSPredicate, sortTerm: String, ascending: Bool) -> [NSManagedObject] {
-        let request = basicFetchRequestInContext(context)
+        let request = SK_basicFetchRequestInContext(context)
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
         request.predicate = predicate
         request.sortDescriptors = sortDescriptors(sortTerm, ascending:ascending)
         
@@ -118,9 +156,15 @@ extension NSManagedObject {
 
         return []
     }
+<<<<<<< HEAD
+    
+    class func SK_all(attribute: String, isEqualTo value: String, sortTerms: String, ascending: Bool, context: NSManagedObjectContext) -> [NSManagedObject] {
+        let request = basicFetchRequestInContext(context)
+=======
 
     public static func SK_all(attribute: String, isEqualTo value: String, sortTerms: String, ascending: Bool, context: NSManagedObjectContext) -> [NSManagedObject] {
-        let request = basicFetchRequestInContext(context)
+        let request = SK_basicFetchRequestInContext(context)
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
         request.predicate = NSPredicate(format: "%K = %@", attribute, value)
         request.sortDescriptors = sortDescriptors(sortTerms, ascending:ascending)
         
@@ -133,9 +177,15 @@ extension NSManagedObject {
 
         return []
     }
+<<<<<<< HEAD
+    
+    class func SK_first(context: NSManagedObjectContext) -> NSManagedObject? {
+        let request = basicFetchRequestInContext(context)
+=======
 
     public static func SK_first(context: NSManagedObjectContext) -> NSManagedObject? {
-        let request = basicFetchRequestInContext(context)
+        let request = SK_basicFetchRequestInContext(context)
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
         request.fetchLimit = 1
         request.fetchBatchSize = 1
         
@@ -148,9 +198,15 @@ extension NSManagedObject {
 
         return nil
     }
+<<<<<<< HEAD
+    
+    class func SK_first(attribute: String, isEqualTo value: String, context: NSManagedObjectContext) -> NSManagedObject? {
+        let request = basicFetchRequestInContext(context)
+=======
 
     public static func SK_first(attribute: String, isEqualTo value: String, context: NSManagedObjectContext) -> NSManagedObject? {
-        let request = basicFetchRequestInContext(context)
+        let request = SK_basicFetchRequestInContext(context)
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
         request.fetchLimit = 1
         request.fetchBatchSize = 1
         request.predicate = NSPredicate(format: "%K = %@", attribute, value)
@@ -164,14 +220,26 @@ extension NSManagedObject {
 
         return nil
     }
-
-    public static func SK_first(predicate: NSPredicate, sortTerms: String, ascending: Bool, context: NSManagedObjectContext) -> NSManagedObject? {
+<<<<<<< HEAD
+    
+    class func SK_first(predicate: NSPredicate, sortTerms: String, ascending: Bool, context: NSManagedObjectContext) -> NSManagedObject? {
         let request = basicFetchRequestInContext(context)
         request.predicate = predicate
         request.fetchLimit = 1
         request.fetchBatchSize = 1
         request.sortDescriptors = sortDescriptors(sortTerms, ascending: ascending)
+        
+        
+=======
 
+    public static func SK_first(predicate: NSPredicate, sortTerms: String, ascending: Bool, context: NSManagedObjectContext) -> NSManagedObject? {
+        let request = SK_basicFetchRequestInContext(context)
+        request.predicate = predicate
+        request.fetchLimit = 1
+        request.fetchBatchSize = 1
+        request.sortDescriptors = SK_sortDescriptors(sortTerms, ascending: ascending)
+
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
         do {
             let results = try context.executeFetchRequest(request) as! [NSManagedObject]
             return results.first
@@ -183,18 +251,31 @@ extension NSManagedObject {
     }
 
     // MARK: Private
+<<<<<<< HEAD
+    
+    private class func basicFetchRequestInContext(context: NSManagedObjectContext) -> NSFetchRequest {
+=======
 
-    private static func basicFetchRequestInContext(context: NSManagedObjectContext) -> NSFetchRequest {
+    private static func SK_basicFetchRequestInContext(context: NSManagedObjectContext) -> NSFetchRequest {
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
         let request = NSFetchRequest()
         let entityDescription = NSEntityDescription.entityForName(self.nameOfClass, inManagedObjectContext: context)
         request.entity = entityDescription
         return request
     }
+<<<<<<< HEAD
+    
+    private class func sortDescriptors(sortTerms: String, ascending:Bool) -> [NSSortDescriptor] {
+        var sortDescriptors = [NSSortDescriptor]()
+        for (_, value) in sortTerms.componentsSeparatedByString(",").enumerate() {
+            
+=======
 
-    private static func sortDescriptors(sortTerms: String, ascending:Bool) -> [NSSortDescriptor] {
+    private static func SK_sortDescriptors(sortTerms: String, ascending:Bool) -> [NSSortDescriptor] {
 
         return sortTerms.componentsSeparatedByString(",").map { value in
 
+>>>>>>> 20a8b3e3ad02faa36399dae1df498d154af5192d
             var sortKey = value
             var customAscending = ascending
 
