@@ -25,7 +25,7 @@ class DALService: NSObject, DALProtocol {
         coreDataStack = cds
         super.init()
         NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector:#selector(receiveErrorNotification),
+                                                         selector: #selector(receiveErrorNotification),
                                                          name: DALServiceConstants.handleDALServiceErrorNotification,
                                                          object: nil)
     }
@@ -68,8 +68,8 @@ class DALService: NSObject, DALProtocol {
             do {
                 try context.save()
                 self.coreDataStack.save(completion)
-            } catch _ {
-                //                fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
+            } catch let error as NSError {
+                fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
             }
             
         }

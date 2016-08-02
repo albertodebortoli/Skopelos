@@ -24,7 +24,7 @@ This component is responsible for the creation of the stack (in terms of chain o
       Managed Object Model <------ Persistent Store Coordinator ------> Persistent Store
                                                 ^
                                                 |
-                        Private Context (NSPrivateQueueConcurrencyType)
+                           Root Context (NSPrivateQueueConcurrencyType)
                                                 ^
                                                 |
               ------------> Main Context (NSMainQueueConcurrencyType) <-------------

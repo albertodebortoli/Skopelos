@@ -18,7 +18,7 @@ enum StoreType {
 class CoreDataStack: NSObject, CoreDataStackProtocol, AppStateReactorDelegate {
     
     var mainContext: NSManagedObjectContext
-    var privateContext: NSManagedObjectContext
+    var rootContext: NSManagedObjectContext
     var appStateReactor: AppStateReactor
     var backgroundTask: UIBackgroundTaskIdentifier?
     
@@ -29,7 +29,7 @@ class CoreDataStack: NSObject, CoreDataStackProtocol, AppStateReactorDelegate {
     init(storeType: StoreType, dataModelFileName: String, handler:(Void -> Void)?) {
         appStateReactor = AppStateReactor()
         mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        privateContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        rootContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         super.init()
         appStateReactor.delegate = self
         self.initialize(storeType, dataModelFileName: dataModelFileName, callback: handler)
@@ -39,11 +39,11 @@ class CoreDataStack: NSObject, CoreDataStackProtocol, AppStateReactorDelegate {
         let modelURL = NSBundle.mainBundle().URLForResource(dataModelFileName, withExtension: "momd")
         let mom = NSManagedObjectModel(contentsOfURL: modelURL!)
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: mom!)
-        privateContext.persistentStoreCoordinator = coordinator
-        mainContext.parentContext = privateContext
+        rootContext.persistentStoreCoordinator = coordinator
+        mainContext.parentContext = rootContext
     
         let privateContextSetupBlock = {
-            let psc = self.privateContext.persistentStoreCoordinator!
+            let psc = self.rootContext.persistentStoreCoordinator!
             
             switch storeType {
             case .SQLite:
@@ -76,8 +76,8 @@ class CoreDataStack: NSObject, CoreDataStackProtocol, AppStateReactorDelegate {
             mainHasChanges = self.mainContext.hasChanges
         }
         
-        privateContext.performBlockAndWait {
-            privateHasChanges = self.privateContext.hasChanges
+        rootContext.performBlockAndWait {
+            privateHasChanges = self.rootContext.hasChanges
         }
         
         if !mainHasChanges && !privateHasChanges {
@@ -101,10 +101,10 @@ class CoreDataStack: NSObject, CoreDataStackProtocol, AppStateReactorDelegate {
                 });
             }
             
-            self.privateContext.performBlock {
+            self.rootContext.performBlock {
                 
                 do {
-                    try self.privateContext.save()
+                    try self.rootContext.save()
                 } catch let error as NSError {
                     //                    fatalError("Error saving private context: \(error.localizedDescription), \(error.userInfo)")
                     dispatch_async(dispatch_get_main_queue(), {
@@ -124,7 +124,9 @@ class CoreDataStack: NSObject, CoreDataStackProtocol, AppStateReactorDelegate {
         
     }
     
-    class func addSQLiteStore(coordinator: NSPersistentStoreCoordinator, dataModelFileName: String) {
+    // MARK: Private
+    
+    private class func addSQLiteStore(coordinator: NSPersistentStoreCoordinator, dataModelFileName: String) {
         let fileManager = NSFileManager.defaultManager()
         let documentsURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last
         let storeURL = documentsURL?.URLByAppendingPathComponent(String("\(dataModelFileName).sqlite"))
@@ -132,20 +134,20 @@ class CoreDataStack: NSObject, CoreDataStackProtocol, AppStateReactorDelegate {
         
         do {
             try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options)
-        } catch _ {
-            // handle error @"Error adding Persistent Store: %@\n%@", [error localizedDescription], [error userInfo]);
+        } catch let error as NSError {
+            fatalError("Error adding Persistent Store: \(error.localizedDescription)\n\(error.userInfo)")
         }
     }
     
-    class func addInMemoryStore(coordinator: NSPersistentStoreCoordinator) {
+    private class func addInMemoryStore(coordinator: NSPersistentStoreCoordinator) {
         do {
             try coordinator.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil)
-        } catch _ {
-            // handle error @"Error adding Persistent Store: %@\n%@", [error localizedDescription], [error userInfo]);
+        } catch let error as NSError {
+            fatalError("Error adding Persistent Store: \(error.localizedDescription)\n\(error.userInfo)")
         }
     }
     
-    class func autoMigratingOptions() -> [NSObject: AnyObject] {
+    private class func autoMigratingOptions() -> [NSObject: AnyObject] {
         let options = [NSMigratePersistentStoresAutomaticallyOption: true,
                        NSInferMappingModelAutomaticallyOption: true,
                        NSSQLitePragmasOption: ["journal_mode": "WAL"]]

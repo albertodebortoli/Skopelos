@@ -29,24 +29,33 @@ class AppStateReactor: NSObject {
     }
     
     func initialize() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillResignActive), name: UIApplicationWillResignActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillTerminate), name: UIApplicationWillTerminateNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(applicationWillResignActive),
+                                                         name: UIApplicationWillResignActiveNotification,
+                                                         object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(applicationDidEnterBackground),
+                                                         name: UIApplicationDidEnterBackgroundNotification,
+                                                         object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(applicationWillTerminate),
+                                                         name: UIApplicationWillTerminateNotification,
+                                                         object: nil)
     }
     
-    func applicationWillResignActive() {
+    @objc func applicationWillResignActive(notification: NSNotification) {
         forwardStatusChange()
     }
     
-    func applicationDidEnterBackground() {
+    @objc func applicationDidEnterBackground(notification: NSNotification) {
         forwardStatusChange()
     }
     
-    func applicationWillTerminate() {
+    @objc func applicationWillTerminate(notification: NSNotification) {
         forwardStatusChange()
     }
     
-    func forwardStatusChange() {
+    private func forwardStatusChange() {
         if let delegate = delegate {
             delegate.didReceiveStateChange(self)
         }
