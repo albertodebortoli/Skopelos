@@ -196,9 +196,9 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
     }
     
     private static func sortDescriptors(sortTerms: String, ascending:Bool) -> [NSSortDescriptor] {
-        var sortDescriptors = [NSSortDescriptor]()
-        for (_, value) in sortTerms.componentsSeparatedByString(",").enumerate() {
-            
+        
+        return sortTerms.componentsSeparatedByString(",").map { value in
+        
             var sortKey = value
             var customAscending = ascending
 

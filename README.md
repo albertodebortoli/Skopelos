@@ -1,4 +1,4 @@
-# Skopelos (Work in progress)
+# Skopelos
 
 A minimalistic, thread safe, non-boilerplate and super easy to use version of Active Record on Core Data.
 Simply all you need for doing Core Data. Swift flavour.
@@ -184,13 +184,13 @@ SkopelosClient.sharedInstance.write({ (context: NSManagedObjectContext) in
 The `NSManagedObject` category provides CRUD methods always explicit on the context. The context passed as parameter should be the one received in the read or write block. You should always use these methods from within read/write blocks. Main methods are:
 
 ```swift
-class func SK_create(context: NSManagedObjectContext) -> NSManagedObject
-class func SK_numberOfEntities(context: NSManagedObjectContext) -> Int
+static func SK_create(context: NSManagedObjectContext) -> Self
+static func SK_numberOfEntities(context: NSManagedObjectContext) -> Int
 func SK_remove(context: NSManagedObjectContext) -> Void
-class func SK_removeAll(context: NSManagedObjectContext) -> Void
-class func SK_all(context: NSManagedObjectContext) -> [NSManagedObject]
-class func SK_all(predicate: NSPredicate, context:NSManagedObjectContext) -> [NSManagedObject]
-class func SK_first(context: NSManagedObjectContext) -> NSManagedObject?
+static func SK_removeAll(context: NSManagedObjectContext) -> Void
+static func SK_all(context: NSManagedObjectContext) -> [Self]
+static func SK_all(predicate: NSPredicate, context:NSManagedObjectContext) -> [Self]
+static func SK_first(context: NSManagedObjectContext) -> Self?
 ```
 
 Mind the usage of `SK_inContext:` to retrieve an object in different read/write blocks (same read blocks are safe).
