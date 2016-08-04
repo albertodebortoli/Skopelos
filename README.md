@@ -58,14 +58,16 @@ Data are always available in the main managed object context.
 
 ## How to use
 
+Import `Skopelos`.
+
 To use this component, you could create a property of type `Skopelos` and instantiate it like so:
 
 ```swift
-self.skopelos = SkopelosClient.inMemoryStack("<#DataModelFileName>")
+self.skopelos = SkopelosClient(inMemoryStack: "<#DataModelFileName>")
 ```
 or
 ```swift
-self.skopelos = SkopelosClient.sqliteStack("<#DataModelFileName>")
+self.skopelos = SkopelosClient(sqliteStack: "<#DataModelFileName>")
 ```
 
 You could then pass around the skopelos in other parts of the app via dependency injection.
@@ -83,8 +85,8 @@ To create a singleton, you should inherit from Skopelos like so:
 ```swift
 class SkopelosClient: Skopelos {
 
-    static let sharedInstance = SkopelosClient.sqliteStack("DataModel")
-
+    static let sharedInstance = Skopelos(sqliteStack: "DataModel")
+    
     override func handleError(error: NSError) {
         // clients should do the right thing here
         print(error.description)
