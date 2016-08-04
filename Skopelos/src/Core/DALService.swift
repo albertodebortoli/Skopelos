@@ -35,11 +35,11 @@ public class DALService: NSObject, DALProtocol {
         handleError(error as! NSError)
     }
     
-    func handleError(error: NSError) {
+    public func handleError(error: NSError) {
         // override in subclasses
     }
     
-    func read(statements: NSManagedObjectContext -> Void) -> Self {
+    public func read(statements: NSManagedObjectContext -> Void) -> Self {
         let context = coreDataStack.mainContext
         context.performBlockAndWait {
             statements(context)
@@ -56,11 +56,11 @@ public class DALService: NSObject, DALProtocol {
     }
     
     
-    func write(changes: NSManagedObjectContext -> Void) -> Self {
+    public func write(changes: NSManagedObjectContext -> Void) -> Self {
         return write(changes, completion:nil)
     }
     
-    func write(changes: NSManagedObjectContext -> Void, completion: (NSError? -> Void)?) -> Self {
+    public func write(changes: NSManagedObjectContext -> Void, completion: (NSError? -> Void)?) -> Self {
         let context = slaveContext()
         context.performBlockAndWait {
             changes(context)
