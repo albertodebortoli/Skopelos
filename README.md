@@ -71,7 +71,7 @@ self.skopelos = SkopelosClient(sqliteStack: "<#DataModelFileName>")
 ```
 
 You could then pass around the skopelos in other parts of the app via dependency injection.
-It has to be said that it's perfectly acceptable to use a singleton for the Core Data stack. Also, allocating instances over and over of `Skopelos`is expensive. Genrally speaking, we don't like singletons. They are not testable by nature, clients don't have control over the lifecycle of the object and they break some principles. For these reasons, the library comes free of singletons.
+It has to be said that it's perfectly acceptable to use a singleton for the Core Data stack. Also, allocating instances over and over is expensive. Genrally speaking, we don't like singletons. They are not testable by nature, clients don't have control over the lifecycle of the object and they break some principles. For these reasons, the library comes free of singletons.
 
 There are 2 reasons why you should inherit from `Skopelos`:
 
@@ -166,7 +166,7 @@ SkopelosClient.sharedInstance.write({ (context: NSManagedObjectContext) in
 })
 ```
 
-Skopelos also supports dot notation and chaining:
+Skopelos also supports chaining:
 
 ```swift
 SkopelosClient.sharedInstance.write({ (context: NSManagedObjectContext) in
@@ -200,7 +200,7 @@ Mind the usage of `SK_inContext:` to retrieve an object in different read/write 
 
 ## Thread-safery notes
 
-All the accesses to the persistence layer done via a `Skopelos` instance are guaranteed to be thread-safe.
+All the accesses to the persistence layer done via a `DALService` instance are guaranteed to be thread-safe.
 
 It is highly suggested to enable the flag `-com.apple.CoreData.ConcurrencyDebug 1` in your project to make sure that the you don't misuse Core Data in terms of threading and concurrency (by accessing managed objects from different threads and similar errors).
 
