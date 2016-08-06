@@ -122,4 +122,68 @@ class SkopelosTests: XCTestCase {
             }
         }
     }
+    
+    func test_CorrectOrderOfOperationsMainQueue() {
+        
+        let expectation = expectationWithDescription("\(#function)")
+        var counter = 0
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            XCTAssertEqual(counter, 0)
+            counter+=1
+            
+            self.skopelos.write({ (context: NSManagedObjectContext) in
+                XCTAssertEqual(counter, 1)
+                counter+=1
+            }).read({ (context: NSManagedObjectContext) in
+                XCTAssertEqual(counter, 2)
+                counter+=1
+            }).write({ (context: NSManagedObjectContext) in
+                XCTAssertEqual(counter, 3)
+                counter+=1
+            }).read({ (context: NSManagedObjectContext) in
+                XCTAssertEqual(counter, 4)
+                counter+=1
+                expectation.fulfill()
+            })
+            XCTAssertEqual(counter, 5)
+        })
+        
+        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
+        
+    }
+    
+    func test_CorrectOrderOfOperationsBkgQueue() {
+        
+        let expectation = expectationWithDescription("\(#function)")
+        var counter = 0
+        
+        let q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+        dispatch_async(q, {
+            
+            XCTAssertEqual(counter, 0)
+            counter+=1
+            
+            self.skopelos.write({ (context: NSManagedObjectContext) in
+                XCTAssertEqual(counter, 1)
+                counter+=1
+            }).read({ (context: NSManagedObjectContext) in
+                XCTAssertEqual(counter, 2)
+                counter+=1
+            }).write({ (context: NSManagedObjectContext) in
+                XCTAssertEqual(counter, 3)
+                counter+=1
+            }).read({ (context: NSManagedObjectContext) in
+                XCTAssertEqual(counter, 4)
+                counter+=1
+                expectation.fulfill()
+            })
+            XCTAssertEqual(counter, 5)
+            
+        })
+        
+        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
+        
+    }
 }
