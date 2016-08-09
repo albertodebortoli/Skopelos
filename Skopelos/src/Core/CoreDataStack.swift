@@ -51,19 +51,19 @@ public final class CoreDataStack: NSObject {
                 CoreDataStack.addInMemoryStore(psc)
             }
             
-            dispatch_async(dispatch_get_main_queue(), {
+            dispatch_async(dispatch_get_main_queue()) {
                 if let callback = callback {
                     callback()
                 }
-            })
+            }
         }
         
         if callback != nil {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
                 privateContextSetupBlock()
-            })
+            }
         } else {
-            privateContextSetupBlock();
+            privateContextSetupBlock()
         }
     }
 
@@ -135,9 +135,9 @@ extension CoreDataStack: CoreDataStackProtocol {
         }
 
         guard mainHasChanges || privateHasChanges else {
-            dispatch_async(dispatch_get_main_queue(), {
+            dispatch_async(dispatch_get_main_queue()) {
                 handler?(nil)
-            })
+            }
             return
         }
         
@@ -146,11 +146,11 @@ extension CoreDataStack: CoreDataStackProtocol {
                 try self.mainContext.save()
             } catch let error as NSError {
                 // fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
-                dispatch_async(dispatch_get_main_queue(), {
+                dispatch_async(dispatch_get_main_queue()) {
                     if let handler = handler {
-                        handler(error);
+                        handler(error)
                     }
-                });
+                }
             }
             
             self.rootContext.performBlock {
@@ -159,18 +159,18 @@ extension CoreDataStack: CoreDataStackProtocol {
                     try self.rootContext.save()
                 } catch let error as NSError {
                     // fatalError("Error saving private context: \(error.localizedDescription), \(error.userInfo)")
-                    dispatch_async(dispatch_get_main_queue(), {
+                    dispatch_async(dispatch_get_main_queue()) {
                         if let handler = handler {
                             handler(error)
                         }
-                    })
+                    }
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                dispatch_async(dispatch_get_main_queue()) {
                     if let handler = handler {
                         handler(nil)
                     }
-                })
+                }
             }
         }
     }

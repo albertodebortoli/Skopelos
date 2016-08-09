@@ -142,21 +142,21 @@ NSManagedObjectContext *context = ...;
 Skopelos reading: 
 
 ```swift
-SkopelosClient.sharedInstance.read({ (context: NSManagedObjectContext) in
+SkopelosClient.sharedInstance.read { (context: NSManagedObjectContext) in
     let users = User.SK_all(context)
     print(users)
-})
+}
 ```
 
 Skopelos writing:
 
 ```swift
 // Sync
-SkopelosClient.sharedInstance.writeSync({ (context: NSManagedObjectContext) in
+SkopelosClient.sharedInstance.writeSync { (context: NSManagedObjectContext) in
     let user = User.SK_create(context) as! User
     user.firstname = "John"
     user.lastname = "Doe"
-})
+}
 
 SkopelosClient.sharedInstance.writeSync({ (context: NSManagedObjectContext) in
     let user = User.SK_create(context) as! User
@@ -167,11 +167,11 @@ SkopelosClient.sharedInstance.writeSync({ (context: NSManagedObjectContext) in
 })
 
 // Async
-SkopelosClient.sharedInstance.writeAsync({ (context: NSManagedObjectContext) in
+SkopelosClient.sharedInstance.writeAsync { (context: NSManagedObjectContext) in
     let user = User.SK_create(context) as! User
     user.firstname = "John"
     user.lastname = "Doe"
-})
+}
 
 SkopelosClient.sharedInstance.writeAsync({ (context: NSManagedObjectContext) in
     let user = User.SK_create(context) as! User
@@ -185,18 +185,18 @@ SkopelosClient.sharedInstance.writeAsync({ (context: NSManagedObjectContext) in
 Skopelos also supports chaining:
 
 ```swift
-SkopelosClient.sharedInstance.writeSync({ (context: NSManagedObjectContext) in
+SkopelosClient.sharedInstance.writeSync { (context: NSManagedObjectContext) in
     user = User.SK_create(context) as! User
     user.firstname = "John"
     user.lastname = "Doe"
-}).writeSync({ (context: NSManagedObjectContext) in
+}.writeSync { (context: NSManagedObjectContext) in
     if let userInContext = user.SK_inContext(context) {
         userInContext.SK_remove(context)
     }
-}).read({ (context: NSManagedObjectContext) in
+}.read { (context: NSManagedObjectContext) in
     let users = User.SK_all(context)
     print(users)
-})
+}
 ```
 
 The `NSManagedObject` category provides CRUD methods always explicit on the context. The context passed as parameter should be the one received in the read or write block. You should always use these methods from within read/write blocks. Main methods are:
