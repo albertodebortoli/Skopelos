@@ -8,7 +8,7 @@
 
 public class Skopelos: DALService {
     
-   public convenience init(sqliteStack dataModelFileName: String) {
+    public convenience init(sqliteStack dataModelFileName: String) {
         let cds = CoreDataStack(storeType: .SQLite, dataModelFileName:dataModelFileName)
         self.init(coreDataStack: cds)
     }
