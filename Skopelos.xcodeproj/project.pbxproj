@@ -44,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F116E1B1D5A7C450028FA94 /* Skopelos.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Skopelos.podspec; sourceTree = "<group>"; };
 		4F25DF601D4A7C8B00E5446E /* Skopelos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skopelos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F25DF631D4A7C8B00E5446E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F25DF651D4A7C8B00E5446E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +97,7 @@
 		4F25DF571D4A7C8B00E5446E = {
 			isa = PBXGroup;
 			children = (
+				4F116E1B1D5A7C450028FA94 /* Skopelos.podspec */,
 				4F401D3C1D4E811000635945 /* README.md */,
 				4F25DF621D4A7C8B00E5446E /* Skopelos */,
 				4F25DF771D4A7C8B00E5446E /* SkopelosTests */,
