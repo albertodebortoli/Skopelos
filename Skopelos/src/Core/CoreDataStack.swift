@@ -21,7 +21,7 @@ public final class CoreDataStack: NSObject {
     private let appStateReactor: AppStateReactor
     var backgroundTask: UIBackgroundTaskIdentifier?
     
-    convenience init(storeType: StoreType, dataModelFileName: String) {
+    public convenience init(storeType: StoreType, dataModelFileName: String) {
         self.init(storeType: storeType, dataModelFileName: dataModelFileName, handler: nil)
     }
     
