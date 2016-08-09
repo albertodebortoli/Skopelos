@@ -34,13 +34,13 @@ This component is responsible for the creation of the stack (in terms of chain o
 (NSPrivateQueueConcurrencyType)   (NSPrivateQueueConcurrencyType)    (NSPrivateQueueConcurrencyType)
 ```
 
-An important difference from Magical Record, or other third-party libraries, is that the saves always go in one direction, from slaves down (or up?) to the persistent store.
-Other components allows you to create slaves that have the private context as parent and this causes the main context not to be updated or to be updated via notifications to merge the context.
+An important difference from Magical Record, or other third-party libraries, is that the savings always go in one direction, from slaves down (or up?) to the persistent store.
+Other components allow you to create slaves that have the private context as parent and this causes the main context not to be updated or to be updated via notifications to merge the context.
 The main context should be the source of truth and it is tied the UI: having a much simpler approach helps to create a system easier to reason about.
 
 ### AppStateReactor
 
-You should ignore this one. It sits in the CoreDataStack and takes care of saving the inflight changes back to disk if the app goes to background, loses focus or is about to be terminated. It's a silent friend who takes care of us.
+You should ignore this one. It sits in the CoreDataStack and takes care of saving the in-flight changes back to disk if the app goes to background, loses focus or is about to be terminated. It's a silent friend who takes care of us.
 
 
 ### DALService (Data Access Layer) / Skopelos
@@ -71,7 +71,7 @@ self.skopelos = SkopelosClient(sqliteStack: "<#DataModelFileName>")
 ```
 
 You could then pass around the skopelos in other parts of the app via dependency injection.
-It has to be said that it's perfectly acceptable to use a singleton for the Core Data stack. Also, allocating instances over and over is expensive. Genrally speaking, we don't like singletons. They are not testable by nature, clients don't have control over the lifecycle of the object and they break some principles. For these reasons, the library comes free of singletons.
+It has to be said that it's perfectly acceptable to use a singleton for the Core Data stack. Also, allocating instances over and over is expensive. Generally speaking, we don't like singletons. They are not testable by nature, clients don't have control over the lifecycle of the object and they break some principles. For these reasons, the library comes free of singletons.
 
 There are 2 reasons why you should inherit from `Skopelos`:
 
@@ -214,7 +214,7 @@ static func SK_first(context: NSManagedObjectContext) -> Self?
 Mind the usage of `SK_inContext:` to retrieve an object in different read/write blocks (same read blocks are safe).
 
 
-## Thread-safery notes
+## Thread-safety notes
 
 All the accesses to the persistence layer done via a `DALService` instance are guaranteed to be thread-safe.
 
