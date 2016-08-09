@@ -134,7 +134,7 @@ extension CoreDataStack: CoreDataStackProtocol {
             privateHasChanges = self.rootContext.hasChanges
         }
 
-        guard mainHasChanges && privateHasChanges else {
+        guard mainHasChanges || privateHasChanges else {
             dispatch_async(dispatch_get_main_queue(), {
                 handler?(nil)
             })
