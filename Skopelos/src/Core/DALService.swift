@@ -13,7 +13,7 @@ public struct DALServiceConstants {
     static let handleDALServiceErrorNotification = "handleDALServiceErrorNotification"
 }
 
-public class DALService: NSObject, DALProtocol {
+public class DALService: NSObject {
     
     let coreDataStack: CoreDataStackProtocol
     
@@ -39,6 +39,16 @@ public class DALService: NSObject, DALProtocol {
         // override in subclasses
     }
     
+    private func slaveContext() -> NSManagedObjectContext {
+        let slaveContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        slaveContext.parentContext = coreDataStack.mainContext
+        
+        return slaveContext
+    }
+}
+
+extension DALService: DALProtocol {
+
     public func read(statements: NSManagedObjectContext -> Void) -> Self {
         let context = coreDataStack.mainContext
         context.performBlockAndWait {
@@ -48,19 +58,11 @@ public class DALService: NSObject, DALProtocol {
         return self
     }
     
-    private func slaveContext() -> NSManagedObjectContext {
-        let slaveContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        slaveContext.parentContext = coreDataStack.mainContext
-
-        return slaveContext
+    public func writeSync(changes: NSManagedObjectContext -> Void) -> Self {
+        return writeSync(changes, completion:nil)
     }
     
-    
-    public func write(changes: NSManagedObjectContext -> Void) -> Self {
-        return write(changes, completion:nil)
-    }
-    
-    public func write(changes: NSManagedObjectContext -> Void, completion: (NSError? -> Void)?) -> Self {
+    public func writeSync(changes: NSManagedObjectContext -> Void, completion: (NSError? -> Void)?) -> Self {
         let context = slaveContext()
         context.performBlockAndWait {
             changes(context)
@@ -73,5 +75,22 @@ public class DALService: NSObject, DALProtocol {
         }
         
         return self
+    }
+    
+    public func writeAsync(changes: NSManagedObjectContext -> Void) -> Void {
+        return writeAsync(changes, completion:nil)
+    }
+    
+    public func writeAsync(changes: NSManagedObjectContext -> Void, completion: (NSError? -> Void)?) -> Void {
+        let context = slaveContext()
+        context.performBlock {
+            changes(context)
+            do {
+                try context.save()
+                self.coreDataStack.save(completion)
+            } catch let error as NSError {
+                fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
+            }
+        }
     }
 }

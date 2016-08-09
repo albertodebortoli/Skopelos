@@ -46,9 +46,9 @@ You should ignore this one. It sits in the CoreDataStack and takes care of savin
 ### DALService (Data Access Layer) / Skopelos
 
 If you have experience with Core Data, you might also know that most of the operations are repetitive and that we usually call `performBlock`/`performBlockAndWait` on a context providing a block that eventually will call `save:` on that context as last statement.
-Databases are all about readings and writings and for this reason our APIs are in the form of `read(statements: NSManagedObjectContext -> Void)` and `write(changes: NSManagedObjectContext -> Void)`: 2 protocols providing a CQRS (Command and Query Responsibility Segregation) approach.
-Read blocks will be executed on the main context (as it's considered to be the single source of truth). Write blocks are executed on a slave context which is saved synchronously at the end; changes are eventually saved asynchronously back to the persistent store without blocking the main thread. 
-The method `write(changes: NSManagedObjectContext -> Void, completion: (NSError? -> Void)?) -> Self` calls the completion handler when the changes are saved back to the persistent store.  
+Databases are all about readings and writings and for this reason our APIs are in the form of `read(statements: NSManagedObjectContext -> Void)` and `writeSync(changes: NSManagedObjectContext -> Void)`/`writeAsync(changes: NSManagedObjectContext -> Void)`: 2 protocols providing a CQRS (Command and Query Responsibility Segregation) approach.
+Read blocks will be executed on the main context (as it's considered to be the single source of truth). Write blocks are executed on a slave context which is saved at the end; changes are eventually saved asynchronously back to the persistent store without blocking the main thread. 
+The completion handler of the write methods calls the completion handler when the changes are saved back to the persistent store.
 
 In other words, writings are always consistent in the main managed object context and eventual consistent in the persistent store.
 Data are always available in the main managed object context.
@@ -151,29 +151,45 @@ SkopelosClient.sharedInstance.read({ (context: NSManagedObjectContext) in
 Skopelos writing:
 
 ```swift
-SkopelosClient.sharedInstance.write({ (context: NSManagedObjectContext) in
+// Sync
+SkopelosClient.sharedInstance.writeSync({ (context: NSManagedObjectContext) in
     let user = User.SK_create(context) as! User
     user.firstname = "John"
     user.lastname = "Doe"
 })
 
-SkopelosClient.sharedInstance.write({ (context: NSManagedObjectContext) in
+SkopelosClient.sharedInstance.writeSync({ (context: NSManagedObjectContext) in
     let user = User.SK_create(context) as! User
     user.firstname = "John"
     user.lastname = "Doe"
     }, completion: { (error: NSError?) in
         // changes are saved to the persistent store
 })
+
+// Async
+SkopelosClient.sharedInstance.writeAsync({ (context: NSManagedObjectContext) in
+    let user = User.SK_create(context) as! User
+    user.firstname = "John"
+    user.lastname = "Doe"
+})
+
+SkopelosClient.sharedInstance.writeAsync({ (context: NSManagedObjectContext) in
+    let user = User.SK_create(context) as! User
+    user.firstname = "John"
+    user.lastname = "Doe"
+}, completion: { (error: NSError?) in
+    // changes are saved to the persistent store
+})
 ```
 
 Skopelos also supports chaining:
 
 ```swift
-SkopelosClient.sharedInstance.write({ (context: NSManagedObjectContext) in
+SkopelosClient.sharedInstance.writeSync({ (context: NSManagedObjectContext) in
     user = User.SK_create(context) as! User
     user.firstname = "John"
     user.lastname = "Doe"
-}).write({ (context: NSManagedObjectContext) in
+}).writeSync({ (context: NSManagedObjectContext) in
     if let userInContext = user.SK_inContext(context) {
         userInContext.SK_remove(context)
     }
