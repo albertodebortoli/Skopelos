@@ -21,7 +21,7 @@ public final class CoreDataStack: NSObject {
     private let appStateReactor: AppStateReactor
     var backgroundTask: UIBackgroundTaskIdentifier?
     
-    convenience init(storeType: StoreType, dataModelFileName: String) {
+    public convenience init(storeType: StoreType, dataModelFileName: String) {
         self.init(storeType: storeType, dataModelFileName: dataModelFileName, handler: nil)
     }
     
@@ -134,7 +134,7 @@ extension CoreDataStack: CoreDataStackProtocol {
             privateHasChanges = self.rootContext.hasChanges
         }
 
-        guard mainHasChanges && privateHasChanges else {
+        guard mainHasChanges || privateHasChanges else {
             dispatch_async(dispatch_get_main_queue(), {
                 handler?(nil)
             })
