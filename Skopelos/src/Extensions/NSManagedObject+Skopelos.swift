@@ -38,10 +38,13 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         
         let request = basicFetchRequestInContext(context)
         
-        var error: NSError?
-        let result = context.countForFetchRequest(request, error: &error)
-        if error != nil {
-            handleDALServiceError(error!)
+        let result: Int
+        
+        do {
+            result = try context.countForFetchRequest(request)
+        } catch let error as NSError {
+            handleDALServiceError(error)
+            result = 0
         }
 
         return result
@@ -52,10 +55,13 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         let request = basicFetchRequestInContext(context)
         request.predicate = predicate
         
-        var error: NSError?
-        let result = context.countForFetchRequest(request, error: &error)
-        if error != nil {
-            handleDALServiceError(error!)
+        let result: Int
+        
+        do {
+            result = try context.countForFetchRequest(request)
+        } catch let error as NSError {
+            handleDALServiceError(error)
+            result = 0
         }
 
         return result
