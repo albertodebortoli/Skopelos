@@ -30,12 +30,12 @@ This component is responsible for the creation of the stack (in terms of chain o
               ------------> Main Context (NSMainQueueConcurrencyType) <-------------
               |                                 ^                                  |
               |                                 |                                  |
-        Slave Context                     Slave Context                      Slave Context
+        Child Context                     Child Context                      Child Context
 (NSPrivateQueueConcurrencyType)   (NSPrivateQueueConcurrencyType)    (NSPrivateQueueConcurrencyType)
 ```
 
-An important difference from Magical Record, or other third-party libraries, is that the savings always go in one direction, from slaves down (or up?) to the persistent store.
-Other components allow you to create slaves that have the private context as parent and this causes the main context not to be updated or to be updated via notifications to merge the context.
+An important difference from Magical Record, or other third-party libraries, is that the savings always go in one direction, from children down (or up?) to the persistent store.
+Other components allow you to create children that have the private context as parent and this causes the main context not to be updated or to be updated via notifications to merge the context.
 The main context should be the source of truth and it is tied the UI: having a much simpler approach helps to create a system easier to reason about.
 
 ### AppStateReactor
@@ -47,7 +47,7 @@ You should ignore this one. It sits in the CoreDataStack and takes care of savin
 
 If you have experience with Core Data, you might also know that most of the operations are repetitive and that we usually call `performBlock`/`performBlockAndWait` on a context providing a block that eventually will call `save:` on that context as last statement.
 Databases are all about readings and writings and for this reason our APIs are in the form of `read(statements: NSManagedObjectContext -> Void)` and `writeSync(changes: NSManagedObjectContext -> Void)`/`writeAsync(changes: NSManagedObjectContext -> Void)`: 2 protocols providing a CQRS (Command and Query Responsibility Segregation) approach.
-Read blocks will be executed on the main context (as it's considered to be the single source of truth). Write blocks are executed on a slave context which is saved at the end; changes are eventually saved asynchronously back to the persistent store without blocking the main thread. 
+Read blocks will be executed on the main context (as it's considered to be the single source of truth). Write blocks are executed on a child context which is saved at the end; changes are eventually saved asynchronously back to the persistent store without blocking the main thread. 
 The completion handler of the write methods calls the completion handler when the changes are saved back to the persistent store.
 
 In other words, writings are always consistent in the main managed object context and eventual consistent in the persistent store.
