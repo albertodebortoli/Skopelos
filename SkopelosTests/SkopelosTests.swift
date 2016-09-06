@@ -22,10 +22,10 @@ class SkopelosTests: XCTestCase {
     
         let expectation = self.expectation(description: "\(#function)")
     
-        skopelos.writeSync({ (context: NSManagedObjectContext) in
+        let _ = skopelos.writeSync({ (context: NSManagedObjectContext) in
             var user = User.SK_create(context)
             user = user.SK_inContext(context)!
-            User.SK_create(context)
+            let _ = User.SK_create(context)
             let users = User.SK_all(context)
             XCTAssertEqual(users.count, 2)
         }).writeSync({ (context: NSManagedObjectContext) in
@@ -48,7 +48,7 @@ class SkopelosTests: XCTestCase {
         
         DispatchQueue.main.async(execute: {
             
-            self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+            let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
                 User.SK_removeAll(context)
             }).read({ (context: NSManagedObjectContext) in
                 let users = User.SK_all(context)
@@ -73,10 +73,10 @@ class SkopelosTests: XCTestCase {
         
         let expectation = self.expectation(description: "\(#function)")
         
-        let q = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background);
+        let q = DispatchQueue.global(qos: .background)
         q.async(execute: {
             
-            self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+            let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
                 User.SK_removeAll(context)
             }).read({ (context: NSManagedObjectContext) in
                 let users = User.SK_all(context)
@@ -104,17 +104,17 @@ class SkopelosTests: XCTestCase {
             
             while (count > 0)
             {
-                sem.wait(timeout: DispatchTime.now())
+                let _ = sem.wait(timeout: DispatchTime.now())
                 RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.2))
                 
-                self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+                let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
                     let user = User.SK_create(context)
                     user.firstname = "John"
                     user.lastname = "Doe"
                 }).writeSync({ (context: NSManagedObjectContext) in
                     User.SK_removeAll(context)
                 }).writeSync({ (context: NSManagedObjectContext) in
-                    User.SK_all(context)
+                    let _ = User.SK_all(context)
                     }, completion: { (error: NSError?) in
                     count-=1
                     sem.signal();
@@ -133,7 +133,7 @@ class SkopelosTests: XCTestCase {
             XCTAssertEqual(counter, 0)
             counter+=1
             
-            self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+            let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
                 XCTAssertEqual(counter, 1)
                 counter+=1
             }).read({ (context: NSManagedObjectContext) in
@@ -159,13 +159,13 @@ class SkopelosTests: XCTestCase {
         let expectation = self.expectation(description: "\(#function)")
         var counter = 0
         
-        let q = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background);
+        let q = DispatchQueue.global(qos: .background);
         q.async(execute: {
             
             XCTAssertEqual(counter, 0)
             counter+=1
             
-            self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+            let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
                 XCTAssertEqual(counter, 1)
                 counter+=1
             }).read({ (context: NSManagedObjectContext) in
@@ -193,7 +193,7 @@ class SkopelosTests: XCTestCase {
         
         DispatchQueue.main.async(execute: {
             
-            self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+            let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
                 XCTAssertTrue(Thread.isMainThread)
             }).read({ (context: NSManagedObjectContext) in
                 XCTAssertTrue(Thread.isMainThread)
@@ -210,10 +210,10 @@ class SkopelosTests: XCTestCase {
         
         let expectation = self.expectation(description: "\(#function)")
         
-        let q = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background);
+        let q = DispatchQueue.global(qos: .background);
         q.async(execute: {
             
-            self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+            let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
                 XCTAssertFalse(Thread.isMainThread)
             }).read({ (context: NSManagedObjectContext) in
                 XCTAssertTrue(Thread.isMainThread)
@@ -249,7 +249,7 @@ class SkopelosTests: XCTestCase {
         
         let expectation = self.expectation(description: "\(#function)")
         
-        let q = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background);
+        let q = DispatchQueue.global(qos: .background);
         q.async(execute: {
             
             self.skopelos.writeAsync({ (context: NSManagedObjectContext) in
