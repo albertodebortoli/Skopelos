@@ -19,7 +19,7 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     var skopelos: Skopelos = Skopelos(inMemoryStack: "DataModel")
     
     func test_create() {
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         skopelos.read({ (context: NSManagedObjectContext) in
             XCTAssertEqual(User.SK_numberOfEntities(context), 0)
         }).writeSync({ (context: NSManagedObjectContext) in
@@ -28,11 +28,11 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             XCTAssertEqual(User.SK_numberOfEntities(context), 1)
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
+        waitForExpectations(timeout: NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
     }
     
     func test_remove() {
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         skopelos.writeSync( { (context: NSManagedObjectContext) in
             User.SK_create(context)
             User.SK_create(context)
@@ -46,11 +46,11 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             XCTAssertEqual(User.SK_numberOfEntities(context), 1)
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
+        waitForExpectations(timeout: NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
     }
     
     func test_removeInSameTransactionalBlock() {
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         skopelos.writeSync( { (context: NSManagedObjectContext) in
             let user = User.SK_create(context)
             User.SK_create(context)
@@ -61,11 +61,11 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             XCTAssertEqual(User.SK_numberOfEntities(context), 1)
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
+        waitForExpectations(timeout: NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
     }
     
     func test_removeAll() {
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         skopelos.writeSync( { (context: NSManagedObjectContext) in
             User.SK_create(context)
             User.SK_create(context)
@@ -77,11 +77,11 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             XCTAssertEqual(count, 0)
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
+        waitForExpectations(timeout: NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
     }
     
     func test_numberOfEntities() {
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         skopelos.writeSync( { (context: NSManagedObjectContext) in
             User.SK_create(context)
             User.SK_create(context)
@@ -89,11 +89,11 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             XCTAssertEqual(User.SK_numberOfEntities(context), 2)
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
+        waitForExpectations(timeout: NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
     }
     
     func test_numberOfEntitiesWithPredicate() {
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         skopelos.writeSync( { (context: NSManagedObjectContext) in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
@@ -105,11 +105,11 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             XCTAssertEqual(numberOfEntitities, 1)
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
+        waitForExpectations(timeout: NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
     }
     
     func test_all() {
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         skopelos.writeSync( { (context: NSManagedObjectContext) in
             User.SK_create(context)
             User.SK_create(context)
@@ -117,11 +117,11 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             XCTAssertEqual(User.SK_numberOfEntities(context), 2)
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
+        waitForExpectations(timeout: NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
     }
     
     func test_allWithPredicate() {
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         skopelos.writeSync( { (context: NSManagedObjectContext) in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
@@ -135,11 +135,11 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             XCTAssertEqual(user?.firstname ?? "", "John")
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
+        waitForExpectations(timeout: NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
     }
     
     func test_allWithPredicateSortedBy() {
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         skopelos.writeSync( { (context: NSManagedObjectContext) in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
@@ -158,11 +158,11 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             XCTAssertEqual(user?.firstname ?? "", "Jane")
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
+        waitForExpectations(timeout: NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
     }
     
     func test_allWhereAttributeIsEqualToSortedBy() {
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         skopelos.writeSync( { (context: NSManagedObjectContext) in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
@@ -181,11 +181,11 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             XCTAssertEqual(u2!.firstname, "Jane");
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
+        waitForExpectations(timeout: NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
     }
     
     func test_first() {
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         skopelos.writeSync( { (context: NSManagedObjectContext) in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
@@ -196,11 +196,11 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             XCTAssertNotNil(user);
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
+        waitForExpectations(timeout: NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
     }
     
     func test_firstWithPredicate() {
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         skopelos.writeSync( { (context: NSManagedObjectContext) in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
@@ -214,11 +214,11 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             XCTAssertEqual(user?.firstname ?? "", "Jane")
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
+        waitForExpectations(timeout: NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
     }
     
     func test_firstWhereAttribute() {
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         skopelos.writeSync( { (context: NSManagedObjectContext) in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
@@ -233,7 +233,7 @@ class NSManagedObject_SkopelosTests: XCTestCase {
             XCTAssertNil(user2)
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
+        waitForExpectations(timeout: NSManagedObjectTestsConsts.UnitTestTimeout, handler:nil)
     }
     
 }
