@@ -10,10 +10,13 @@ import CoreData
 
 protocol CommandModelProtocol {
     
-    func writeSync(changes: NSManagedObjectContext -> Void) -> Self
-    func writeSync(changes: NSManagedObjectContext -> Void, completion: (NSError? -> Void)?) -> Self
-
+    typealias ChangesBlock = (NSManagedObjectContext) -> Void
+    typealias CompletionBlock = (NSError?) -> Void
+    
+    func writeSync(_ changes: @escaping ChangesBlock) -> Self
+    func writeSync(_ changes: @escaping ChangesBlock, completion: CompletionBlock?) -> Self
+    
     // async writings are not chainable, return value is void
-    func writeAsync(changes: NSManagedObjectContext -> Void) -> Void
-    func writeAsync(changes: NSManagedObjectContext -> Void, completion: (NSError? -> Void)?) -> Void
+    func writeAsync(_ changes: @escaping ChangesBlock) -> Void
+    func writeAsync(_ changes: @escaping ChangesBlock, completion: CompletionBlock?) -> Void
 }
