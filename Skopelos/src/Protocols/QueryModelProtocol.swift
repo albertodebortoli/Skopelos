@@ -10,5 +10,7 @@ import CoreData
 
 protocol QueryModelProtocol {
     
-    func read(statements: NSManagedObjectContext -> Void) -> Self
+    typealias StatementBlock = (NSManagedObjectContext) -> Void
+    
+    func read(_ statements: @escaping (NSManagedObjectContext) -> Void) -> Self
 }

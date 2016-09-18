@@ -6,4 +6,4 @@
 //  Copyright © 2016 Alberto De Bortoli. All rights reserved.
 //
 
-typealias DALProtocol = protocol<QueryModelProtocol, CommandModelProtocol>
+typealias DALProtocol = QueryModelProtocol & CommandModelProtocol

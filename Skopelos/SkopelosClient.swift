@@ -12,7 +12,7 @@ final class SkopelosClient: Skopelos {
     
     static let sharedInstance = Skopelos(sqliteStack: "DataModel")
     
-    override func handleError(error: NSError) {
+    override func handleError(_ error: NSError) {
         // clients should do the right thing here
         print(error.description)
     }

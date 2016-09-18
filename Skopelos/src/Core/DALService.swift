@@ -13,35 +13,35 @@ public struct DALServiceConstants {
     static let handleDALServiceErrorNotification = "handleDALServiceErrorNotification"
 }
 
-public class DALService: NSObject {
+open class DALService: NSObject {
     
     let coreDataStack: CoreDataStackProtocol
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: DALServiceConstants.handleDALServiceErrorNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: DALServiceConstants.handleDALServiceErrorNotification), object: nil)
     }
     
     public init(coreDataStack cds: CoreDataStackProtocol) {
         coreDataStack = cds
         super.init()
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(receiveErrorNotification),
-                                                         name: DALServiceConstants.handleDALServiceErrorNotification,
+                                                         name: NSNotification.Name(rawValue: DALServiceConstants.handleDALServiceErrorNotification),
                                                          object: nil)
     }
     
-    @objc func receiveErrorNotification(notification: NSNotification) {
-        guard let userInfo = notification.userInfo, error = userInfo["error"]  else { return }
+    @objc func receiveErrorNotification(_ notification: Notification) {
+        guard let userInfo = (notification as NSNotification).userInfo, let error = userInfo["error"]  else { return }
         handleError(error as! NSError)
     }
     
-    public func handleError(error: NSError) {
+    open func handleError(_ error: NSError) {
         // override in subclasses
     }
     
-    private func slaveContext() -> NSManagedObjectContext {
-        let slaveContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        slaveContext.parentContext = coreDataStack.mainContext
+    fileprivate func slaveContext() -> NSManagedObjectContext {
+        let slaveContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        slaveContext.parent = coreDataStack.mainContext
         
         return slaveContext
     }
@@ -49,22 +49,22 @@ public class DALService: NSObject {
 
 extension DALService: DALProtocol {
 
-    public func read(statements: NSManagedObjectContext -> Void) -> Self {
+    public func read(_ statements: @escaping (NSManagedObjectContext) -> Void) -> Self {
         let context = coreDataStack.mainContext
-        context.performBlockAndWait {
+        context.performAndWait {
             statements(context)
         }
 
         return self
     }
     
-    public func writeSync(changes: NSManagedObjectContext -> Void) -> Self {
+    public func writeSync(_ changes: @escaping (NSManagedObjectContext) -> Void) -> Self {
         return writeSync(changes, completion:nil)
     }
     
-    public func writeSync(changes: NSManagedObjectContext -> Void, completion: (NSError? -> Void)?) -> Self {
+    public func writeSync(_ changes: @escaping (NSManagedObjectContext) -> Void, completion: ((NSError?) -> Void)?) -> Self {
         let context = slaveContext()
-        context.performBlockAndWait {
+        context.performAndWait {
             changes(context)
             do {
                 try context.save()
@@ -77,13 +77,13 @@ extension DALService: DALProtocol {
         return self
     }
     
-    public func writeAsync(changes: NSManagedObjectContext -> Void) -> Void {
+    public func writeAsync(_ changes: @escaping (NSManagedObjectContext) -> Void) -> Void {
         return writeAsync(changes, completion:nil)
     }
     
-    public func writeAsync(changes: NSManagedObjectContext -> Void, completion: (NSError? -> Void)?) -> Void {
+    public func writeAsync(_ changes: @escaping (NSManagedObjectContext) -> Void, completion: ((NSError?) -> Void)?) -> Void {
         let context = slaveContext()
-        context.performBlock {
+        context.perform {
             changes(context)
             do {
                 try context.save()
