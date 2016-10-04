@@ -10,5 +10,5 @@ import CoreData
 
 protocol QueryModelProtocol {
     
-    func read(statements: NSManagedObjectContext -> Void) -> Self
+    func read(_ statements: @escaping (NSManagedObjectContext) -> Void) -> Self
 }

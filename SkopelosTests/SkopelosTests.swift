@@ -20,12 +20,12 @@ class SkopelosTests: XCTestCase {
     
     func test_Chaining() {
     
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
     
-        skopelos.writeSync({ (context: NSManagedObjectContext) in
+        let _ = skopelos.writeSync({ (context: NSManagedObjectContext) in
             var user = User.SK_create(context)
             user = user.SK_inContext(context)!
-            User.SK_create(context)
+            let _ = User.SK_create(context)
             let users = User.SK_all(context)
             XCTAssertEqual(users.count, 2)
         }).writeSync({ (context: NSManagedObjectContext) in
@@ -39,16 +39,16 @@ class SkopelosTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
+        waitForExpectations(timeout: SkopelosTestsConsts.UnitTestTimeout, handler: nil)
     }
     
     func test_DispatchAyncOnMainQueue() {
         
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             
-            self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+            let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
                 User.SK_removeAll(context)
             }).read({ (context: NSManagedObjectContext) in
                 let users = User.SK_all(context)
@@ -65,18 +65,18 @@ class SkopelosTests: XCTestCase {
             
         })
         
-        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
+        waitForExpectations(timeout: SkopelosTestsConsts.UnitTestTimeout, handler: nil)
         
     }
     
     func test_DispatchAyncOnBackgroundQueue() {
         
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         
-        let q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-        dispatch_async(q, {
+        let q = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background);
+        q.async(execute: {
             
-            self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+            let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
                 User.SK_removeAll(context)
             }).read({ (context: NSManagedObjectContext) in
                 let users = User.SK_all(context)
@@ -93,31 +93,31 @@ class SkopelosTests: XCTestCase {
             
         })
         
-        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
+        waitForExpectations(timeout: SkopelosTestsConsts.UnitTestTimeout, handler: nil)
         
     }
     
     func test_performance() {
-        measureBlock { 
-            let sem = dispatch_semaphore_create(0)
+        measure { 
+            let sem = DispatchSemaphore(value: 0)
             var count = 3
             
             while (count > 0)
             {
-                dispatch_semaphore_wait(sem, DISPATCH_TIME_NOW)
-                NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 0.2))
+                let _ = sem.wait(timeout: DispatchTime.now())
+                RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.2))
                 
-                self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+                let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
                     let user = User.SK_create(context)
                     user.firstname = "John"
                     user.lastname = "Doe"
                 }).writeSync({ (context: NSManagedObjectContext) in
                     User.SK_removeAll(context)
                 }).writeSync({ (context: NSManagedObjectContext) in
-                    User.SK_all(context)
+                    let _ = User.SK_all(context)
                     }, completion: { (error: NSError?) in
                     count-=1
-                    dispatch_semaphore_signal(sem);
+                    sem.signal();
                 })
             }
         }
@@ -125,15 +125,15 @@ class SkopelosTests: XCTestCase {
     
     func test_CorrectOrderOfOperationsMainQueue() {
         
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         var counter = 0
         
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             
             XCTAssertEqual(counter, 0)
             counter+=1
             
-            self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+            let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
                 XCTAssertEqual(counter, 1)
                 counter+=1
             }).read({ (context: NSManagedObjectContext) in
@@ -150,22 +150,22 @@ class SkopelosTests: XCTestCase {
             XCTAssertEqual(counter, 5)
         })
         
-        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
+        waitForExpectations(timeout: SkopelosTestsConsts.UnitTestTimeout, handler: nil)
         
     }
     
     func test_CorrectOrderOfOperationsBkgQueue() {
         
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         var counter = 0
         
-        let q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-        dispatch_async(q, {
+        let q = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background);
+        q.async(execute: {
             
             XCTAssertEqual(counter, 0)
             counter+=1
             
-            self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+            let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
                 XCTAssertEqual(counter, 1)
                 counter+=1
             }).read({ (context: NSManagedObjectContext) in
@@ -183,85 +183,85 @@ class SkopelosTests: XCTestCase {
             
         })
         
-        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
+        waitForExpectations(timeout: SkopelosTestsConsts.UnitTestTimeout, handler: nil)
         
     }
     
     func test_CorrectThreadingOfOperationsMainQueue_SyncWrite() {
         
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             
-            self.skopelos.writeSync({ (context: NSManagedObjectContext) in
-                XCTAssertTrue(NSThread.isMainThread())
+            let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+                XCTAssertTrue(Thread.isMainThread)
             }).read({ (context: NSManagedObjectContext) in
-                XCTAssertTrue(NSThread.isMainThread())
+                XCTAssertTrue(Thread.isMainThread)
                 expectation.fulfill()
             });
             
         })
         
-        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
+        waitForExpectations(timeout: SkopelosTestsConsts.UnitTestTimeout, handler: nil)
         
     }
     
     func test_CorrectThreadingOfOperationsBkgQueue_SyncWrite() {
         
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         
-        let q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-        dispatch_async(q, {
+        let q = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background);
+        q.async(execute: {
             
-            self.skopelos.writeSync({ (context: NSManagedObjectContext) in
-                XCTAssertFalse(NSThread.isMainThread())
+            let _ = self.skopelos.writeSync({ (context: NSManagedObjectContext) in
+                XCTAssertFalse(Thread.isMainThread)
             }).read({ (context: NSManagedObjectContext) in
-                XCTAssertTrue(NSThread.isMainThread())
+                XCTAssertTrue(Thread.isMainThread)
                 expectation.fulfill()
             })
             
         })
         
-        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
+        waitForExpectations(timeout: SkopelosTestsConsts.UnitTestTimeout, handler: nil)
         
     }
     
     func test_CorrectThreadingOfOperationsMainQueue_AsyncWrite() {
         
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             
             self.skopelos.writeAsync({ (context: NSManagedObjectContext) in
-                XCTAssertFalse(NSThread.isMainThread())
+                XCTAssertFalse(Thread.isMainThread)
                 }, completion: { (error: NSError?) in
-                    XCTAssertTrue(NSThread.isMainThread())
+                    XCTAssertTrue(Thread.isMainThread)
                     expectation.fulfill()
             })
             
         })
         
-        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
+        waitForExpectations(timeout: SkopelosTestsConsts.UnitTestTimeout, handler: nil)
         
     }
     
     func test_CorrectThreadingOfOperationsBkgQueue_AsyncWrite() {
         
-        let expectation = expectationWithDescription("\(#function)")
+        let expectation = self.expectation(description: "\(#function)")
         
-        let q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-        dispatch_async(q, {
+        let q = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background);
+        q.async(execute: {
             
             self.skopelos.writeAsync({ (context: NSManagedObjectContext) in
-                XCTAssertFalse(NSThread.isMainThread())
+                XCTAssertFalse(Thread.isMainThread)
                 }, completion: { (error: NSError?) in
-                    XCTAssertTrue(NSThread.isMainThread())
+                    XCTAssertTrue(Thread.isMainThread)
                     expectation.fulfill()
             })
             
         })
         
-        waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
+        waitForExpectations(timeout: SkopelosTestsConsts.UnitTestTimeout, handler: nil)
         
     }
 }

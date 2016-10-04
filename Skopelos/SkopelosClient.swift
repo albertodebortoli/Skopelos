@@ -10,10 +10,10 @@ import Foundation
 
 final class SkopelosClient: Skopelos {
     
-    static let sharedInstance = Skopelos(sqliteStack: "DataModel")
+    static let shared = Skopelos(sqliteStack: "DataModel")
     
-    override func handleError(error: NSError) {
+    override func handle(error: NSError) {
         // clients should do the right thing here
-        print(error.description)
+        print(error.localizedDescription)
     }
 }

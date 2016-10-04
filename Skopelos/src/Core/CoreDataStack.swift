@@ -10,48 +10,48 @@ import UIKit
 import CoreData
 
 public enum StoreType {
-    case SQLite
-    case InMemory
+    case sqLite
+    case inMemory
 }
 
 public final class CoreDataStack: NSObject {
     
     public var mainContext: NSManagedObjectContext
     public var rootContext: NSManagedObjectContext
-    private let appStateReactor: AppStateReactor
+    fileprivate let appStateReactor: AppStateReactor
     var backgroundTask: UIBackgroundTaskIdentifier?
     
     public convenience init(storeType: StoreType, dataModelFileName: String) {
         self.init(storeType: storeType, dataModelFileName: dataModelFileName, handler: nil)
     }
     
-    public init(storeType: StoreType, dataModelFileName: String, handler:(Void -> Void)?) {
+    public init(storeType: StoreType, dataModelFileName: String, handler:((Void) -> Void)?) {
         appStateReactor = AppStateReactor()
-        mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        rootContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        rootContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         super.init()
         appStateReactor.delegate = self
         self.initialize(storeType, dataModelFileName: dataModelFileName, callback: handler)
     }
     
-    func initialize(storeType: StoreType, dataModelFileName: String, callback:(Void -> Void)?) {
-        let modelURL = NSBundle.mainBundle().URLForResource(dataModelFileName, withExtension: "momd")
-        let mom = NSManagedObjectModel(contentsOfURL: modelURL!)
+    func initialize(_ storeType: StoreType, dataModelFileName: String, callback:((Void) -> Void)?) {
+        let modelURL = Bundle.main.url(forResource: dataModelFileName, withExtension: "momd")
+        let mom = NSManagedObjectModel(contentsOf: modelURL!)
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: mom!)
         rootContext.persistentStoreCoordinator = coordinator
-        mainContext.parentContext = rootContext
+        mainContext.parent = rootContext
     
         let privateContextSetupBlock = {
             let psc = self.rootContext.persistentStoreCoordinator!
             
             switch storeType {
-            case .SQLite:
+            case .sqLite:
                 CoreDataStack.addSQLiteStore(psc, dataModelFileName:dataModelFileName)
-            case .InMemory:
+            case .inMemory:
                 CoreDataStack.addInMemoryStore(psc)
             }
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 if let callback = callback {
                     callback()
                 }
@@ -59,7 +59,7 @@ public final class CoreDataStack: NSObject {
         }
         
         if callback != nil {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
+            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async(execute: {
                 privateContextSetupBlock()
             })
         } else {
@@ -67,51 +67,51 @@ public final class CoreDataStack: NSObject {
         }
     }
 
-    private static func addSQLiteStore(coordinator: NSPersistentStoreCoordinator, dataModelFileName: String) {
+    fileprivate static func addSQLiteStore(_ coordinator: NSPersistentStoreCoordinator, dataModelFileName: String) {
 
-        let fileManager = NSFileManager.defaultManager()
-        let documentsURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last
-        let storeURL = documentsURL?.URLByAppendingPathComponent(String("\(dataModelFileName).sqlite"))
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last
+        let storeURL = documentsURL?.appendingPathComponent(String("\(dataModelFileName).sqlite"))
         let options = autoMigratingOptions()
         
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options)
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: options)
         } catch let error as NSError {
             fatalError("Error adding Persistent Store: \(error.localizedDescription)\n\(error.userInfo)")
         }
     }
     
-    private static func addInMemoryStore(coordinator: NSPersistentStoreCoordinator) {
+    fileprivate static func addInMemoryStore(_ coordinator: NSPersistentStoreCoordinator) {
         do {
-            try coordinator.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil)
+            try coordinator.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil, options: nil)
         } catch let error as NSError {
             fatalError("Error adding Persistent Store: \(error.localizedDescription)\n\(error.userInfo)")
         }
     }
     
-    private static func autoMigratingOptions() -> [NSObject: AnyObject] {
+    fileprivate static func autoMigratingOptions() -> [String : Any] {
         let options = [NSMigratePersistentStoresAutomaticallyOption: true,
                        NSInferMappingModelAutomaticallyOption: true,
-                       NSSQLitePragmasOption: ["journal_mode": "WAL"]]
+                       NSSQLitePragmasOption: ["journal_mode": "WAL"]] as [String : Any]
         return options
     }
 }
 
 extension CoreDataStack: AppStateReactorDelegate {
 
-    private func registerBackgroundTask() {
-        backgroundTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler {
+    fileprivate func registerBackgroundTask() {
+        backgroundTask = UIApplication.shared.beginBackgroundTask (expirationHandler: {
             [unowned self] in
             self.endBackgroundTask()
-        }
+        })
     }
 
-    private func endBackgroundTask() {
-        UIApplication.sharedApplication().endBackgroundTask(backgroundTask!)
+    fileprivate func endBackgroundTask() {
+        UIApplication.shared.endBackgroundTask(backgroundTask!)
         backgroundTask = UIBackgroundTaskInvalid
     }
 
-    public func didReceiveStateChange(appStateReactor: AppStateReactor) -> Void {
+    public func didReceiveStateChange(_ appStateReactor: AppStateReactor) -> Void {
         registerBackgroundTask()
         return save({ (error: NSError?) in
             self.endBackgroundTask()
@@ -122,51 +122,51 @@ extension CoreDataStack: AppStateReactorDelegate {
 
 extension CoreDataStack: CoreDataStackProtocol {
 
-    public func save(handler: (NSError? -> Void)? ) -> Void {
+    public func save(_ handler: ((NSError?) -> Void)? ) -> Void {
         var mainHasChanges = false
         var privateHasChanges = false
         
-        mainContext.performBlockAndWait {
+        mainContext.performAndWait {
             mainHasChanges = self.mainContext.hasChanges
         }
         
-        rootContext.performBlockAndWait {
+        rootContext.performAndWait {
             privateHasChanges = self.rootContext.hasChanges
         }
 
         guard mainHasChanges || privateHasChanges else {
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 handler?(nil)
             })
             return
         }
         
-        mainContext.performBlock {
+        mainContext.perform {
             do {
                 try self.mainContext.save()
             } catch let error as NSError {
                 // fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     if let handler = handler {
                         handler(error);
                     }
                 });
             }
             
-            self.rootContext.performBlock {
+            self.rootContext.perform {
                 
                 do {
                     try self.rootContext.save()
                 } catch let error as NSError {
                     // fatalError("Error saving private context: \(error.localizedDescription), \(error.userInfo)")
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         if let handler = handler {
                             handler(error)
                         }
                     })
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     if let handler = handler {
                         handler(nil)
                     }
