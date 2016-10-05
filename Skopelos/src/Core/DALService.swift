@@ -32,7 +32,7 @@ open class DALService: NSObject {
     
     @objc func receiveErrorNotification(_ notification: Notification) {
         guard let userInfo = (notification as NSNotification).userInfo, let error = userInfo["error"]  else { return }
-        handleError(error as! NSError)
+        handle(error: error as! NSError)
     }
     
     open func handle(error: NSError) {
