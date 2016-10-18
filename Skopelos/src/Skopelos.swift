@@ -9,12 +9,17 @@
 public class Skopelos: DALService {
     
     public convenience init(sqliteStack dataModelFileName: String) {
-        let cds = CoreDataStack(storeType: .SQLite, dataModelFileName:dataModelFileName)
+        let cds = CoreDataStack(storeType: .SQLite, dataModelFileName:dataModelFileName, securityApplicationGroupIdentifier: nil)
+        self.init(coreDataStack: cds)
+    }
+    
+    public convenience init(sqliteStack dataModelFileName: String, securityApplicationGroupIdentifier: String?) {
+        let cds = CoreDataStack(storeType: .SQLite, dataModelFileName:dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
         self.init(coreDataStack: cds)
     }
     
     public convenience init(inMemoryStack dataModelFileName: String) {
-        let cds = CoreDataStack(storeType: .InMemory, dataModelFileName:dataModelFileName)
+        let cds = CoreDataStack(storeType: .InMemory, dataModelFileName:dataModelFileName, securityApplicationGroupIdentifier: nil)
         self.init(coreDataStack: cds)
     }
 }
