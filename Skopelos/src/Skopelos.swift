@@ -22,4 +22,8 @@ public class Skopelos: DALService {
         let cds = CoreDataStack(storeType: .InMemory, dataModelFileName:dataModelFileName, securityApplicationGroupIdentifier: nil)
         self.init(coreDataStack: cds)
     }
+    
+    public func nuke() {
+        coreDataStack.nukeStore()
+    }
 }

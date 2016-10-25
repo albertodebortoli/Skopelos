@@ -16,7 +16,17 @@ struct SkopelosTestsConsts {
 
 class SkopelosTests: XCTestCase {
     
-    var skopelos: Skopelos = Skopelos(inMemoryStack: "DataModel")
+    var skopelos: Skopelos!
+    
+    override func setUp() {
+        super.setUp()
+        skopelos = Skopelos(inMemoryStack: "DataModel")
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        skopelos = nil
+    }
     
     func test_Chaining() {
     
@@ -264,4 +274,43 @@ class SkopelosTests: XCTestCase {
         waitForExpectationsWithTimeout(SkopelosTestsConsts.UnitTestTimeout, handler: nil)
         
     }
+    
+    func test_NukingSQLiteStack() {
+        
+        let skopelos = Skopelos(sqliteStack: "DataModel")
+        testNuke(skopelos)
+    }
+    
+    func test_NukingSQLiteStackInSharedSpace() {
+        
+        let skopelos = Skopelos(sqliteStack: "DataModel", securityApplicationGroupIdentifier: "group.com.skopelos")
+        testNuke(skopelos)
+    }
+    
+    func test_NukingInMemoryStack() {
+        
+        let skopelos = Skopelos(inMemoryStack: "DataModel")
+        testNuke(skopelos)
+    }
+    
+    private func testNuke(skopelos: Skopelos) {
+        
+        skopelos.writeSync({ (context: NSManagedObjectContext) in
+            User.SK_create(context)
+            let users = User.SK_all(context)
+            XCTAssertEqual(users.count, 1)
+        }).read { (context: NSManagedObjectContext) in
+            let users = User.SK_all(context)
+            XCTAssertEqual(users.count, 1);
+        }
+        
+        skopelos.nuke()
+        
+        skopelos.read { (context: NSManagedObjectContext) in
+            let users = User.SK_all(context)
+            XCTAssertEqual(users.count, 0);
+        }
+        
+    }
+    
 }

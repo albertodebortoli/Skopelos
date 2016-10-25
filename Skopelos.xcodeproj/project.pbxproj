@@ -73,6 +73,7 @@
 		4F401D4D1D4EA2F600635945 /* Skopelos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skopelos.swift; sourceTree = "<group>"; };
 		4F401D5A1D4EA4B100635945 /* String+Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Bool.swift"; sourceTree = "<group>"; };
 		4F401D5C1D4FDEB200635945 /* NSManagedObject_SkopelosTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObject_SkopelosTests.swift; sourceTree = "<group>"; };
+		4FF6B5041DBFB97F0035222A /* Skopelos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Skopelos.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +116,7 @@
 		4F25DF621D4A7C8B00E5446E /* Skopelos */ = {
 			isa = PBXGroup;
 			children = (
+				4FF6B5041DBFB97F0035222A /* Skopelos.entitlements */,
 				4F25DF961D4D4DD400E5446E /* SkopelosClient.swift */,
 				4F401D3E1D4EA2F600635945 /* src */,
 				4F25DFAC1D4D531F00E5446E /* Model */,
@@ -243,6 +245,12 @@
 				TargetAttributes = {
 					4F25DF5F1D4A7C8B00E5446E = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 6LQXKLATAD;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					4F25DF731D4A7C8B00E5446E = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -444,6 +452,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Skopelos/Skopelos.entitlements;
+				DEVELOPMENT_TEAM = 6LQXKLATAD;
 				INFOPLIST_FILE = Skopelos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.albertodebortoli.Skopelos;
@@ -456,6 +466,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Skopelos/Skopelos.entitlements;
+				DEVELOPMENT_TEAM = 6LQXKLATAD;
 				INFOPLIST_FILE = Skopelos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.albertodebortoli.Skopelos;
