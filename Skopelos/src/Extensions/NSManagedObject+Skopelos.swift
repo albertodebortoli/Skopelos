@@ -42,7 +42,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         
         do {
             result = try context.count(for: request)
-        } catch let error {
+        } catch let error as NSError {
             handleDALServiceError(error)
             result = 0
         }
@@ -59,7 +59,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         
         do {
             result = try context.count(for: request)
-        } catch let error {
+        } catch let error as NSError {
             handleDALServiceError(error)
             result = 0
         }

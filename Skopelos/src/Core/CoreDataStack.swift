@@ -21,20 +21,20 @@ public final class CoreDataStack: NSObject {
     fileprivate let appStateReactor: AppStateReactor
     var backgroundTask: UIBackgroundTaskIdentifier?
     
-    public convenience init(storeType: StoreType, dataModelFileName: String) {
-        self.init(storeType: storeType, dataModelFileName: dataModelFileName, handler: nil)
+    public convenience init(storeType: StoreType, dataModelFileName: String, securityApplicationGroupIdentifier: String?) {
+        self.init(storeType: storeType, dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, handler: nil)
     }
     
-    public init(storeType: StoreType, dataModelFileName: String, handler:((Void) -> Void)?) {
+    public init(storeType: StoreType, dataModelFileName: String, securityApplicationGroupIdentifier: String?, handler:((Void) -> Void)?) {
         appStateReactor = AppStateReactor()
         mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         rootContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         super.init()
         appStateReactor.delegate = self
-        self.initialize(storeType, dataModelFileName: dataModelFileName, callback: handler)
+        self.initialize(storeType: storeType, dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, callback: handler)
     }
     
-    func initialize(_ storeType: StoreType, dataModelFileName: String, callback:((Void) -> Void)?) {
+    func initialize(storeType: StoreType, dataModelFileName: String, securityApplicationGroupIdentifier: String?, callback:((Void) -> Void)?) {
         let modelURL = Bundle.main.url(forResource: dataModelFileName, withExtension: "momd")
         let mom = NSManagedObjectModel(contentsOf: modelURL!)
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: mom!)
@@ -46,7 +46,7 @@ public final class CoreDataStack: NSObject {
             
             switch storeType {
             case .sqLite:
-                CoreDataStack.addSQLiteStore(psc, dataModelFileName:dataModelFileName)
+                CoreDataStack.addSQLiteStore(coordinator: psc, dataModelFileName:dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
             case .inMemory:
                 CoreDataStack.addInMemoryStore(psc)
             }
@@ -67,11 +67,24 @@ public final class CoreDataStack: NSObject {
         }
     }
 
-    fileprivate static func addSQLiteStore(_ coordinator: NSPersistentStoreCoordinator, dataModelFileName: String) {
+    private static func addSQLiteStore(coordinator: NSPersistentStoreCoordinator, dataModelFileName: String, securityApplicationGroupIdentifier: String?) {
 
+        // if securityApplicationGroupIdentifier then -> shared Location i.e. storeURL = blah blah
+        // else, nope
+        
         let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last
-        let storeURL = documentsURL?.appendingPathComponent(String("\(dataModelFileName).sqlite"))
+        
+        var storeURL: URL?
+        
+        if let securityApplicationGroupIdentifier = securityApplicationGroupIdentifier {
+            let directory = fileManager.containerURL(forSecurityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
+            storeURL = directory?.appendingPathComponent(String("\(dataModelFileName).sqlite"))
+        }
+        else {
+            let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last
+            storeURL = documentsURL?.appendingPathComponent(String("\(dataModelFileName).sqlite"))
+        }
+        
         let options = autoMigratingOptions()
         
         do {
