@@ -85,8 +85,15 @@ To create a singleton, you should inherit from Skopelos like so:
 ```swift
 class SkopelosClient: Skopelos {
 
-    static let sharedInstance = Skopelos(sqliteStack: "DataModel")
-    
+    static let sharedInstance: Skopelos! = {
+
+        if let modelURL = NSBundle(forClass: Skopelos.self).URLForResource("DataModel", withExtension: "momd") {
+            return Skopelos(inMemoryStack: modelURL)
+        }
+
+        return nil
+    }
+
     override func handleError(error: NSError) {
         // clients should do the right thing here
         print(error.description)

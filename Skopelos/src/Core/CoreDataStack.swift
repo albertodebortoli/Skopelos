@@ -21,16 +21,16 @@ public final class CoreDataStack: NSObject {
     private let appStateReactor: AppStateReactor
     var backgroundTask: UIBackgroundTaskIdentifier?
     
-    var dataModelFileName: String!
+    var modelURL: NSURL
     var securityApplicationGroupIdentifier: String?
     var storeType: StoreType
     
-    public convenience init(storeType: StoreType, dataModelFileName: String, securityApplicationGroupIdentifier: String?) {
-        self.init(storeType: storeType, dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, handler: nil)
+    public convenience init(storeType: StoreType, modelURL: NSURL, securityApplicationGroupIdentifier: String?) {
+        self.init(storeType: storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, handler: nil)
     }
     
-    public init(storeType: StoreType, dataModelFileName: String, securityApplicationGroupIdentifier: String?, handler:(Void -> Void)?) {
-        self.dataModelFileName = dataModelFileName
+    public init(storeType: StoreType, modelURL: NSURL, securityApplicationGroupIdentifier: String?, handler:(Void -> Void)?) {
+        self.modelURL = modelURL
         self.securityApplicationGroupIdentifier = securityApplicationGroupIdentifier
         self.storeType = storeType
         appStateReactor = AppStateReactor()
@@ -38,12 +38,11 @@ public final class CoreDataStack: NSObject {
         rootContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         super.init()
         appStateReactor.delegate = self
-        self.initialize(storeType, dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, callback: handler)
+        self.initialize(storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, callback: handler)
     }
     
-    func initialize(storeType: StoreType, dataModelFileName: String, securityApplicationGroupIdentifier: String?, callback:(Void -> Void)?) {
-        let modelURL = NSBundle.mainBundle().URLForResource(dataModelFileName, withExtension: "momd")
-        let mom = NSManagedObjectModel(contentsOfURL: modelURL!)
+    func initialize(storeType: StoreType, modelURL: NSURL, securityApplicationGroupIdentifier: String?, callback:(Void -> Void)?) {
+        let mom = NSManagedObjectModel(contentsOfURL: modelURL)
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: mom!)
         mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         rootContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
@@ -55,7 +54,9 @@ public final class CoreDataStack: NSObject {
             
             switch storeType {
             case .SQLite:
-                CoreDataStack.addSQLiteStore(psc, dataModelFileName:dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
+                if let dataModelFileName = modelURL.URLByDeletingPathExtension?.lastPathComponent {
+                    CoreDataStack.addSQLiteStore(psc, dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
+                }
             case .InMemory:
                 CoreDataStack.addInMemoryStore(psc)
             }
@@ -205,8 +206,9 @@ extension CoreDataStack: CoreDataStackProtocol {
         }
     }
     
-    public func nukeStore() {        
-        let storeURL: NSURL? = CoreDataStack.persistentStoreURL(self.dataModelFileName, securityApplicationGroupIdentifier: self.securityApplicationGroupIdentifier)
+    public func nukeStore() {
+        guard let dataModelFileName = modelURL.URLByDeletingPathExtension?.lastPathComponent else { return }
+        let storeURL: NSURL? = CoreDataStack.persistentStoreURL(dataModelFileName, securityApplicationGroupIdentifier: self.securityApplicationGroupIdentifier)
         let pathToStore = storeURL?.URLByDeletingPathExtension;
         
         let fileManager = NSFileManager.defaultManager()
@@ -223,6 +225,6 @@ extension CoreDataStack: CoreDataStackProtocol {
             }
         }
         
-        initialize(storeType, dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, callback: nil)
+        initialize(storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, callback: nil)
     }
 }

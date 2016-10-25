@@ -20,7 +20,9 @@ class SkopelosTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        skopelos = Skopelos(inMemoryStack: "DataModel")
+        if let modelURL = NSBundle(forClass: self.dynamicType).URLForResource("DataModel", withExtension: "momd") {
+            skopelos = Skopelos(inMemoryStack: modelURL)
+        }
     }
     
     override func tearDown() {
@@ -277,19 +279,34 @@ class SkopelosTests: XCTestCase {
     
     func test_NukingSQLiteStack() {
         
-        let skopelos = Skopelos(sqliteStack: "DataModel")
+        var skopelos: Skopelos!
+        
+        if let modelURL = NSBundle(forClass: self.dynamicType).URLForResource("DataModel", withExtension: "momd") {
+            skopelos = Skopelos(sqliteStack: modelURL)
+        }
+        
         testNuke(skopelos)
     }
     
     func test_NukingSQLiteStackInSharedSpace() {
         
-        let skopelos = Skopelos(sqliteStack: "DataModel", securityApplicationGroupIdentifier: "group.com.skopelos")
+        var skopelos: Skopelos!
+        
+        if let modelURL = NSBundle(forClass: self.dynamicType).URLForResource("DataModel", withExtension: "momd") {
+            skopelos = Skopelos(sqliteStack: modelURL, securityApplicationGroupIdentifier: "group.com.skopelos")
+        }
+        
         testNuke(skopelos)
     }
     
     func test_NukingInMemoryStack() {
         
-        let skopelos = Skopelos(inMemoryStack: "DataModel")
+        var skopelos: Skopelos!
+        
+        if let modelURL = NSBundle(forClass: self.dynamicType).URLForResource("DataModel", withExtension: "momd") {
+            skopelos = Skopelos(inMemoryStack: modelURL)
+        }
+        
         testNuke(skopelos)
     }
     
