@@ -63,11 +63,11 @@ Import `Skopelos`.
 To use this component, you could create a property of type `Skopelos` and instantiate it like so:
 
 ```swift
-self.skopelos = SkopelosClient(inMemoryStack: "<#DataModelFileName>")
+self.skopelos = SkopelosClient(inMemoryStack: "<#ModelURL>")
 ```
 or
 ```swift
-self.skopelos = SkopelosClient(sqliteStack: "<#DataModelFileName>")
+self.skopelos = SkopelosClient(sqliteStack: "<#ModelURL>")
 ```
 
 You could then pass around the skopelos in other parts of the app via dependency injection.
