@@ -10,13 +10,15 @@ import Foundation
 
 final class SkopelosClient: Skopelos {
     
-    static let sharedInstance: Skopelos! = {
+    static let sharedInstance: Skopelos = {
      
+        var skopelos: Skopelos!
+        
         if let modelURL = NSBundle(forClass: Skopelos.self).URLForResource("DataModel", withExtension: "momd") {
-            return Skopelos(inMemoryStack: modelURL)
+            skopelos = Skopelos(inMemoryStack: modelURL)
         }
         
-        return nil
+        return skopelos
         
     }()
     
