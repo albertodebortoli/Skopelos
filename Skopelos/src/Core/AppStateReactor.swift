@@ -6,6 +6,8 @@
 //  Copyright © 2016 Alberto De Bortoli. All rights reserved.
 //
 
+#if os(iOS)
+    
 import UIKit
 
 public protocol AppStateReactorDelegate {
@@ -49,3 +51,5 @@ public final class AppStateReactor: NSObject {
         delegate?.didReceiveStateChange(self)
     }
 }
+
+#endif

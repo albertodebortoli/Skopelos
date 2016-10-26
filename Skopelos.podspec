@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
 	s.source_files = 'Skopelos/src/**/*.{swift}'
 	s.module_name = 'Skopelos'
 	s.ios.deployment_target = '9.0'
+    s.watchos.deployment_target = '3.0'
 	s.requires_arc = true
 	s.frameworks = ["Foundation", "CoreData"]
 end

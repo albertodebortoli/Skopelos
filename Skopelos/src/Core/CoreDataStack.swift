@@ -18,9 +18,10 @@ public final class CoreDataStack: NSObject {
     
     public var mainContext: NSManagedObjectContext
     public var rootContext: NSManagedObjectContext
+    #if os(iOS)
     private let appStateReactor: AppStateReactor
     var backgroundTask: UIBackgroundTaskIdentifier?
-    
+    #endif
     var modelURL: NSURL
     var securityApplicationGroupIdentifier: String?
     var storeType: StoreType
@@ -33,11 +34,15 @@ public final class CoreDataStack: NSObject {
         self.modelURL = modelURL
         self.securityApplicationGroupIdentifier = securityApplicationGroupIdentifier
         self.storeType = storeType
+        #if os(iOS)
         appStateReactor = AppStateReactor()
+        #endif
         mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         rootContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         super.init()
+        #if os(iOS)
         appStateReactor.delegate = self
+        #endif
         self.initialize(storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, callback: handler)
     }
     
@@ -128,6 +133,7 @@ public final class CoreDataStack: NSObject {
     }
 }
 
+#if os(iOS)
 extension CoreDataStack: AppStateReactorDelegate {
 
     private func registerBackgroundTask() {
@@ -150,6 +156,7 @@ extension CoreDataStack: AppStateReactorDelegate {
         })
     }
 }
+#endif
 
 extension CoreDataStack: CoreDataStackProtocol {
 
