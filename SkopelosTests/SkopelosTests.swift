@@ -16,7 +16,19 @@ struct SkopelosTestsConsts {
 
 class SkopelosTests: XCTestCase {
     
-    var skopelos: Skopelos = Skopelos(inMemoryStack: "DataModel")
+    var skopelos: Skopelos!
+    
+    override func setUp() {
+        super.setUp()
+        if let modelURL = Bundle(for: type(of: self)).url(forResource: "DataModel", withExtension: "momd") {
+            skopelos = Skopelos(inMemoryStack: modelURL)
+        }
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        skopelos = nil
+    }
     
     func test_Chaining() {
     
@@ -264,4 +276,58 @@ class SkopelosTests: XCTestCase {
         waitForExpectations(timeout: SkopelosTestsConsts.UnitTestTimeout, handler: nil)
         
     }
+    
+    func test_NukingSQLiteStack() {
+        
+        var skopelos: Skopelos!
+        
+        if let modelURL = Bundle(for: type(of: self)).url(forResource: "DataModel", withExtension: "momd") {
+            skopelos = Skopelos(sqliteStack: modelURL)
+        }
+        
+        testNuke(skopelos)
+    }
+    
+    func test_NukingSQLiteStackInSharedSpace() {
+        
+        var skopelos: Skopelos!
+        
+        if let modelURL = Bundle(for: type(of: self)).url(forResource: "DataModel", withExtension: "momd") {
+            skopelos = Skopelos(sqliteStack: modelURL, securityApplicationGroupIdentifier: "group.com.skopelos")
+        }
+        
+        testNuke(skopelos)
+    }
+    
+    func test_NukingInMemoryStack() {
+        
+        var skopelos: Skopelos!
+        
+        if let modelURL = Bundle(for: type(of: self)).url(forResource: "DataModel", withExtension: "momd") {
+            skopelos = Skopelos(inMemoryStack: modelURL)
+        }
+        
+        testNuke(skopelos)
+    }
+    
+    private func testNuke(_ skopelos: Skopelos) {
+        
+        let _ = skopelos.writeSync({ (context: NSManagedObjectContext) in
+            let _ = User.SK_create(context)
+            let users = User.SK_all(context)
+            XCTAssertEqual(users.count, 1)
+        }).read { (context: NSManagedObjectContext) in
+            let users = User.SK_all(context)
+            XCTAssertEqual(users.count, 1);
+        }
+        
+        skopelos.nuke()
+        
+        let _ = skopelos.read { (context: NSManagedObjectContext) in
+            let users = User.SK_all(context)
+            XCTAssertEqual(users.count, 0);
+        }
+        
+    }
+    
 }

@@ -18,7 +18,6 @@
 		4F25DFA91D4D531900E5446E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F25DFA51D4D531900E5446E /* User.swift */; };
 		4F25DFAA1D4D531900E5446E /* Pet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F25DFA61D4D531900E5446E /* Pet+CoreDataProperties.swift */; };
 		4F25DFAB1D4D531900E5446E /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F25DFA71D4D531900E5446E /* Pet.swift */; };
-		4F25DFB31D4D562A00E5446E /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F25DFB11D4D562A00E5446E /* DataModel.xcdatamodeld */; };
 		4F401D4E1D4EA2F600635945 /* AppStateReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D401D4EA2F600635945 /* AppStateReactor.swift */; };
 		4F401D501D4EA2F600635945 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D421D4EA2F600635945 /* CoreDataStack.swift */; };
 		4F401D511D4EA2F600635945 /* DALService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D431D4EA2F600635945 /* DALService.swift */; };
@@ -31,6 +30,8 @@
 		4F401D591D4EA2F600635945 /* Skopelos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D4D1D4EA2F600635945 /* Skopelos.swift */; };
 		4F401D5B1D4EA4B100635945 /* String+Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D5A1D4EA4B100635945 /* String+Bool.swift */; };
 		4F401D5D1D4FDEB200635945 /* NSManagedObject_SkopelosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F401D5C1D4FDEB200635945 /* NSManagedObject_SkopelosTests.swift */; };
+		4FF6B5051DBFC6ED0035222A /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F25DFB11D4D562A00E5446E /* DataModel.xcdatamodeld */; };
+		4FF6B5061DBFC98E0035222A /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F25DFB11D4D562A00E5446E /* DataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		4F401D4D1D4EA2F600635945 /* Skopelos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skopelos.swift; sourceTree = "<group>"; };
 		4F401D5A1D4EA4B100635945 /* String+Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Bool.swift"; sourceTree = "<group>"; };
 		4F401D5C1D4FDEB200635945 /* NSManagedObject_SkopelosTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObject_SkopelosTests.swift; sourceTree = "<group>"; };
+		4FF6B5041DBFB97F0035222A /* Skopelos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Skopelos.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 		4F25DF621D4A7C8B00E5446E /* Skopelos */ = {
 			isa = PBXGroup;
 			children = (
+				4FF6B5041DBFB97F0035222A /* Skopelos.entitlements */,
 				4F25DF961D4D4DD400E5446E /* SkopelosClient.swift */,
 				4F401D3E1D4EA2F600635945 /* src */,
 				4F25DFAC1D4D531F00E5446E /* Model */,
@@ -243,11 +246,17 @@
 				TargetAttributes = {
 					4F25DF5F1D4A7C8B00E5446E = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 0800;
+						DevelopmentTeam = 6LQXKLATAD;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					4F25DF731D4A7C8B00E5446E = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 0800;
 						TestTargetID = 4F25DF5F1D4A7C8B00E5446E;
 					};
 				};
@@ -310,7 +319,7 @@
 				4F25DFAA1D4D531900E5446E /* Pet+CoreDataProperties.swift in Sources */,
 				4F401D571D4EA2F600635945 /* DALProtocol.swift in Sources */,
 				4F401D5B1D4EA4B100635945 /* String+Bool.swift in Sources */,
-				4F25DFB31D4D562A00E5446E /* DataModel.xcdatamodeld in Sources */,
+				4FF6B5061DBFC98E0035222A /* DataModel.xcdatamodeld in Sources */,
 				4F401D581D4EA2F600635945 /* QueryModelProtocol.swift in Sources */,
 				4F25DF971D4D4DD400E5446E /* SkopelosClient.swift in Sources */,
 				4F401D591D4EA2F600635945 /* Skopelos.swift in Sources */,
@@ -322,6 +331,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FF6B5051DBFC6ED0035222A /* DataModel.xcdatamodeld in Sources */,
 				4F25DF791D4A7C8B00E5446E /* SkopelosTests.swift in Sources */,
 				4F401D5D1D4FDEB200635945 /* NSManagedObject_SkopelosTests.swift in Sources */,
 			);
@@ -451,6 +461,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Skopelos/Skopelos.entitlements;
+				DEVELOPMENT_TEAM = 6LQXKLATAD;
 				INFOPLIST_FILE = Skopelos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.albertodebortoli.Skopelos;
@@ -463,6 +475,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Skopelos/Skopelos.entitlements;
+				DEVELOPMENT_TEAM = 6LQXKLATAD;
 				INFOPLIST_FILE = Skopelos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.albertodebortoli.Skopelos;

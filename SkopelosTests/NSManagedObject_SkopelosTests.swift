@@ -16,7 +16,19 @@ struct NSManagedObjectTestsConsts {
 
 class NSManagedObject_SkopelosTests: XCTestCase {
 
-    var skopelos: Skopelos = Skopelos(inMemoryStack: "DataModel")
+    var skopelos: Skopelos!
+    
+    override func setUp() {
+        super.setUp()
+        if let modelURL = Bundle(for: type(of: self)).url(forResource: "DataModel", withExtension: "momd") {
+            skopelos = Skopelos(inMemoryStack: modelURL)
+        }
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        skopelos = nil
+    }
     
     func test_create() {
         let expectation = self.expectation(description: "\(#function)")
