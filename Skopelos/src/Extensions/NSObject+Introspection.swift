@@ -17,4 +17,4 @@ public extension NSObject{
         return NSStringFromClass(type(of: self)).components(separatedBy: ".").last!
     }
 }
- 
+
