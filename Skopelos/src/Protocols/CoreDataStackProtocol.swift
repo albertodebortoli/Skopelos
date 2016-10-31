@@ -13,6 +13,6 @@ public protocol CoreDataStackProtocol {
     var mainContext: NSManagedObjectContext { get set }
     var rootContext: NSManagedObjectContext { get set }
 
-    func save(handler: (NSError? -> Void)? ) -> Void
+    func save(_ handler: ((NSError?) -> Void)? ) -> Void
     func nukeStore()
 }

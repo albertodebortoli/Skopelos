@@ -11,7 +11,7 @@
 import UIKit
 
 public protocol AppStateReactorDelegate {
-    func didReceiveStateChange(appStateReactor: AppStateReactor) -> Void
+    func didReceiveStateChange(_ appStateReactor: AppStateReactor) -> Void
 }
 
 public final class AppStateReactor: NSObject {
@@ -19,9 +19,9 @@ public final class AppStateReactor: NSObject {
     public var delegate: AppStateReactorDelegate?
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillTerminateNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
     }
 
     public override init() {
@@ -29,25 +29,25 @@ public final class AppStateReactor: NSObject {
         initialize()
     }
 
-   private func initialize() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillResignActive), name: UIApplicationWillResignActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(applicationWillTerminate), name: UIApplicationWillTerminateNotification, object: nil)
+   fileprivate func initialize() {
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillTerminate), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
     }
     
-    @objc func applicationWillResignActive(notification: NSNotification) {
+    @objc func applicationWillResignActive(_ notification: Notification) {
         forwardStatusChange()
     }
     
-    @objc func applicationDidEnterBackground(notification: NSNotification) {
+    @objc func applicationDidEnterBackground(_ notification: Notification) {
         forwardStatusChange()
     }
     
-    @objc func applicationWillTerminate(notification: NSNotification) {
+    @objc func applicationWillTerminate(_ notification: Notification) {
         forwardStatusChange()
     }
     
-    private func forwardStatusChange() {
+    fileprivate func forwardStatusChange() {
         delegate?.didReceiveStateChange(self)
     }
 }

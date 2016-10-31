@@ -8,20 +8,20 @@
 
 import Foundation
 
-public class Skopelos: DALService {
+open class Skopelos: DALService {
     
-    public convenience init(sqliteStack modelURL: NSURL) {
-        let cds = CoreDataStack(storeType: .SQLite, modelURL: modelURL, securityApplicationGroupIdentifier: nil)
+    public convenience init(sqliteStack modelURL: URL) {
+        let cds = CoreDataStack(storeType: .sqLite, modelURL: modelURL, securityApplicationGroupIdentifier: nil)
         self.init(coreDataStack: cds)
     }
     
-    public convenience init(sqliteStack modelURL: NSURL, securityApplicationGroupIdentifier: String?) {
-        let cds = CoreDataStack(storeType: .SQLite, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
+    public convenience init(sqliteStack modelURL: URL, securityApplicationGroupIdentifier: String?) {
+        let cds = CoreDataStack(storeType: .sqLite, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
         self.init(coreDataStack: cds)
     }
     
-    public convenience init(inMemoryStack modelURL: NSURL) {
-        let cds = CoreDataStack(storeType: .InMemory, modelURL: modelURL, securityApplicationGroupIdentifier: nil)
+    public convenience init(inMemoryStack modelURL: URL) {
+        let cds = CoreDataStack(storeType: .inMemory, modelURL: modelURL, securityApplicationGroupIdentifier: nil)
         self.init(coreDataStack: cds)
     }
     

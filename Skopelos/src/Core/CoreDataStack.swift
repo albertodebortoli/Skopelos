@@ -10,8 +10,8 @@ import UIKit
 import CoreData
 
 public enum StoreType {
-    case SQLite
-    case InMemory
+    case sqLite
+    case inMemory
 }
 
 public final class CoreDataStack: NSObject {
@@ -19,26 +19,26 @@ public final class CoreDataStack: NSObject {
     public var mainContext: NSManagedObjectContext
     public var rootContext: NSManagedObjectContext
     #if os(iOS)
-    private let appStateReactor: AppStateReactor
+    fileprivate let appStateReactor: AppStateReactor
     var backgroundTask: UIBackgroundTaskIdentifier?
     #endif
-    var modelURL: NSURL
+    var modelURL: URL
     var securityApplicationGroupIdentifier: String?
     var storeType: StoreType
     
-    public convenience init(storeType: StoreType, modelURL: NSURL, securityApplicationGroupIdentifier: String?) {
+    public convenience init(storeType: StoreType, modelURL: URL, securityApplicationGroupIdentifier: String?) {
         self.init(storeType: storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, handler: nil)
     }
     
-    public init(storeType: StoreType, modelURL: NSURL, securityApplicationGroupIdentifier: String?, handler:(Void -> Void)?) {
+    public init(storeType: StoreType, modelURL: URL, securityApplicationGroupIdentifier: String?, handler:((Void) -> Void)?) {
         self.modelURL = modelURL
         self.securityApplicationGroupIdentifier = securityApplicationGroupIdentifier
         self.storeType = storeType
         #if os(iOS)
         appStateReactor = AppStateReactor()
         #endif
-        mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        rootContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        rootContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         super.init()
         #if os(iOS)
         appStateReactor.delegate = self
@@ -46,33 +46,34 @@ public final class CoreDataStack: NSObject {
         self.initialize(storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, callback: handler)
     }
     
-    func initialize(storeType: StoreType, modelURL: NSURL, securityApplicationGroupIdentifier: String?, callback:(Void -> Void)?) {
-        let mom = NSManagedObjectModel(contentsOfURL: modelURL)
+    func initialize(_ storeType: StoreType, modelURL: URL, securityApplicationGroupIdentifier: String?, callback:((Void) -> Void)?) {
+        let mom = NSManagedObjectModel(contentsOf: modelURL)
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: mom!)
-        mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        rootContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        rootContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         rootContext.persistentStoreCoordinator = coordinator
-        mainContext.parentContext = rootContext
+        mainContext.parent = rootContext
     
         let privateContextSetupBlock = {
             let psc = self.rootContext.persistentStoreCoordinator!
             
             switch storeType {
-            case .SQLite:
-                if let dataModelFileName = modelURL.URLByDeletingPathExtension?.lastPathComponent {
-                    CoreDataStack.addSQLiteStore(psc, dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
+            case .sqLite:
+                let dataModelFileName = modelURL.deletingPathExtension().lastPathComponent
+                if !dataModelFileName.isEmpty {
+                    CoreDataStack.addSQLiteStore(coordinator: psc, dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
                 }
-            case .InMemory:
-                CoreDataStack.addInMemoryStore(psc)
+            case .inMemory:
+                CoreDataStack.addInMemoryStore(coordinator: psc)
             }
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async {
                 callback?()
-            })
+            }
         }
         
         if callback != nil {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
+            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async(execute: {
                 privateContextSetupBlock()
             })
         } else {
@@ -85,12 +86,12 @@ public final class CoreDataStack: NSObject {
         // if securityApplicationGroupIdentifier then -> shared Location i.e. storeURL = blah blah
         // else, nope
         
-        let storeURL: NSURL? = persistentStoreURL(dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
+        let storeURL: URL? = persistentStoreURL(dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
         
         let options = autoMigratingOptions()
         
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options)
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: options)
         } catch let error as NSError {
             fatalError("Error adding Persistent Store: \(error.localizedDescription)\n\(error.userInfo)")
         }
@@ -98,37 +99,37 @@ public final class CoreDataStack: NSObject {
     
     private static func addInMemoryStore(coordinator: NSPersistentStoreCoordinator) {
         do {
-            try coordinator.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil)
+            try coordinator.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil, options: nil)
         } catch let error as NSError {
             fatalError("Error adding Persistent Store: \(error.localizedDescription)\n\(error.userInfo)")
         }
     }
     
-    private static func autoMigratingOptions() -> [NSObject: AnyObject] {
+    private static func autoMigratingOptions() -> [String : Any] {
         let options = [NSMigratePersistentStoresAutomaticallyOption: true,
                        NSInferMappingModelAutomaticallyOption: true,
-                       NSSQLitePragmasOption: ["journal_mode": "WAL"]]
+                       NSSQLitePragmasOption: ["journal_mode": "WAL"]] as [String : Any]
         return options
     }
     
-    private static func persistentStoreURL(dataModelFileName: String, securityApplicationGroupIdentifier: String?) -> NSURL? {
+    fileprivate static func persistentStoreURL(dataModelFileName: String, securityApplicationGroupIdentifier: String?) -> URL? {
         
-        let fileManager = NSFileManager.defaultManager()
-        var storeURL: NSURL?
+        let fileManager = FileManager.default
+        var storeURL: URL?
         
         if let securityApplicationGroupIdentifier = securityApplicationGroupIdentifier {
-            let directory = fileManager.containerURLForSecurityApplicationGroupIdentifier(securityApplicationGroupIdentifier)
-            storeURL = directory?.URLByAppendingPathComponent(String("\(dataModelFileName).sqlite"))
+            let directory = fileManager.containerURL(forSecurityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
+            storeURL = directory?.appendingPathComponent(String("\(dataModelFileName).sqlite"))
         }
         else {
-            let documentsURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last
-            storeURL = documentsURL?.URLByAppendingPathComponent(String("\(dataModelFileName).sqlite"))
+            let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last
+            storeURL = documentsURL?.appendingPathComponent(String("\(dataModelFileName).sqlite"))
         }
         
         return storeURL
     }
     
-    private static func storeExtensions() -> [String] {
+    fileprivate static func storeExtensions() -> [String] {
         return ["sqlite", "sqlite-shm", "sqlite-wal"]
     }
 }
@@ -136,19 +137,19 @@ public final class CoreDataStack: NSObject {
 #if os(iOS)
 extension CoreDataStack: AppStateReactorDelegate {
 
-    private func registerBackgroundTask() {
-        backgroundTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler {
+    fileprivate func registerBackgroundTask() {
+        backgroundTask = UIApplication.shared.beginBackgroundTask {
             [unowned self] in
             self.endBackgroundTask()
         }
     }
 
-    private func endBackgroundTask() {
-        UIApplication.sharedApplication().endBackgroundTask(backgroundTask!)
+    fileprivate func endBackgroundTask() {
+        UIApplication.shared.endBackgroundTask(backgroundTask!)
         backgroundTask = UIBackgroundTaskInvalid
     }
 
-    public func didReceiveStateChange(appStateReactor: AppStateReactor) -> Void {
+    public func didReceiveStateChange(_ appStateReactor: AppStateReactor) -> Void {
         registerBackgroundTask()
         return save({ (error: NSError?) in
             self.endBackgroundTask()
@@ -160,71 +161,73 @@ extension CoreDataStack: AppStateReactorDelegate {
 
 extension CoreDataStack: CoreDataStackProtocol {
 
-    public func save(handler: (NSError? -> Void)? ) -> Void {
+    public func save(_ handler: ((NSError?) -> Void)? ) -> Void {
         var mainHasChanges = false
         var privateHasChanges = false
         
-        mainContext.performBlockAndWait {
+        mainContext.performAndWait {
             mainHasChanges = self.mainContext.hasChanges
         }
         
-        rootContext.performBlockAndWait {
+        rootContext.performAndWait {
             privateHasChanges = self.rootContext.hasChanges
         }
 
         guard mainHasChanges || privateHasChanges else {
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async {
                 handler?(nil)
-            })
+            }
             return
         }
         
-        mainContext.performBlock {
+        mainContext.perform {
             do {
                 try self.mainContext.save()
             } catch let error as NSError {
                 // fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async {
                     if let handler = handler {
                         handler(error);
                     }
-                });
+                }
             }
             
-            self.rootContext.performBlock {
+            self.rootContext.perform {
                 
                 do {
                     try self.rootContext.save()
                 } catch let error as NSError {
                     // fatalError("Error saving private context: \(error.localizedDescription), \(error.userInfo)")
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async {
                         if let handler = handler {
                             handler(error)
                         }
-                    })
+                    }
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async {
                     if let handler = handler {
                         handler(nil)
                     }
-                })
+                }
             }
         }
     }
     
     public func nukeStore() {
-        guard let dataModelFileName = modelURL.URLByDeletingPathExtension?.lastPathComponent else { return }
-        let storeURL: NSURL? = CoreDataStack.persistentStoreURL(dataModelFileName, securityApplicationGroupIdentifier: self.securityApplicationGroupIdentifier)
-        let pathToStore = storeURL?.URLByDeletingPathExtension;
+        let dataModelFileName = modelURL.deletingPathExtension().lastPathComponent
+        guard !dataModelFileName.isEmpty else { return }
         
-        let fileManager = NSFileManager.defaultManager()
+        let storeURL: URL? = CoreDataStack.persistentStoreURL(dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: self.securityApplicationGroupIdentifier)
+        let pathToStore = storeURL?.deletingPathExtension;
+        
+        let fileManager = FileManager.default
         
         for storeExtension in CoreDataStack.storeExtensions() {
-            if let filePath = pathToStore?.URLByAppendingPathExtension(storeExtension)?.path {
-                if (fileManager.fileExistsAtPath(filePath)) {
+            if let filePath = pathToStore?().appendingPathExtension(storeExtension).path {
+                if (fileManager.fileExists(atPath: filePath)) {
                     do {
-                        try fileManager.removeItemAtPath(filePath)
+                        try fileManager.removeItem(atPath: filePath)
                     } catch let error as NSError {
                         fatalError("Error removing file at path '\(filePath)': \(error.localizedDescription)\n\(error.userInfo)")
                     }
