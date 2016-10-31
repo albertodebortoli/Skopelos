@@ -3,7 +3,7 @@
 ![logo](./skopelos.png)
 
 A minimalistic, thread-safe, non-boilerplate and super easy to use version of Active Record on Core Data.
-Simply all you need for doing Core Data. Swift flavour.
+Simply all you need for doing Core Data. Swift 3.0 flavour.
 
 [Objective-C version](https://github.com/albertodebortoli/Skiathos)
 
@@ -65,11 +65,16 @@ Import `Skopelos`.
 To use this component, you could create a property of type `Skopelos` and instantiate it like so:
 
 ```swift
-self.skopelos = SkopelosClient(inMemoryStack: "<#ModelURL>")
+self.skopelos = SkopelosClient(sqliteStack: "<#ModelURL>")
 ```
 or
 ```swift
-self.skopelos = SkopelosClient(sqliteStack: "<#ModelURL>")
+self.skopelos = SkopelosClient(sqliteStack: "<#ModelURL>", securityApplicationGroupIdentifier: "<#GroupID>")
+
+```
+or
+```swift
+self.skopelos = Skopelos(inMemoryStack: "<#ModelURL>")
 ```
 
 You could then pass around the skopelos in other parts of the app via dependency injection.
@@ -87,11 +92,11 @@ To create a singleton, you should inherit from Skopelos like so:
 ```swift
 class SkopelosClient: Skopelos {
 
-    static let sharedInstance: Skopelos = {
+    static let shared: Skopelos = {
 
         var skopelos: Skopelos!
 
-        if let modelURL = NSBundle(forClass: Skopelos.self).URLForResource("DataModel", withExtension: "momd") {
+        if let modelURL = Bundle(for: Skopelos.self).url(forResource: "<#DataModel>", withExtension: "momd") {
             skopelos = Skopelos(inMemoryStack: modelURL)
         }
 
@@ -99,9 +104,9 @@ class SkopelosClient: Skopelos {
 
     }()
     
-    override func handleError(error: NSError) {
+    override func handle(error: Error) {
         // clients should do the right thing here
-        print(error.description)
+        print(error.localizedDescription)
     }
 }
 ```
@@ -154,7 +159,7 @@ NSManagedObjectContext *context = ...;
 Skopelos reading: 
 
 ```swift
-SkopelosClient.sharedInstance.read { context in
+SkopelosClient.shared.read { context in
     let users = User.SK_all(context)
     print(users)
 }
@@ -164,13 +169,13 @@ Skopelos writing:
 
 ```swift
 // Sync
-SkopelosClient.sharedInstance.writeSync { context in
+SkopelosClient.shared.writeSync { context in
     let user = User.SK_create(context)
     user.firstname = "John"
     user.lastname = "Doe"
 }
 
-SkopelosClient.sharedInstance.writeSync({ context in
+SkopelosClient.shared.writeSync({ context in
     let user = User.SK_create(context)
     user.firstname = "John"
     user.lastname = "Doe"
@@ -179,13 +184,13 @@ SkopelosClient.sharedInstance.writeSync({ context in
 })
 
 // Async
-SkopelosClient.sharedInstance.writeAsync { context in
+SkopelosClient.shared.writeAsync { context in
     let user = User.SK_create(context)
     user.firstname = "John"
     user.lastname = "Doe"
 }
 
-SkopelosClient.sharedInstance.writeAsync({ context in
+SkopelosClient.shared.writeAsync({ context in
     let user = User.SK_create(context)
     user.firstname = "John"
     user.lastname = "Doe"
@@ -197,7 +202,7 @@ SkopelosClient.sharedInstance.writeAsync({ context in
 Skopelos also supports chaining:
 
 ```swift
-SkopelosClient.sharedInstance.writeSync { context in
+SkopelosClient.shared.writeSync { context in
     user = User.SK_create(context)
     user.firstname = "John"
     user.lastname = "Doe"
