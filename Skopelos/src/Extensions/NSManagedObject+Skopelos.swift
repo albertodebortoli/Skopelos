@@ -46,7 +46,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
             handleDALServiceError(error)
             result = 0
         }
-
+        
         return result
     }
     
@@ -91,7 +91,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         let request = basicFetchRequestInContext(context)
 
         do {
-            let results = try context.fetch(request) as! [Self]
+            let results = try context.fetch(request)
             return results
         } catch let error as NSError {
             handleDALServiceError(error)
@@ -105,7 +105,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         request.predicate = predicate
 
         do {
-            let results = try context.fetch(request) as! [Self]
+            let results = try context.fetch(request)
             return results
         } catch let error as NSError {
             handleDALServiceError(error)
@@ -120,7 +120,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         request.sortDescriptors = sortDescriptors(sortTerm, ascending:ascending)
         
         do {
-            let results = try context.fetch(request) as! [Self]
+            let results = try context.fetch(request)
             return results
         } catch let error as NSError {
             handleDALServiceError(error)
@@ -135,7 +135,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         request.sortDescriptors = sortDescriptors(sortTerms, ascending:ascending)
         
         do {
-            let results = try context.fetch(request) as! [Self]
+            let results = try context.fetch(request)
             return results
         } catch let error as NSError {
             handleDALServiceError(error)
@@ -150,7 +150,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         request.fetchBatchSize = 1
         
         do {
-            let results = try context.fetch(request) as! [Self]
+            let results = try context.fetch(request)
             return results.first
         } catch let error as NSError {
             handleDALServiceError(error)
@@ -166,7 +166,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         request.predicate = NSPredicate(format: "%K = %@", attribute, value)
 
         do {
-            let results = try context.fetch(request) as! [Self]
+            let results = try context.fetch(request)
             return results.first
         } catch let error as NSError {
             handleDALServiceError(error)
@@ -183,7 +183,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         request.sortDescriptors = sortDescriptors(sortTerms, ascending: ascending)
 
         do {
-            let results = try context.fetch(request) as! [Self]
+            let results = try context.fetch(request)
             return results.first
         } catch let error as NSError {
             handleDALServiceError(error)
@@ -194,8 +194,8 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
 
     // MARK: Private
     
-    fileprivate static func basicFetchRequestInContext(_ context: NSManagedObjectContext) -> NSFetchRequest<NSManagedObject> {
-        let request = NSFetchRequest<NSManagedObject>()
+    fileprivate static func basicFetchRequestInContext(_ context: NSManagedObjectContext) -> NSFetchRequest<Self> {
+        let request = NSFetchRequest<Self>()
         let entityDescription = NSEntityDescription.entity(forEntityName: self.nameOfClass, in: context)
         request.entity = entityDescription
         return request
@@ -218,7 +218,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         }
     }
     
-    fileprivate static func handleDALServiceError(_ error: NSError) -> Void {
+    fileprivate static func handleDALServiceError(_ error: Error) -> Void {
         NotificationCenter.default.post(name: Notification.Name(rawValue: DALServiceConstants.handleDALServiceErrorNotification), object: self, userInfo: ["error": error])
     }
 }

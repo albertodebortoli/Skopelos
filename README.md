@@ -65,11 +65,11 @@ Import `Skopelos`.
 To use this component, you could create a property of type `Skopelos` and instantiate it like so:
 
 ```swift
-self.skopelos = SkopelosClient(inMemoryStack: "<#DataModelFileName>")
+self.skopelos = SkopelosClient(inMemoryStack: "<#ModelURL>")
 ```
 or
 ```swift
-self.skopelos = SkopelosClient(sqliteStack: "<#DataModelFileName>")
+self.skopelos = SkopelosClient(sqliteStack: "<#ModelURL>")
 ```
 
 You could then pass around the skopelos in other parts of the app via dependency injection.
@@ -87,7 +87,17 @@ To create a singleton, you should inherit from Skopelos like so:
 ```swift
 class SkopelosClient: Skopelos {
 
-    static let sharedInstance = Skopelos(sqliteStack: "DataModel")
+    static let sharedInstance: Skopelos = {
+
+        var skopelos: Skopelos!
+
+        if let modelURL = NSBundle(forClass: Skopelos.self).URLForResource("DataModel", withExtension: "momd") {
+            skopelos = Skopelos(inMemoryStack: modelURL)
+        }
+
+        return skopelos
+
+    }()
     
     override func handleError(error: NSError) {
         // clients should do the right thing here
