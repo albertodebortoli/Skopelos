@@ -16,7 +16,13 @@ protocol CommandModelProtocol {
     func writeSync(_ changes: @escaping ChangesBlock) -> Self
     func writeSync(_ changes: @escaping ChangesBlock, completion: CompletionBlock?) -> Self
     
+    func writeSync(_ saveToParentContext: Bool, changes: @escaping ChangesBlock) -> Self
+    func writeSync(_ saveToParentContext: Bool, changes: @escaping ChangesBlock, completion: CompletionBlock?) -> Self
+    
     // async writings are not chainable, return value is void
     func writeAsync(_ changes: @escaping ChangesBlock) -> Void
     func writeAsync(_ changes: @escaping ChangesBlock, completion: CompletionBlock?) -> Void
+    
+    func writeAsync(_ saveToParentContext: Bool, changes: @escaping ChangesBlock) -> Void
+    func writeAsync(_ saveToParentContext: Bool, changes: @escaping ChangesBlock, completion: CompletionBlock?) -> Void
 }

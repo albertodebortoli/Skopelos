@@ -63,7 +63,16 @@ extension DALService: DALProtocol {
     }
     
     public func writeSync(_ changes: @escaping (NSManagedObjectContext) -> Void, completion: ((NSError?) -> Void)?) -> Self {
-        let context = slaveContext()
+        return writeSync(false, changes: changes, completion: completion)
+    }
+    
+    public func writeSync(_ saveToParentContext: Bool, changes: @escaping (NSManagedObjectContext) -> Void) -> Self {
+        return writeSync(saveToParentContext, changes: changes, completion: nil)
+    }
+    
+    public func writeSync(_ saveToParentContext: Bool, changes: @escaping (NSManagedObjectContext) -> Void, completion: ((NSError?) -> Void)?) -> Self {
+        let tempContext = slaveContext()
+        let context = saveToParentContext ? (tempContext.parent ?? tempContext) : tempContext
         context.performAndWait {
             changes(context)
             do {
@@ -82,7 +91,16 @@ extension DALService: DALProtocol {
     }
     
     public func writeAsync(_ changes: @escaping (NSManagedObjectContext) -> Void, completion: ((NSError?) -> Void)?) -> Void {
-        let context = slaveContext()
+        writeAsync(false, changes: changes, completion: completion)
+    }
+    
+    public func writeAsync(_ saveToParentContext: Bool, changes: @escaping (NSManagedObjectContext) -> Void) {
+        return writeAsync(saveToParentContext, changes: changes, completion: nil)
+    }
+    
+    public func writeAsync(_ saveToParentContext: Bool, changes: @escaping (NSManagedObjectContext) -> Void, completion: ((NSError?) -> Void)?) {
+        let tempContext = slaveContext()
+        let context = saveToParentContext ? (tempContext.parent ?? tempContext) : tempContext
         context.perform {
             changes(context)
             do {
