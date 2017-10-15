@@ -1,4 +1,4 @@
-language: objective-c
+language: swift
 xcode_project: Skopelos.xcodeproj
 xcode_scheme: Skopelos
 osx_image: xcode8.2
