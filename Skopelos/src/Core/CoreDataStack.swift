@@ -30,7 +30,7 @@ public final class CoreDataStack: NSObject {
         self.init(storeType: storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, handler: nil)
     }
     
-    public init(storeType: StoreType, modelURL: URL, securityApplicationGroupIdentifier: String?, handler:((Void) -> Void)?) {
+    public init(storeType: StoreType, modelURL: URL, securityApplicationGroupIdentifier: String?, handler:(() -> Void)?) {
         self.modelURL = modelURL
         self.securityApplicationGroupIdentifier = securityApplicationGroupIdentifier
         self.storeType = storeType
@@ -46,7 +46,7 @@ public final class CoreDataStack: NSObject {
         self.initialize(storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, callback: handler)
     }
     
-    func initialize(_ storeType: StoreType, modelURL: URL, securityApplicationGroupIdentifier: String?, callback:((Void) -> Void)?) {
+    func initialize(_ storeType: StoreType, modelURL: URL, securityApplicationGroupIdentifier: String?, callback:(() -> Void)?) {
         let mom = NSManagedObjectModel(contentsOf: modelURL)
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: mom!)
         mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
