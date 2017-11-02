@@ -48,7 +48,7 @@ public final class CoreDataStack: NSObject {
     
     func initialize(_ storeType: StoreType, modelURL: URL, securityApplicationGroupIdentifier: String?, callback:((Void) -> Void)?) {
         let mom = NSManagedObjectModel(contentsOf: modelURL)
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: mom!)
+        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: mom)
         mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         rootContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         rootContext.persistentStoreCoordinator = coordinator
