@@ -1,9 +1,0 @@
-language: swift
-xcode_project: Skopelos.xcodeproj
-xcode_scheme: Skopelos
-osx_image: xcode8.2
-xcode_sdk: iphonesimulator10.0
-
-script:
-- xcodebuild clean build test -project Skopelos.xcodeproj -scheme Skopelos -destination "platform=iOS Simulator,name=iPhone 6,OS=10.0" -configuration "Debug"
-
