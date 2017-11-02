@@ -61,10 +61,10 @@ public final class CoreDataStack: NSObject {
             case .sqlite:
                 let dataModelFileName = modelURL.deletingPathExtension().lastPathComponent
                 if !dataModelFileName.isEmpty {
-                    CoreDataStack.addSQLiteStore(coordinator: psc, dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
+                    self.addSQLiteStore(coordinator: psc, dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
                 }
             case .inMemory:
-                CoreDataStack.addInMemoryStore(coordinator: psc)
+                self.addInMemoryStore(coordinator: psc)
             }
             
             DispatchQueue.main.async {
@@ -81,24 +81,26 @@ public final class CoreDataStack: NSObject {
         }
     }
 
-    private static func addSQLiteStore(coordinator: NSPersistentStoreCoordinator, dataModelFileName: String, securityApplicationGroupIdentifier: String?) {
+    private func addSQLiteStore(coordinator: NSPersistentStoreCoordinator, dataModelFileName: String, securityApplicationGroupIdentifier: String?) {
 
-        let storeURL: URL? = persistentStoreURL(dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
+        let storeURL: URL? = CoreDataStack.persistentStoreURL(dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
         
-        let options = autoMigratingOptions()
+        let options = CoreDataStack.autoMigratingOptions()
         
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: options)
-        } catch let error as NSError {
-            fatalError("Error adding Persistent Store: \(error.localizedDescription)\n\(error.userInfo)")
+        } catch {
+            // this would be a fatal error, let's initialize the whole stack from scratch
+            nukeStore()
         }
     }
     
-    private static func addInMemoryStore(coordinator: NSPersistentStoreCoordinator) {
+    private func addInMemoryStore(coordinator: NSPersistentStoreCoordinator) {
         do {
             try coordinator.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil, options: nil)
-        } catch let error as NSError {
-            fatalError("Error adding Persistent Store: \(error.localizedDescription)\n\(error.userInfo)")
+        } catch {
+            // this would be a fatal error, let's initialize the whole stack from scratch
+            nukeStore()
         }
     }
     
