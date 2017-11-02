@@ -5,7 +5,7 @@
 [![Build Status](https://www.bitrise.io/app/e4a0c4deb80d6fe2.svg?token=wCDhOAylb8-lXl6IzWBa9A&branch=master)](https://www.bitrise.io/app/e4a0c4deb80d6fe2)
 
 A minimalistic, thread-safe, non-boilerplate and super easy to use version of Active Record on Core Data.
-Simply all you need for doing Core Data. Swift 3.0 flavour.
+Simply all you need for doing Core Data. Swift 4 flavour.
 
 [Objective-C version](https://github.com/albertodebortoli/Skiathos)
 
