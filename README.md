@@ -3,6 +3,9 @@
 ![logo](./skopelos.png)
 
 [![Build Status](https://www.bitrise.io/app/e4a0c4deb80d6fe2.svg?token=wCDhOAylb8-lXl6IzWBa9A&branch=master)](https://www.bitrise.io/app/e4a0c4deb80d6fe2)
+[![Version](https://img.shields.io/cocoapods/v/Skopelos.svg?style=flat)](http://cocoapods.org/pods/Skopelos)
+[![License](https://img.shields.io/cocoapods/l/Skopelos.svg?style=flat)](http://cocoapods.org/pods/Skopelos)
+[![Platform](https://img.shields.io/cocoapods/p/Skopelos.svg?style=flat)](http://cocoapods.org/pods/Skopelos)
 
 A minimalistic, thread-safe, non-boilerplate and super easy to use version of Active Record on Core Data.
 Simply all you need for doing Core Data. Swift 4 flavour.
