@@ -12,5 +12,6 @@ protocol QueryModelProtocol {
     
     typealias StatementBlock = (NSManagedObjectContext) -> Void
     
+    @discardableResult
     func read(_ statements: @escaping (NSManagedObjectContext) -> Void) -> Self
 }

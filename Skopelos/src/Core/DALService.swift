@@ -49,6 +49,7 @@ open class DALService: NSObject {
 
 extension DALService: DALProtocol {
 
+    @discardableResult
     public func read(_ statements: @escaping (NSManagedObjectContext) -> Void) -> Self {
         let context = coreDataStack.mainContext
         context.performAndWait {
@@ -58,10 +59,12 @@ extension DALService: DALProtocol {
         return self
     }
     
+    @discardableResult
     public func writeSync(_ changes: @escaping (NSManagedObjectContext) -> Void) -> Self {
         return writeSync(changes, completion:nil)
     }
     
+    @discardableResult
     public func writeSync(_ changes: @escaping (NSManagedObjectContext) -> Void, completion: ((NSError?) -> Void)?) -> Self {
         let context = slaveContext()
         context.performAndWait {

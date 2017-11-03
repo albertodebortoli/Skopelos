@@ -13,7 +13,9 @@ protocol CommandModelProtocol {
     typealias ChangesBlock = (NSManagedObjectContext) -> Void
     typealias CompletionBlock = (NSError?) -> Void
     
+    @discardableResult
     func writeSync(_ changes: @escaping ChangesBlock) -> Self
+    @discardableResult
     func writeSync(_ changes: @escaping ChangesBlock, completion: CompletionBlock?) -> Self
     
     // async writings are not chainable, return value is void
