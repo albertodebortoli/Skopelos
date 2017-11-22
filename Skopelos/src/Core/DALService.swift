@@ -39,12 +39,12 @@ open class DALService: NSObject {
         // override in subclasses
     }
     
-    fileprivate func slaveContext() -> NSManagedObjectContext {
+    lazy fileprivate var slaveContext: NSManagedObjectContext = {
         let slaveContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         slaveContext.parent = coreDataStack.mainContext
         
         return slaveContext
-    }
+    }()
 }
 
 extension DALService: DALProtocol {
@@ -66,7 +66,7 @@ extension DALService: DALProtocol {
     
     @discardableResult
     public func writeSync(_ changes: @escaping (NSManagedObjectContext) -> Void, completion: ((NSError?) -> Void)?) -> Self {
-        let context = slaveContext()
+        let context = slaveContext
         context.performAndWait {
             changes(context)
             do {
@@ -85,7 +85,7 @@ extension DALService: DALProtocol {
     }
     
     public func writeAsync(_ changes: @escaping (NSManagedObjectContext) -> Void, completion: ((NSError?) -> Void)?) -> Void {
-        let context = slaveContext()
+        let context = slaveContext
         context.perform {
             changes(context)
             do {
