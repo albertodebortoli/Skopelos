@@ -41,7 +41,7 @@ open class DALService: NSObject {
     
     lazy fileprivate var slaveContext: NSManagedObjectContext = {
         let slaveContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        slaveContext.parent = coreDataStack.mainContext
+        slaveContext.parent = self.coreDataStack.mainContext
         
         return slaveContext
     }()
