@@ -37,12 +37,12 @@ This component is responsible for the creation of the stack (in terms of chain o
               ------------> Main Context (NSMainQueueConcurrencyType) <-------------
               |                                 ^                                  |
               |                                 |                                  |
-        Child Context                     Child Context                      Child Context
+       Scratch Context                   Scratch Context                    Scratch Context
 (NSPrivateQueueConcurrencyType)   (NSPrivateQueueConcurrencyType)    (NSPrivateQueueConcurrencyType)
 ```
 
-An important difference from Magical Record, or other third-party libraries, is that the savings always go in one direction, from children down (or up?) to the persistent store.
-Other components allow you to create children that have the private context as parent and this causes the main context not to be updated or to be updated via notifications to merge the context.
+An important difference from Magical Record, or other third-party libraries, is that the savings always go in one direction, from scratch contexts down (up direction in the above diagram) to the persistent store.
+Other components allow you to create scratch contexts that have the private context as parent and this causes the main context not to be updated or to be updated via notifications to merge the context.
 The main context should be the source of truth and it is tied the UI: having a much simpler approach helps to create a system easier to reason about.
 
 ### AppStateReactor
@@ -54,7 +54,7 @@ You should ignore this one. It sits in the CoreDataStack and takes care of savin
 
 If you have experience with Core Data, you might also know that most of the operations are repetitive and that we usually call `performBlock`/`performBlockAndWait` on a context providing a block that eventually will call `save:` on that context as last statement.
 Databases are all about readings and writings and for this reason our APIs are in the form of `read(statements: NSManagedObjectContext -> Void)` and `writeSync(changes: NSManagedObjectContext -> Void)`/`writeAsync(changes: NSManagedObjectContext -> Void)`: 2 protocols providing a CQRS (Command and Query Responsibility Segregation) approach.
-Read blocks will be executed on the main context (as it's considered to be the single source of truth). Write blocks are executed on a child context which is saved at the end; changes are eventually saved asynchronously back to the persistent store without blocking the main thread. 
+Read blocks will be executed on the main context (as it's considered to be the single source of truth). Write blocks are executed on a scratch context which is saved at the end; changes are eventually saved asynchronously back to the persistent store without blocking the main thread.
 The completion handler of the write methods calls the completion handler when the changes are saved back to the persistent store.
 
 In other words, writings are always consistent in the main managed object context and eventual consistent in the persistent store.
@@ -70,17 +70,19 @@ Import `Skopelos`.
 To use this component, you could create a property of type `Skopelos` and instantiate it like so:
 
 ```swift
-self.skopelos = SkopelosClient(sqliteStack: "<#ModelURL>")
+self.skopelos = Skopelos(sqliteStack: "<#ModelURL>")
 ```
 or
 ```swift
-self.skopelos = SkopelosClient(sqliteStack: "<#ModelURL>", securityApplicationGroupIdentifier: "<#GroupID>")
+self.skopelos = Skopelos(sqliteStack: "<#ModelURL>", securityApplicationGroupIdentifier: "<#GroupID>")
 
 ```
 or
 ```swift
 self.skopelos = Skopelos(inMemoryStack: "<#ModelURL>")
 ```
+
+N.B. All the above methods also accept an extra optional argument `allowsConcurrentWritings` (which defaults to false) to allow using a dedicated scratch context per writing operation. For simple applications, reusing the same scratch context (i.e. using the default value) on writings helps avoiding race conditions when the changes are pushed to the main context.
 
 You could then pass around the skopelos in other parts of the app via dependency injection.
 It has to be said that it's perfectly acceptable to use a singleton for the Core Data stack. Also, allocating instances over and over is expensive. Generally speaking, we don't like singletons. They are not testable by nature, clients don't have control over the lifecycle of the object and they break some principles. For these reasons, the library comes free of singletons.

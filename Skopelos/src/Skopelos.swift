@@ -10,19 +10,19 @@ import Foundation
 
 open class Skopelos: DALService {
     
-    public convenience init(sqliteStack modelURL: URL) {
+    public convenience init(sqliteStack modelURL: URL, allowsConcurrentWritings: Bool = false) {
         let cds = CoreDataStack(storeType: .sqlite, modelURL: modelURL, securityApplicationGroupIdentifier: nil)
-        self.init(coreDataStack: cds)
+        self.init(coreDataStack: cds, allowsConcurrentWritings: allowsConcurrentWritings)
     }
     
-    public convenience init(sqliteStack modelURL: URL, securityApplicationGroupIdentifier: String?) {
+    public convenience init(sqliteStack modelURL: URL, securityApplicationGroupIdentifier: String?, allowsConcurrentWritings: Bool = false) {
         let cds = CoreDataStack(storeType: .sqlite, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
-        self.init(coreDataStack: cds)
+        self.init(coreDataStack: cds, allowsConcurrentWritings: allowsConcurrentWritings)
     }
     
-    public convenience init(inMemoryStack modelURL: URL) {
+    public convenience init(inMemoryStack modelURL: URL, allowsConcurrentWritings: Bool = false) {
         let cds = CoreDataStack(storeType: .inMemory, modelURL: modelURL, securityApplicationGroupIdentifier: nil)
-        self.init(coreDataStack: cds)
+        self.init(coreDataStack: cds, allowsConcurrentWritings: allowsConcurrentWritings)
     }
     
     public func nuke() {
