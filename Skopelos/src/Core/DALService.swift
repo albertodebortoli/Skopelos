@@ -16,13 +16,15 @@ public struct DALServiceConstants {
 open class DALService: NSObject {
     
     let coreDataStack: CoreDataStackProtocol
+    let allowsMultipleScratchContexts: Bool
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: DALServiceConstants.handleDALServiceErrorNotification), object: nil)
     }
     
-    public init(coreDataStack cds: CoreDataStackProtocol) {
+    public init(coreDataStack cds: CoreDataStackProtocol, allowsConcurrentWritings: Bool = false) {
         coreDataStack = cds
+        allowsMultipleScratchContexts = allowsConcurrentWritings
         super.init()
         NotificationCenter.default.addObserver(self,
                                                          selector: #selector(receiveErrorNotification),
@@ -39,11 +41,18 @@ open class DALService: NSObject {
         // override in subclasses
     }
     
-    lazy fileprivate var slaveContext: NSManagedObjectContext = {
-        let slaveContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        slaveContext.parent = self.coreDataStack.mainContext
+    fileprivate func scratchContext() -> NSManagedObjectContext {
+        let scratchContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        scratchContext.parent = self.coreDataStack.mainContext
         
-        return slaveContext
+        return scratchContext
+    }
+    
+    lazy fileprivate var singleScratchContext: NSManagedObjectContext = {
+        let scratchContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        scratchContext.parent = self.coreDataStack.mainContext
+        
+        return scratchContext
     }()
 }
 
@@ -66,7 +75,7 @@ extension DALService: DALProtocol {
     
     @discardableResult
     public func writeSync(_ changes: @escaping (NSManagedObjectContext) -> Void, completion: ((NSError?) -> Void)?) -> Self {
-        let context = slaveContext
+        let context = allowsMultipleScratchContexts ? scratchContext() : singleScratchContext
         context.performAndWait {
             changes(context)
             do {
@@ -85,7 +94,7 @@ extension DALService: DALProtocol {
     }
     
     public func writeAsync(_ changes: @escaping (NSManagedObjectContext) -> Void, completion: ((NSError?) -> Void)?) -> Void {
-        let context = slaveContext
+        let context = allowsMultipleScratchContexts ? scratchContext() : singleScratchContext
         context.perform {
             changes(context)
             do {
