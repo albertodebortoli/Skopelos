@@ -246,3 +246,10 @@ It is highly suggested to enable the flag `-com.apple.CoreData.ConcurrencyDebug 
 
 This component doesn't aim to introduce interfaces with the goal of hiding the concept of `ManagedObjectContext`: it would open up the doors to threading issues in clients' code as developers should be responsible to check for the type of the calling thread at some level (that would be ignoring the benefits that Core Data gives to us).
 Therefore, our design forces to make all the readings and writings via the `DALService` and the `ManagedObject` category methods are intended to always be explicit on the context (e.g. `SK_create`).
+
+
+## Clients
+
+Skopelos is used in production in the following products:
+
+- [Just Eat](https://itunes.apple.com/gb/app/just-eat-food-delivery/id566347057?mt=8)
