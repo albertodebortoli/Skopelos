@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name = 'Skopelos'
-    s.version = '2.2.0'
+    s.version = '2.3.0'
     s.license = { :type => 'Apache 2.0', :file => 'LICENSE' }
     s.summary = 'Simply all you need for doing Core Data. Swift flavour.'
     s.description = 'A minimalistic, thread safe, non-boilerplate and super easy to use version of Active Record on Core Data. Simply all you need for doing Core Data. Swift flavour.'
@@ -12,6 +12,7 @@ Pod::Spec.new do |s|
     s.ios.deployment_target = '9.0'
     s.watchos.deployment_target = '3.0'
     s.requires_arc = true
+    s.swift_version = '4.2'
     s.frameworks = ["Foundation", "UIKit", "CoreData"]
 end
 
