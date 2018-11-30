@@ -145,14 +145,14 @@ extension CoreDataStack: AppStateReactorDelegate {
 
     fileprivate func endBackgroundTask() {
         UIApplication.shared.endBackgroundTask(backgroundTask!)
-        backgroundTask = UIBackgroundTaskInvalid
+        backgroundTask = UIBackgroundTaskIdentifier(rawValue: convertFromUIBackgroundTaskIdentifier(UIBackgroundTaskIdentifier.invalid))
     }
 
     public func didReceiveStateChange(_ appStateReactor: AppStateReactor) -> Void {
         registerBackgroundTask()
         return save({ (error: NSError?) in
             self.endBackgroundTask()
-            self.backgroundTask = UIBackgroundTaskInvalid
+            self.backgroundTask = UIBackgroundTaskIdentifier(rawValue: convertFromUIBackgroundTaskIdentifier(UIBackgroundTaskIdentifier.invalid))
         })
     }
 }
@@ -236,4 +236,9 @@ extension CoreDataStack: CoreDataStackProtocol {
         
         initialize(storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, callback: nil)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIBackgroundTaskIdentifier(_ input: UIBackgroundTaskIdentifier) -> Int {
+	return input.rawValue
 }
