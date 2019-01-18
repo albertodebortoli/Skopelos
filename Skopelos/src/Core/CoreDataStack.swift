@@ -71,7 +71,7 @@ public final class CoreDataStack: NSObject {
         }
         
         if callback != nil {
-            DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async(execute: {
+            DispatchQueue.global(qos: .userInitiated).async(execute: {
                 privateContextSetupBlock()
             })
         } else {
