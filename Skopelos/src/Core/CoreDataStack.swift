@@ -71,9 +71,9 @@ public final class CoreDataStack: NSObject {
         }
         
         if callback != nil {
-            DispatchQueue.global(qos: .userInitiated).async(execute: {
+            DispatchQueue.global(qos: .userInitiated).async {
                 privateContextSetupBlock()
-            })
+            }
         } else {
             privateContextSetupBlock()
         }
@@ -190,7 +190,6 @@ extension CoreDataStack: CoreDataStackProtocol {
             }
             
             self.rootContext.perform {
-                
                 do {
                     try self.rootContext.save()
                 } catch let error as NSError {
