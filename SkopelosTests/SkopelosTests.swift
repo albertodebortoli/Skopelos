@@ -85,7 +85,7 @@ class SkopelosTests: XCTestCase {
         
         let expectation = self.expectation(description: "\(#function)")
         
-        let q = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
+        let q = DispatchQueue.global(qos: .userInitiated)
         q.async(execute: {
             
             let _ = self.skopelos.writeSync { context in
@@ -171,7 +171,7 @@ class SkopelosTests: XCTestCase {
         let expectation = self.expectation(description: "\(#function)")
         var counter = 0
         
-        let q = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
+        let q = DispatchQueue.global(qos: .userInitiated)
         q.async(execute: {
             
             XCTAssertEqual(counter, 0)
@@ -222,7 +222,7 @@ class SkopelosTests: XCTestCase {
         
         let expectation = self.expectation(description: "\(#function)")
         
-        let q = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
+        let q = DispatchQueue.global(qos: .userInitiated)
         q.async(execute: {
             
             let _ = self.skopelos.writeSync { context in
@@ -261,7 +261,7 @@ class SkopelosTests: XCTestCase {
         
         let expectation = self.expectation(description: "\(#function)")
         
-        let q = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
+        let q = DispatchQueue.global(qos: .userInitiated)
         q.async(execute: {
             
             self.skopelos.writeAsync({ context in
