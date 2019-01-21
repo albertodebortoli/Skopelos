@@ -51,8 +51,8 @@ public final class CoreDataStack: NSObject {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: mom!)
         rootContext.persistentStoreCoordinator = coordinator
         mainContext.parent = rootContext
-    
-        let privateContextSetupBlock = {
+        
+        DispatchQueue.global(qos: .userInitiated).async {
             let psc = self.rootContext.persistentStoreCoordinator!
             
             switch storeType {
@@ -65,20 +65,14 @@ public final class CoreDataStack: NSObject {
                 self.addInMemoryStore(coordinator: psc)
             }
             
-            DispatchQueue.main.async {
-                callback?()
+            if let callback = callback {
+                DispatchQueue.main.async {
+                    callback()
+                }
             }
-        }
-        
-        if callback != nil {
-            DispatchQueue.global(qos: .userInitiated).async {
-                privateContextSetupBlock()
-            }
-        } else {
-            privateContextSetupBlock()
         }
     }
-
+    
     private func addSQLiteStore(coordinator: NSPersistentStoreCoordinator, dataModelFileName: String, securityApplicationGroupIdentifier: String?) {
 
         let storeURL: URL? = CoreDataStack.persistentStoreURL(dataModelFileName: dataModelFileName, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
