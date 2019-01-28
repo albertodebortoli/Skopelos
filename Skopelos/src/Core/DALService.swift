@@ -34,10 +34,10 @@ open class DALService: NSObject {
     
     @objc func receiveErrorNotification(_ notification: Notification) {
         guard let userInfo = (notification as NSNotification).userInfo, let error = userInfo["error"]  else { return }
-        handle(error: error as! NSError)
+        handleError(error as! NSError)
     }
     
-    open func handle(error: NSError) {
+    open func handleError(_ error: NSError) {
         // override in subclasses
     }
     
