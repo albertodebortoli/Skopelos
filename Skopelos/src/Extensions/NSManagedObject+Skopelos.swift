@@ -23,7 +23,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
                 let inContext = try otherContext.existingObject(with: self.objectID)
                 return inContext as? Self
             } catch let error as NSError {
-                Self.handleDALServiceError(error)
+                Self.handleError(error)
             }
         }
 
@@ -43,7 +43,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         do {
             result = try context.count(for: request)
         } catch let error as NSError {
-            handleDALServiceError(error)
+            handleError(error)
             result = 0
         }
         
@@ -60,7 +60,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         do {
             result = try context.count(for: request)
         } catch let error as NSError {
-            handleDALServiceError(error)
+            handleError(error)
             result = 0
         }
 
@@ -83,7 +83,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
             }
         }
         catch let error as NSError {
-            handleDALServiceError(error)
+            handleError(error)
         }
     }
     
@@ -94,7 +94,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
             let results = try context.fetch(request)
             return results
         } catch let error as NSError {
-            handleDALServiceError(error)
+            handleError(error)
         }
 
         return []
@@ -108,7 +108,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
             let results = try context.fetch(request)
             return results
         } catch let error as NSError {
-            handleDALServiceError(error)
+            handleError(error)
         }
 
         return []
@@ -123,7 +123,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
             let results = try context.fetch(request)
             return results
         } catch let error as NSError {
-            handleDALServiceError(error)
+            handleError(error)
         }
 
         return []
@@ -138,7 +138,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
             let results = try context.fetch(request)
             return results
         } catch let error as NSError {
-            handleDALServiceError(error)
+            handleError(error)
         }
 
         return []
@@ -153,7 +153,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
             let results = try context.fetch(request)
             return results.first
         } catch let error as NSError {
-            handleDALServiceError(error)
+            handleError(error)
         }
 
         return nil
@@ -169,7 +169,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
             let results = try context.fetch(request)
             return results.first
         } catch let error as NSError {
-            handleDALServiceError(error)
+            handleError(error)
         }
 
         return nil
@@ -186,7 +186,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
             let results = try context.fetch(request)
             return results.first
         } catch let error as NSError {
-            handleDALServiceError(error)
+            handleError(error)
         }
 
         return nil
@@ -218,7 +218,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         }
     }
     
-    fileprivate static func handleDALServiceError(_ error: Error) -> Void {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: DALServiceConstants.handleDALServiceErrorNotification), object: self, userInfo: ["error": error])
+    fileprivate static func handleError(_ error: Error) -> Void {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: DALServiceConstants.handleErrorNotification), object: self, userInfo: ["error": error])
     }
 }

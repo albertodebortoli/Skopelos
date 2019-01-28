@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 public struct DALServiceConstants {
-    static let handleDALServiceErrorNotification = "handleDALServiceErrorNotification"
+    static let handleErrorNotification = "handleErrorNotification"
 }
 
 open class DALService: NSObject {
@@ -19,7 +19,7 @@ open class DALService: NSObject {
     let allowsMultipleScratchContexts: Bool
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: DALServiceConstants.handleDALServiceErrorNotification), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: DALServiceConstants.handleErrorNotification), object: nil)
     }
     
     public init(coreDataStack cds: CoreDataStackProtocol, allowsConcurrentWritings: Bool = false) {
@@ -28,16 +28,16 @@ open class DALService: NSObject {
         super.init()
         NotificationCenter.default.addObserver(self,
                                                          selector: #selector(receiveErrorNotification),
-                                                         name: NSNotification.Name(rawValue: DALServiceConstants.handleDALServiceErrorNotification),
+                                                         name: NSNotification.Name(rawValue: DALServiceConstants.handleErrorNotification),
                                                          object: nil)
     }
     
     @objc func receiveErrorNotification(_ notification: Notification) {
         guard let userInfo = (notification as NSNotification).userInfo, let error = userInfo["error"]  else { return }
-        handle(error: error as! NSError)
+        handleError(error as! NSError)
     }
     
-    open func handle(error: NSError) {
+    open func handleError(_ error: NSError) {
         // override in subclasses
     }
     
@@ -82,7 +82,7 @@ extension DALService: DALProtocol {
                 try context.save()
                 self.coreDataStack.save(completion)
             } catch let error as NSError {
-                fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
+                self.handleError(error)
             }
         }
         
@@ -101,7 +101,7 @@ extension DALService: DALProtocol {
                 try context.save()
                 self.coreDataStack.save(completion)
             } catch let error as NSError {
-                fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
+                self.handleError(error)
             }
         }
     }

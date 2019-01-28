@@ -111,7 +111,7 @@ class SkopelosClient: Skopelos {
 
     }()
     
-    override func handle(error: Error) {
+    override func handleError(_ error: Error) {
         // clients should do the right thing here
         print(error.localizedDescription)
     }

@@ -22,7 +22,7 @@ final class SkopelosClient: Skopelos {
         
     }()
     
-    override func handle(error: NSError) {
+    override func handleError(_ error: NSError) {
         // clients should do the right thing here
         print(error.localizedDescription)
     }
