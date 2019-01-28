@@ -84,36 +84,37 @@ self.skopelos = Skopelos(inMemoryStack: "<#ModelURL>")
 
 N.B. All the above methods also accept an extra optional argument `allowsConcurrentWritings` (which defaults to false) to allow using a dedicated scratch context per writing operation. For simple applications, reusing the same scratch context (i.e. using the default value) on writings helps avoiding race conditions when the changes are pushed to the main context.
 
-You could then pass around the skopelos in other parts of the app via dependency injection.
-It has to be said that it's perfectly acceptable to use a singleton for the Core Data stack. Also, allocating instances over and over is expensive. Generally speaking, we don't like singletons. They are not testable by nature, clients don't have control over the lifecycle of the object and they break some principles. For these reasons, the library comes free of singletons.
+While it would be acceptable to treat `Skopelos` as a singleton, it's always best to not use such patter but rather explicitly instantiate a single instance and inject it to parts of the app via dependency injection. Generally speaking, we don't like singletons. They are not testable by nature, clients don't have control over the lifecycle of the object and they break some principles. For these reasons, the library comes free of singletons.
 
-There are 2 reasons why you should inherit from `Skopelos`:
+You could inherit from `Skopelos` to:
+- wrap it into an interface that is specific to you use-case
+- override `handleError(_error: NSError)` to perform specific actions whenever an error is encountered
 
-- to create a shared instance for global access
-- to override `override func handleError(error: NSError)` to perform specific actions when an error is encountered and this method is called 
-
-To create a singleton, you should inherit from Skopelos like so:
-
-### Singleton
+Here is an example:
 
 ```swift
+protocol SkopelosClientDelegate: class {
+    func handle(_ error: NSError)
+}
+
 class SkopelosClient: Skopelos {
 
-    static let shared: Skopelos = {
+    static let modelURL = Bundle(identifier: "<#com.mydomain.myapp>").url(forResource: "<#DataModel>", withExtension: "momd")!
 
-        var skopelos: Skopelos!
+    weak var delegate: SkopelosClientDelegate?
 
-        if let modelURL = Bundle(for: Skopelos.self).url(forResource: "<#DataModel>", withExtension: "momd") {
-            skopelos = Skopelos(inMemoryStack: modelURL)
+    class func sqliteStack() -> Skopelos {
+        return Skopelos(sqliteStack: modelURL)
+    }
+
+    class func inMemoryStack() -> Skopelos {
+        return Skopelos(inMemoryStack: modelURL)
+    }
+
+    override func handleError(_ error: NSError) {
+        DispatchQueue.main.async {
+            self.delegate?.handle(error)
         }
-
-        return skopelos
-
-    }()
-    
-    override func handleError(_ error: Error) {
-        // clients should do the right thing here
-        print(error.localizedDescription)
     }
 }
 ```
@@ -166,7 +167,7 @@ NSManagedObjectContext *context = ...;
 Skopelos reading: 
 
 ```swift
-SkopelosClient.shared.read { context in
+skopelosClient.read { context in
     let users = User.SK_all(context)
     print(users)
 }
@@ -176,13 +177,13 @@ Skopelos writing:
 
 ```swift
 // Sync
-SkopelosClient.shared.writeSync { context in
+skopelosClient.writeSync { context in
     let user = User.SK_create(context)
     user.firstname = "John"
     user.lastname = "Doe"
 }
 
-SkopelosClient.shared.writeSync({ context in
+skopelosClient.writeSync({ context in
     let user = User.SK_create(context)
     user.firstname = "John"
     user.lastname = "Doe"
@@ -191,13 +192,13 @@ SkopelosClient.shared.writeSync({ context in
 })
 
 // Async
-SkopelosClient.shared.writeAsync { context in
+skopelosClient.writeAsync { context in
     let user = User.SK_create(context)
     user.firstname = "John"
     user.lastname = "Doe"
 }
 
-SkopelosClient.shared.writeAsync({ context in
+skopelosClient.writeAsync({ context in
     let user = User.SK_create(context)
     user.firstname = "John"
     user.lastname = "Doe"
@@ -209,7 +210,7 @@ SkopelosClient.shared.writeAsync({ context in
 Skopelos also supports chaining:
 
 ```swift
-SkopelosClient.shared.writeSync { context in
+skopelosClient.writeSync { context in
     user = User.SK_create(context)
     user.firstname = "John"
     user.lastname = "Doe"
@@ -244,7 +245,7 @@ All the accesses to the persistence layer done via a `DALService` instance are g
 
 It is highly suggested to enable the flag `-com.apple.CoreData.ConcurrencyDebug 1` in your project to make sure that you don't misuse Core Data in terms of threading and concurrency (by accessing managed objects from different threads and similar errors).
 
-This component doesn't aim to introduce interfaces with the goal of hiding the concept of `ManagedObjectContext`: it would open up the doors to threading issues in clients' code as developers should be responsible to check for the type of the calling thread at some level (that would be ignoring the benefits that Core Data gives to us).
+This component doesn't aim to introduce interfaces with the goal of hiding the concept of `ManagedObjectContext`: it would open up the doors to threading issues in clients' code as developers should be responsible to check for the type of the calling thread at some level (that would be ignoring the benefits that Core Data gives us).
 Therefore, our design forces to make all the readings and writings via the `DALService` and the `ManagedObject` category methods are intended to always be explicit on the context (e.g. `SK_create`).
 
 
