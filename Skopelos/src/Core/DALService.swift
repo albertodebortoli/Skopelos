@@ -82,7 +82,7 @@ extension DALService: DALProtocol {
                 try context.save()
                 self.coreDataStack.save(completion)
             } catch let error as NSError {
-                fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
+                self.handleError(error)
             }
         }
         
@@ -101,7 +101,7 @@ extension DALService: DALProtocol {
                 try context.save()
                 self.coreDataStack.save(completion)
             } catch let error as NSError {
-                fatalError("Failed to save main context: \(error.localizedDescription), \(error.userInfo)")
+                self.handleError(error)
             }
         }
     }
