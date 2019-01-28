@@ -21,7 +21,7 @@ final class ViewController: UIViewController {
             _ = sem.wait(timeout: DispatchTime.now())
             RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.2))
 
-            let dataStore = SkopelosClient.shared
+            let dataStore = SkopelosClient.inMemoryStack()
             dataStore.writeSync({ context in
                 let user = User.SK_create(context)
                 user.firstname = "John"
