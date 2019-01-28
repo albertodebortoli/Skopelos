@@ -30,6 +30,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         return nil
     }
     
+    @discardableResult
     public static func SK_create(_ context: NSManagedObjectContext) -> Self {
         return  NSEntityDescription.insertNewObject(forEntityName: self.nameOfClass, into: context) as! Self
     }
@@ -67,11 +68,11 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         return result
     }
     
-    public func SK_remove(_ context: NSManagedObjectContext) -> Void {
+    public func SK_remove(_ context: NSManagedObjectContext) {
         context.delete(self)
     }
     
-    public static func SK_removeAll(_ context: NSManagedObjectContext) -> Void {
+    public static func SK_removeAll(_ context: NSManagedObjectContext) {
         let request = basicFetchRequestInContext(context)
         request.returnsObjectsAsFaults = true
         request.includesPropertyValues = false
@@ -218,7 +219,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         }
     }
     
-    fileprivate static func handleError(_ error: Error) -> Void {
+    fileprivate static func handleError(_ error: Error) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: DALServiceConstants.handleErrorNotification), object: self, userInfo: ["error": error])
     }
 }

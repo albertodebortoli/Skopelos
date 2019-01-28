@@ -228,8 +228,8 @@ The `NSManagedObject` category provides CRUD methods always explicit on the cont
 ```swift
 static func SK_create(context: NSManagedObjectContext) -> Self
 static func SK_numberOfEntities(context: NSManagedObjectContext) -> Int
-func SK_remove(context: NSManagedObjectContext) -> Void
-static func SK_removeAll(context: NSManagedObjectContext) -> Void
+func SK_remove(context: NSManagedObjectContext)
+static func SK_removeAll(context: NSManagedObjectContext)
 static func SK_all(context: NSManagedObjectContext) -> [Self]
 static func SK_all(predicate: NSPredicate, context:NSManagedObjectContext) -> [Self]
 static func SK_first(context: NSManagedObjectContext) -> Self?
