@@ -30,6 +30,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         return nil
     }
     
+    @discardableResult
     public static func SK_create(_ context: NSManagedObjectContext) -> Self {
         return  NSEntityDescription.insertNewObject(forEntityName: self.nameOfClass, into: context) as! Self
     }
