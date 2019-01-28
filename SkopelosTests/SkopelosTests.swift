@@ -32,10 +32,10 @@ class SkopelosTests: XCTestCase {
     
     func test_Chaining() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.writeSync { context in
+        skopelos.writeSync { context in
             var user = User.SK_create(context)
             user = user.SK_inContext(context)!
-            let _ = User.SK_create(context)
+            User.SK_create(context)
             let users = User.SK_all(context)
             XCTAssertEqual(users.count, 2)
             }.writeSync { context in
@@ -54,7 +54,7 @@ class SkopelosTests: XCTestCase {
     func test_DispatchAyncOnMainQueue() {
         let expectation = self.expectation(description: "\(#function)")
         DispatchQueue.main.async {
-            let _ = self.skopelos.writeSync { context in
+            self.skopelos.writeSync { context in
                 User.SK_removeAll(context)
                 }.read { context in
                     let users = User.SK_all(context)
@@ -76,7 +76,7 @@ class SkopelosTests: XCTestCase {
         let expectation = self.expectation(description: "\(#function)")
         let q = DispatchQueue.global(qos: .userInitiated)
         q.async {
-            let _ = self.skopelos.writeSync { context in
+            self.skopelos.writeSync { context in
                 User.SK_removeAll(context)
                 }.read { context in
                     let users = User.SK_all(context)
@@ -99,17 +99,17 @@ class SkopelosTests: XCTestCase {
             let sem = DispatchSemaphore(value: 0)
             var count = 3
             while (count > 0) {
-                let _ = sem.wait(timeout: DispatchTime.now())
+                _ = sem.wait(timeout: DispatchTime.now())
                 RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.2))
                 
-                let _ = self.skopelos.writeSync { context in
+                self.skopelos.writeSync { context in
                     let user = User.SK_create(context)
                     user.firstname = "John"
                     user.lastname = "Doe"
                     }.writeSync { context in
                         User.SK_removeAll(context)
                     }.writeSync({ context in
-                        let _ = User.SK_all(context)
+                        _ = User.SK_all(context)
                     }, completion: { error in
                         count-=1
                         sem.signal();
@@ -124,7 +124,7 @@ class SkopelosTests: XCTestCase {
         DispatchQueue.main.async {
             XCTAssertEqual(counter, 0)
             counter+=1
-            let _ = self.skopelos.writeSync { context in
+            self.skopelos.writeSync { context in
                 XCTAssertEqual(counter, 1)
                 counter+=1
                 }.read { context in
@@ -151,7 +151,7 @@ class SkopelosTests: XCTestCase {
             XCTAssertEqual(counter, 0)
             counter+=1
             
-            let _ = self.skopelos.writeSync { context in
+            self.skopelos.writeSync { context in
                 XCTAssertEqual(counter, 1)
                 counter+=1
                 }.read { context in
@@ -173,7 +173,7 @@ class SkopelosTests: XCTestCase {
     func test_CorrectThreadingOfOperationsMainQueue_SyncWrite() {
         let expectation = self.expectation(description: "\(#function)")
         DispatchQueue.main.async {
-            let _ = self.skopelos.writeSync { context in
+            self.skopelos.writeSync { context in
                 XCTAssertTrue(Thread.isMainThread)
                 }.read { context in
                     XCTAssertTrue(Thread.isMainThread)
@@ -187,7 +187,7 @@ class SkopelosTests: XCTestCase {
         let expectation = self.expectation(description: "\(#function)")
         let q = DispatchQueue.global(qos: .userInitiated)
         q.async {
-            let _ = self.skopelos.writeSync { context in
+            self.skopelos.writeSync { context in
                 XCTAssertFalse(Thread.isMainThread)
                 }.read { context in
                     XCTAssertTrue(Thread.isMainThread)
@@ -250,9 +250,8 @@ class SkopelosTests: XCTestCase {
     }
     
     private func testNuke(_ skopelos: Skopelos) {
-        
-        let _ = skopelos.writeSync({ (context: NSManagedObjectContext) in
-            let _ = User.SK_create(context)
+        skopelos.writeSync({ (context: NSManagedObjectContext) in
+            User.SK_create(context)
             let users = User.SK_all(context)
             XCTAssertEqual(users.count, 1)
         }).read { (context: NSManagedObjectContext) in
@@ -262,7 +261,7 @@ class SkopelosTests: XCTestCase {
         
         skopelos.nuke()
         
-        let _ = skopelos.read { (context: NSManagedObjectContext) in
+        skopelos.read { (context: NSManagedObjectContext) in
             let users = User.SK_all(context)
             XCTAssertEqual(users.count, 0);
         }

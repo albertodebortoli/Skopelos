@@ -32,10 +32,10 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     func test_create() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.read { context in
+        skopelos.read { context in
             XCTAssertEqual(User.SK_numberOfEntities(context), 0)
             }.writeSync { context in
-                let _ = User.SK_create(context)
+                User.SK_create(context)
             }.read { context in
                 XCTAssertEqual(User.SK_numberOfEntities(context), 1)
                 expectation.fulfill()
@@ -45,9 +45,9 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     func test_remove() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.writeSync { context in
-            let _ = User.SK_create(context)
-            let _ = User.SK_create(context)
+        skopelos.writeSync { context in
+            User.SK_create(context)
+            User.SK_create(context)
             let users = User.SK_all(context)
             XCTAssertEqual(users.count, 2)
             }.writeSync { context in
@@ -63,9 +63,9 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     func test_removeInSameTransactionalBlock() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.writeSync { context in
+        skopelos.writeSync { context in
             let user = User.SK_create(context)
-            let _ = User.SK_create(context)
+            User.SK_create(context)
             XCTAssertEqual(User.SK_numberOfEntities(context), 2)
             user.SK_remove(context)
             XCTAssertEqual(User.SK_numberOfEntities(context), 1)
@@ -78,9 +78,9 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     func test_removeAll() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.writeSync { context in
-            let _ = User.SK_create(context)
-            let _ = User.SK_create(context)
+        skopelos.writeSync { context in
+            User.SK_create(context)
+            User.SK_create(context)
             XCTAssertEqual(User.SK_numberOfEntities(context), 2)
             User.SK_removeAll(context)
             XCTAssertEqual(User.SK_numberOfEntities(context), 0)
@@ -94,9 +94,9 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     func test_numberOfEntities() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.writeSync { context in
-            let _ = User.SK_create(context)
-            let _ = User.SK_create(context)
+        skopelos.writeSync { context in
+            User.SK_create(context)
+            User.SK_create(context)
             }.read { context in
                 XCTAssertEqual(User.SK_numberOfEntities(context), 2)
                 expectation.fulfill()
@@ -106,7 +106,7 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     func test_numberOfEntitiesWithPredicate() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.writeSync { context in
+        skopelos.writeSync { context in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
             u1.firstname = "John"
@@ -122,9 +122,9 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     func test_all() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.writeSync { context in
-            let _ = User.SK_create(context)
-            let _ = User.SK_create(context)
+        skopelos.writeSync { context in
+            User.SK_create(context)
+            User.SK_create(context)
             }.read { context in
                 XCTAssertEqual(User.SK_numberOfEntities(context), 2)
                 expectation.fulfill()
@@ -134,7 +134,7 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     func test_allWithPredicate() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.writeSync { context in
+        skopelos.writeSync { context in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
             u1.firstname = "John"
@@ -152,7 +152,7 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     func test_allWithPredicateSortedBy() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.writeSync { context in
+        skopelos.writeSync { context in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
             let u3 = User.SK_create(context)
@@ -175,7 +175,7 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     func test_allWhereAttributeIsEqualToSortedBy() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.writeSync { context in
+        skopelos.writeSync { context in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
             let u3 = User.SK_create(context)
@@ -198,7 +198,7 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     func test_first() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.writeSync { context in
+        skopelos.writeSync { context in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
             u1.firstname = "John"
@@ -213,7 +213,7 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     func test_firstWithPredicate() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.writeSync { context in
+        skopelos.writeSync { context in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
             u1.firstname = "John"
@@ -231,7 +231,7 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     func test_firstWhereAttribute() {
         let expectation = self.expectation(description: "\(#function)")
-        let _ = skopelos.writeSync { context in
+        skopelos.writeSync { context in
             let u1 = User.SK_create(context)
             let u2 = User.SK_create(context)
             u1.firstname = "John"
