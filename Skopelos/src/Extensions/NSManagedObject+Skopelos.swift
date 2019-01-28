@@ -219,6 +219,6 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
     }
     
     fileprivate static func handleError(_ error: Error) -> Void {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: DALServiceConstants.handleDALServiceErrorNotification), object: self, userInfo: ["error": error])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: DALServiceConstants.handleErrorNotification), object: self, userInfo: ["error": error])
     }
 }

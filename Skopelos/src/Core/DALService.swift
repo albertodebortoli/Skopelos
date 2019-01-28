@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 public struct DALServiceConstants {
-    static let handleDALServiceErrorNotification = "handleDALServiceErrorNotification"
+    static let handleErrorNotification = "handleErrorNotification"
 }
 
 open class DALService: NSObject {
@@ -19,7 +19,7 @@ open class DALService: NSObject {
     let allowsMultipleScratchContexts: Bool
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: DALServiceConstants.handleDALServiceErrorNotification), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: DALServiceConstants.handleErrorNotification), object: nil)
     }
     
     public init(coreDataStack cds: CoreDataStackProtocol, allowsConcurrentWritings: Bool = false) {
@@ -28,7 +28,7 @@ open class DALService: NSObject {
         super.init()
         NotificationCenter.default.addObserver(self,
                                                          selector: #selector(receiveErrorNotification),
-                                                         name: NSNotification.Name(rawValue: DALServiceConstants.handleDALServiceErrorNotification),
+                                                         name: NSNotification.Name(rawValue: DALServiceConstants.handleErrorNotification),
                                                          object: nil)
     }
     
