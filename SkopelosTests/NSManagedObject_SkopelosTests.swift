@@ -20,9 +20,8 @@ class NSManagedObject_SkopelosTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        if let modelURL = Bundle(for: type(of: self)).url(forResource: "DataModel", withExtension: "momd") {
-            skopelos = Skopelos(inMemoryStack: modelURL)
-        }
+        let modelURL = Bundle(for: type(of: self)).url(forResource: "DataModel", withExtension: "momd")!
+        skopelos = Skopelos(inMemoryStack: modelURL)
     }
     
     override func tearDown() {
