@@ -226,19 +226,19 @@ class SkopelosTests: XCTestCase {
     
     func test_NukingSQLiteStack() {
         let modelURL = Bundle(for: type(of: self)).url(forResource: "DataModel", withExtension: "momd")!
-        var skopelos = Skopelos(sqliteStack: modelURL)
+        let skopelos = Skopelos(sqliteStack: modelURL)
         testNuke(skopelos)
     }
     
     func test_NukingSQLiteStackInSharedSpace() {
         let modelURL = Bundle(for: type(of: self)).url(forResource: "DataModel", withExtension: "momd")!
-        var skopelos = Skopelos(sqliteStack: modelURL, securityApplicationGroupIdentifier: "group.com.skopelos")
+        let skopelos = Skopelos(sqliteStack: modelURL, securityApplicationGroupIdentifier: "group.com.skopelos")
         testNuke(skopelos)
     }
     
     func test_NukingInMemoryStack() {
         let modelURL = Bundle(for: type(of: self)).url(forResource: "DataModel", withExtension: "momd")!
-        var skopelos = Skopelos(inMemoryStack: modelURL)
+        let skopelos = Skopelos(inMemoryStack: modelURL)
         testNuke(skopelos)
     }
     
