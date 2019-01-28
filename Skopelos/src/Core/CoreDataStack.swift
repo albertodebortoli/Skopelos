@@ -14,7 +14,7 @@ public enum StoreType {
     case inMemory
 }
 
-public final class CoreDataStack: NSObject {
+public final class CoreDataStack {
     
     public var mainContext: NSManagedObjectContext
     public var rootContext: NSManagedObjectContext
@@ -31,16 +31,13 @@ public final class CoreDataStack: NSObject {
     }
     
     public init(storeType: StoreType, modelURL: URL, securityApplicationGroupIdentifier: String?, handler:(() -> Void)?) {
+        self.storeType = storeType
         self.modelURL = modelURL
         self.securityApplicationGroupIdentifier = securityApplicationGroupIdentifier
-        self.storeType = storeType
-        #if os(iOS)
-        appStateReactor = AppStateReactor()
-        #endif
         mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         rootContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        super.init()
         #if os(iOS)
+        appStateReactor = AppStateReactor()
         appStateReactor.delegate = self
         #endif
         self.initialize(storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, callback: handler)

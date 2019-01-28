@@ -14,7 +14,7 @@ public protocol AppStateReactorDelegate {
     func didReceiveStateChange(_ appStateReactor: AppStateReactor) -> Void
 }
 
-public final class AppStateReactor: NSObject {
+public final class AppStateReactor {
 
     public var delegate: AppStateReactorDelegate?
 
@@ -24,15 +24,10 @@ public final class AppStateReactor: NSObject {
         NotificationCenter.default.removeObserver(self, name: UIApplication.willTerminateNotification, object: nil)
     }
 
-    public override init() {
-        super.init()
-        initialize()
-    }
-
-   fileprivate func initialize() {
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillTerminate), name: UIApplication.willTerminateNotification, object: nil)
+    public init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(AppStateReactor.applicationWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AppStateReactor.applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AppStateReactor.applicationWillTerminate), name: UIApplication.willTerminateNotification, object: nil)
     }
     
     @objc func applicationWillResignActive(_ notification: Notification) {
