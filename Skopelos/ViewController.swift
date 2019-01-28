@@ -11,31 +11,27 @@ import CoreData
 
 final class ViewController: UIViewController {
     
-    /*
+    let dataStore = SkopelosClient.inMemoryStack()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let sem = DispatchSemaphore(value: 0)
-
-        while (true) {
-            _ = sem.wait(timeout: DispatchTime.now())
-            RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.2))
-
-            let dataStore = SkopelosClient.inMemoryStack()
-            dataStore.writeSync({ context in
-                let user = User.SK_create(context)
-                user.firstname = "John"
-                user.lastname = "Doe"
-            }).writeSync({ context in
-                User.SK_removeAll(context)
-            }).writeSync({ context in
-                _ = User.SK_all(context)
-                }, completion: { (error: NSError?) in
-                    sem.signal()
-            })
-        }
+        
+        dataStore.writeSync({ context in
+            let user = User.SK_create(context)
+            user.firstname = "John"
+            user.lastname = "Doe"
+        }).read({ context in
+            let users = User.SK_all(context)
+            print(users)
+        }).writeSync({ context in
+            User.SK_removeAll(context)
+        }).writeSync({ context in
+            let users = User.SK_all(context)
+            print(users)
+        }, completion: { error in
+            if let error = error {
+                print(error)
+            }
+        })
     }
-    */
-    
 }
-

@@ -13,7 +13,7 @@ public struct DALServiceConstants {
     static let handleErrorNotification = "handleErrorNotification"
 }
 
-open class DALService: NSObject {
+open class DALService {
     
     let coreDataStack: CoreDataStackProtocol
     let allowsMultipleScratchContexts: Bool
@@ -25,11 +25,10 @@ open class DALService: NSObject {
     public init(coreDataStack cds: CoreDataStackProtocol, allowsConcurrentWritings: Bool = false) {
         coreDataStack = cds
         allowsMultipleScratchContexts = allowsConcurrentWritings
-        super.init()
         NotificationCenter.default.addObserver(self,
-                                                         selector: #selector(receiveErrorNotification),
-                                                         name: NSNotification.Name(rawValue: DALServiceConstants.handleErrorNotification),
-                                                         object: nil)
+                                               selector: #selector(DALService.receiveErrorNotification),
+                                               name: NSNotification.Name(rawValue: DALServiceConstants.handleErrorNotification),
+                                               object: nil)
     }
     
     @objc func receiveErrorNotification(_ notification: Notification) {
