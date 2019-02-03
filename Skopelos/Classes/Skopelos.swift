@@ -10,18 +10,40 @@ import Foundation
 
 open class Skopelos: DALService {
     
-    public convenience init(sqliteStack modelURL: URL, allowsConcurrentWritings: Bool = false) {
-        let cds = CoreDataStack(storeType: .sqlite, modelURL: modelURL, securityApplicationGroupIdentifier: nil)
+    public convenience init(sqliteStack modelURL: URL,
+                            allowsConcurrentWritings: Bool = false,
+                            shouldAddStoreAsynchronously: Bool = false,
+                            completion: (() -> Void)? = nil) {
+        let cds = CoreDataStack(storeType: .sqlite,
+                                modelURL: modelURL,
+                                securityApplicationGroupIdentifier: nil,
+                                shouldAddStoreAsynchronously: shouldAddStoreAsynchronously,
+                                handler: completion)
         self.init(coreDataStack: cds, allowsConcurrentWritings: allowsConcurrentWritings)
     }
     
-    public convenience init(sqliteStack modelURL: URL, securityApplicationGroupIdentifier: String?, allowsConcurrentWritings: Bool = false) {
-        let cds = CoreDataStack(storeType: .sqlite, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier)
+    public convenience init(sqliteStack modelURL: URL,
+                            securityApplicationGroupIdentifier: String?,
+                            allowsConcurrentWritings: Bool = false,
+                            shouldAddStoreAsynchronously: Bool = false,
+                            completion: (() -> Void)? = nil) {
+        let cds = CoreDataStack(storeType: .sqlite,
+                                modelURL: modelURL,
+                                securityApplicationGroupIdentifier: securityApplicationGroupIdentifier,
+                                shouldAddStoreAsynchronously: shouldAddStoreAsynchronously,
+                                handler: completion)
         self.init(coreDataStack: cds, allowsConcurrentWritings: allowsConcurrentWritings)
     }
     
-    public convenience init(inMemoryStack modelURL: URL, allowsConcurrentWritings: Bool = false) {
-        let cds = CoreDataStack(storeType: .inMemory, modelURL: modelURL, securityApplicationGroupIdentifier: nil)
+    public convenience init(inMemoryStack modelURL: URL,
+                            allowsConcurrentWritings: Bool = false,
+                            shouldAddStoreAsynchronously: Bool = false,
+                            completion: (() -> Void)? = nil) {
+        let cds = CoreDataStack(storeType: .inMemory,
+                                modelURL: modelURL,
+                                securityApplicationGroupIdentifier: nil,
+                                shouldAddStoreAsynchronously: shouldAddStoreAsynchronously,
+                                handler: completion)
         self.init(coreDataStack: cds, allowsConcurrentWritings: allowsConcurrentWritings)
     }
     

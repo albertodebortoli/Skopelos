@@ -9,7 +9,11 @@
 /* Begin PBXBuildFile section */
 		136C4C9D722B64C735269C43 /* Pods_Skopelos_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9108A5E099FBE804288CB921 /* Pods_Skopelos_Example.framework */; };
 		4FB1E4602207793600644F62 /* NSManagedObject_SkopelosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB1E45E2207793600644F62 /* NSManagedObject_SkopelosTests.swift */; };
-		4FB1E4612207793600644F62 /* SkopelosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB1E45F2207793600644F62 /* SkopelosTests.swift */; };
+		4FB1E4612207793600644F62 /* SkopelosSetupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB1E45F2207793600644F62 /* SkopelosSetupTests.swift */; };
+		4FB1E468220785E800644F62 /* SkopelosConcurrencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB1E467220785E800644F62 /* SkopelosConcurrencyTests.swift */; };
+		4FB1E46A2207860C00644F62 /* SkopelosNukingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB1E4692207860C00644F62 /* SkopelosNukingTests.swift */; };
+		4FB1E46C2207868F00644F62 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB1E46B2207868F00644F62 /* Constants.swift */; };
+		4FB1E46E2207882000644F62 /* SkopelosChainingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB1E46D2207882000644F62 /* SkopelosChainingTests.swift */; };
 		4FB69DE42207735B004E4A1F /* SkopelosClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB69DE32207735B004E4A1F /* SkopelosClient.swift */; };
 		4FB69DEC220773C8004E4A1F /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4FB69DE6220773C8004E4A1F /* DataModel.xcdatamodeld */; };
 		4FB69DED220773C8004E4A1F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB69DE8220773C8004E4A1F /* User.swift */; };
@@ -41,7 +45,11 @@
 		4FB1E453220778F900644F62 /* Skopelos_UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Skopelos_UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FB1E457220778F900644F62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FB1E45E2207793600644F62 /* NSManagedObject_SkopelosTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObject_SkopelosTests.swift; sourceTree = "<group>"; };
-		4FB1E45F2207793600644F62 /* SkopelosTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkopelosTests.swift; sourceTree = "<group>"; };
+		4FB1E45F2207793600644F62 /* SkopelosSetupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkopelosSetupTests.swift; sourceTree = "<group>"; };
+		4FB1E467220785E800644F62 /* SkopelosConcurrencyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkopelosConcurrencyTests.swift; sourceTree = "<group>"; };
+		4FB1E4692207860C00644F62 /* SkopelosNukingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkopelosNukingTests.swift; sourceTree = "<group>"; };
+		4FB1E46B2207868F00644F62 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4FB1E46D2207882000644F62 /* SkopelosChainingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkopelosChainingTests.swift; sourceTree = "<group>"; };
 		4FB69DE22207735B004E4A1F /* Skopelos.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Skopelos.entitlements; sourceTree = "<group>"; };
 		4FB69DE32207735B004E4A1F /* SkopelosClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkopelosClient.swift; sourceTree = "<group>"; };
 		4FB69DE7220773C8004E4A1F /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -100,8 +108,12 @@
 		4FB1E454220778F900644F62 /* Skopelos_UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				4FB1E46B2207868F00644F62 /* Constants.swift */,
 				4FB1E45E2207793600644F62 /* NSManagedObject_SkopelosTests.swift */,
-				4FB1E45F2207793600644F62 /* SkopelosTests.swift */,
+				4FB1E45F2207793600644F62 /* SkopelosSetupTests.swift */,
+				4FB1E46D2207882000644F62 /* SkopelosChainingTests.swift */,
+				4FB1E467220785E800644F62 /* SkopelosConcurrencyTests.swift */,
+				4FB1E4692207860C00644F62 /* SkopelosNukingTests.swift */,
 				4FB1E457220778F900644F62 /* Info.plist */,
 			);
 			path = Skopelos_UnitTests;
@@ -365,8 +377,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FB1E46E2207882000644F62 /* SkopelosChainingTests.swift in Sources */,
+				4FB1E46C2207868F00644F62 /* Constants.swift in Sources */,
 				4FB1E4602207793600644F62 /* NSManagedObject_SkopelosTests.swift in Sources */,
-				4FB1E4612207793600644F62 /* SkopelosTests.swift in Sources */,
+				4FB1E4612207793600644F62 /* SkopelosSetupTests.swift in Sources */,
+				4FB1E468220785E800644F62 /* SkopelosConcurrencyTests.swift in Sources */,
+				4FB1E46A2207860C00644F62 /* SkopelosNukingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
