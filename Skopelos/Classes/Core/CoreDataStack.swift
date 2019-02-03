@@ -26,11 +26,11 @@ public final class CoreDataStack {
     var securityApplicationGroupIdentifier: String?
     var storeType: StoreType
     
-    public convenience init(storeType: StoreType, modelURL: URL, securityApplicationGroupIdentifier: String?) {
-        self.init(storeType: storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, handler: nil)
-    }
-    
-    public init(storeType: StoreType, modelURL: URL, securityApplicationGroupIdentifier: String?, handler:(() -> Void)?) {
+    public init(storeType: StoreType,
+                modelURL: URL,
+                securityApplicationGroupIdentifier: String?,
+                shouldAddStoreAsynchronously: Bool,
+                handler: (() -> Void)? = nil) {
         self.storeType = storeType
         self.modelURL = modelURL
         self.securityApplicationGroupIdentifier = securityApplicationGroupIdentifier
@@ -40,10 +40,18 @@ public final class CoreDataStack {
         appStateReactor = AppStateReactor()
         appStateReactor.delegate = self
         #endif
-        self.initialize(storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, callback: handler)
+        self.initialize(storeType,
+                        modelURL: modelURL,
+                        securityApplicationGroupIdentifier: securityApplicationGroupIdentifier,
+                        shouldAddStoreAsynchronously: shouldAddStoreAsynchronously,
+                        handler: handler)
     }
     
-    func initialize(_ storeType: StoreType, modelURL: URL, securityApplicationGroupIdentifier: String?, callback:(() -> Void)?) {
+    func initialize(_ storeType: StoreType,
+                    modelURL: URL,
+                    securityApplicationGroupIdentifier: String?,
+                    shouldAddStoreAsynchronously: Bool,
+                    handler: (() -> Void)?) {
         let mom = NSManagedObjectModel(contentsOf: modelURL)
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: mom!)
         rootContext.persistentStoreCoordinator = coordinator
@@ -61,18 +69,20 @@ public final class CoreDataStack {
             case .inMemory:
                 self.addInMemoryStore(coordinator: psc)
             }
-            
-            DispatchQueue.main.async {
-                callback?()
-            }
         }
         
-        if callback != nil {
+        if shouldAddStoreAsynchronously {
             DispatchQueue.global(qos: .userInitiated).async {
                 privateContextSetupBlock()
+                if let handler = handler {
+                    DispatchQueue.main.async {
+                        handler()
+                    }
+                }
             }
         } else {
             privateContextSetupBlock()
+            handler?()
         }
     }
 
@@ -230,6 +240,6 @@ extension CoreDataStack: CoreDataStackProtocol {
         
         mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         rootContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        initialize(storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, callback: nil)
+        initialize(storeType, modelURL: modelURL, securityApplicationGroupIdentifier: securityApplicationGroupIdentifier, shouldAddStoreAsynchronously: false, handler: nil)
     }
 }

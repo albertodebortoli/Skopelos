@@ -11,44 +11,19 @@ import CoreData
 @testable import Skopelos
 @testable import Skopelos_Example
 
-struct SkopelosTestsConsts {
-    static let UnitTestTimeout = 10.0
-}
-
-class SkopelosTests: XCTestCase {
+class SkopelosConcurrencyTests: XCTestCase {
     
+    let modelURL = Bundle.main.url(forResource: "DataModel", withExtension: "momd")!
     var skopelos: Skopelos!
     
     override func setUp() {
         super.setUp()
-        let modelURL = Bundle.main.url(forResource: "DataModel", withExtension: "momd")!
         skopelos = Skopelos(inMemoryStack: modelURL)
     }
     
     override func tearDown() {
         super.tearDown()
         skopelos = nil
-    }
-    
-    func test_Chaining() {
-        let expectation = self.expectation(description: "\(#function)")
-        skopelos.writeSync { context in
-            var user = User.SK_create(context)
-            user = user.SK_inContext(context)!
-            User.SK_create(context)
-            let users = User.SK_all(context)
-            XCTAssertEqual(users.count, 2)
-            }.writeSync { context in
-                let user = User.SK_first(context)!
-                user.SK_remove(context)
-                let users = User.SK_all(context)
-                XCTAssertEqual(users.count, 1)
-            }.read { context in
-                let users = User.SK_all(context)
-                XCTAssertEqual(users.count, 1)
-                expectation.fulfill()
-        }
-        waitForExpectations(timeout: SkopelosTestsConsts.UnitTestTimeout, handler: nil)
     }
     
     func test_DispatchAyncOnMainQueue() {
@@ -223,41 +198,5 @@ class SkopelosTests: XCTestCase {
         }
         
         waitForExpectations(timeout: SkopelosTestsConsts.UnitTestTimeout, handler: nil)
-    }
-    
-    func test_NukingSQLiteStack() {
-        let modelURL = Bundle.main.url(forResource: "DataModel", withExtension: "momd")!
-        let skopelos = Skopelos(sqliteStack: modelURL)
-        testNuke(skopelos)
-    }
-    
-    func test_NukingSQLiteStackInSharedSpace() {
-        let modelURL = Bundle.main.url(forResource: "DataModel", withExtension: "momd")!
-        let skopelos = Skopelos(sqliteStack: modelURL, securityApplicationGroupIdentifier: "group.com.skopelos")
-        testNuke(skopelos)
-    }
-    
-    func test_NukingInMemoryStack() {
-        let modelURL = Bundle.main.url(forResource: "DataModel", withExtension: "momd")!
-        let skopelos = Skopelos(inMemoryStack: modelURL)
-        testNuke(skopelos)
-    }
-    
-    private func testNuke(_ skopelos: Skopelos) {
-        skopelos.writeSync({ (context: NSManagedObjectContext) in
-            User.SK_create(context)
-            let users = User.SK_all(context)
-            XCTAssertEqual(users.count, 1)
-        }).read { (context: NSManagedObjectContext) in
-            let users = User.SK_all(context)
-            XCTAssertEqual(users.count, 1);
-        }
-        
-        skopelos.nuke()
-        
-        skopelos.read { (context: NSManagedObjectContext) in
-            let users = User.SK_all(context)
-            XCTAssertEqual(users.count, 0);
-        }
     }
 }
