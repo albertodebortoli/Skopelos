@@ -1,0 +1,6 @@
+framework module Skopelos {
+  umbrella header "Skopelos-umbrella.h"
+
+  export *
+  module * { export * }
+}
