@@ -1,0 +1,14 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+use_frameworks!
+
+target 'Skopelos_Example' do
+  platform :ios, '10.0'
+  pod 'Skopelos', :path => '../'
+  
+  target 'Skopelos_UnitTests' do
+      inherit! :search_paths
+      
+  end
+  
+end
