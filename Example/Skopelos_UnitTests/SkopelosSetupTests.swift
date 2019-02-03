@@ -20,7 +20,7 @@ class SkopelosSetupTests: XCTestCase {
         let expectation1 = self.expectation(description: "\(#function)")
         let expectation2 = self.expectation(description: "\(#function)")
         skopelos = Skopelos(inMemoryStack: modelURL,
-                            allowsConcurrentWritings: false,
+                            allowsConcurrentWritings: true,
                             shouldAddStoreAsynchronously: false,
                             completion: {
                                 expectation1.fulfill()
@@ -33,7 +33,7 @@ class SkopelosSetupTests: XCTestCase {
         let expectation1 = self.expectation(description: "\(#function)")
         let expectation2 = self.expectation(description: "\(#function)")
         skopelos = Skopelos(inMemoryStack: modelURL,
-                            allowsConcurrentWritings: false,
+                            allowsConcurrentWritings: true,
                             shouldAddStoreAsynchronously: true,
                             completion: {
                                 expectation2.fulfill()

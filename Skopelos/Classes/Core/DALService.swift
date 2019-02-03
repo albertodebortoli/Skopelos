@@ -22,7 +22,7 @@ open class DALService {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: DALServiceConstants.handleErrorNotification), object: nil)
     }
     
-    public init(coreDataStack cds: CoreDataStackProtocol, allowsConcurrentWritings: Bool = false) {
+    public init(coreDataStack cds: CoreDataStackProtocol, allowsConcurrentWritings: Bool = true) {
         coreDataStack = cds
         allowsMultipleScratchContexts = allowsConcurrentWritings
         NotificationCenter.default.addObserver(self,
