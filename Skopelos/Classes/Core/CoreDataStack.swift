@@ -33,6 +33,7 @@ public final class CoreDataStack {
                 handler: (() -> Void)? = nil) {
         self.storeType = storeType
         self.modelURL = modelURL
+        
         self.securityApplicationGroupIdentifier = securityApplicationGroupIdentifier
         mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         rootContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)

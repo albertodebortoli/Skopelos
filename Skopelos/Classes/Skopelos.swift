@@ -11,7 +11,7 @@ import Foundation
 open class Skopelos: DALService {
     
     public convenience init(sqliteStack modelURL: URL,
-                            allowsConcurrentWritings: Bool = false,
+                            allowsConcurrentWritings: Bool = true,
                             shouldAddStoreAsynchronously: Bool = false,
                             completion: (() -> Void)? = nil) {
         let cds = CoreDataStack(storeType: .sqlite,
@@ -24,7 +24,7 @@ open class Skopelos: DALService {
     
     public convenience init(sqliteStack modelURL: URL,
                             securityApplicationGroupIdentifier: String?,
-                            allowsConcurrentWritings: Bool = false,
+                            allowsConcurrentWritings: Bool = true,
                             shouldAddStoreAsynchronously: Bool = false,
                             completion: (() -> Void)? = nil) {
         let cds = CoreDataStack(storeType: .sqlite,
@@ -36,7 +36,7 @@ open class Skopelos: DALService {
     }
     
     public convenience init(inMemoryStack modelURL: URL,
-                            allowsConcurrentWritings: Bool = false,
+                            allowsConcurrentWritings: Bool = true,
                             shouldAddStoreAsynchronously: Bool = false,
                             completion: (() -> Void)? = nil) {
         let cds = CoreDataStack(storeType: .inMemory,
