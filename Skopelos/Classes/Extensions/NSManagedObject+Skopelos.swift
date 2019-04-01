@@ -15,7 +15,7 @@ extension NSManagedObject : NSManagedObjectExtendable { }
 
 public extension NSManagedObjectExtendable where Self:NSManagedObject {
     
-    public func SK_inContext(_ otherContext: NSManagedObjectContext) -> Self? {
+    func SK_inContext(_ otherContext: NSManagedObjectContext) -> Self? {
         
         if self.objectID.isTemporaryID {
             do {
@@ -31,11 +31,11 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
     }
     
     @discardableResult
-    public static func SK_create(_ context: NSManagedObjectContext) -> Self {
+    static func SK_create(_ context: NSManagedObjectContext) -> Self {
         return NSEntityDescription.insertNewObject(forEntityName: self.nameOfClass, into: context) as! Self
     }
     
-    public static func SK_numberOfEntities(_ context: NSManagedObjectContext) -> Int {
+    static func SK_numberOfEntities(_ context: NSManagedObjectContext) -> Int {
         
         let request = basicFetchRequestInContext(context)
         
@@ -51,7 +51,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         return result
     }
     
-    public static func SK_numberOfEntities(_ predicate: NSPredicate, context: NSManagedObjectContext) -> Int {
+    static func SK_numberOfEntities(_ predicate: NSPredicate, context: NSManagedObjectContext) -> Int {
         
         let request = basicFetchRequestInContext(context)
         request.predicate = predicate
@@ -68,11 +68,11 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         return result
     }
     
-    public func SK_remove(_ context: NSManagedObjectContext) {
+    func SK_remove(_ context: NSManagedObjectContext) {
         context.delete(self)
     }
     
-    public static func SK_removeAll(_ context: NSManagedObjectContext) {
+    static func SK_removeAll(_ context: NSManagedObjectContext) {
         let request = basicFetchRequestInContext(context)
         request.returnsObjectsAsFaults = true
         request.includesPropertyValues = false
@@ -88,7 +88,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         }
     }
     
-    public static func SK_all(_ context: NSManagedObjectContext) -> [Self] {
+    static func SK_all(_ context: NSManagedObjectContext) -> [Self] {
         let request = basicFetchRequestInContext(context)
 
         do {
@@ -101,7 +101,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         return []
     }
     
-    public static func SK_all(_ predicate: NSPredicate, context:NSManagedObjectContext) -> [Self] {
+    static func SK_all(_ predicate: NSPredicate, context:NSManagedObjectContext) -> [Self] {
         let request = basicFetchRequestInContext(context)
         request.predicate = predicate
 
@@ -115,7 +115,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         return []
     }
     
-    public static func SK_all(_ context: NSManagedObjectContext, predicate: NSPredicate, sortTerm: String, ascending: Bool) -> [Self] {
+    static func SK_all(_ context: NSManagedObjectContext, predicate: NSPredicate, sortTerm: String, ascending: Bool) -> [Self] {
         let request = basicFetchRequestInContext(context)
         request.predicate = predicate
         request.sortDescriptors = sortDescriptors(sortTerm, ascending:ascending)
@@ -130,7 +130,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         return []
     }
     
-    public static func SK_all(_ attribute: String, isEqualTo value: String, sortTerms: String, ascending: Bool, context: NSManagedObjectContext) -> [Self] {
+    static func SK_all(_ attribute: String, isEqualTo value: String, sortTerms: String, ascending: Bool, context: NSManagedObjectContext) -> [Self] {
         let request = basicFetchRequestInContext(context)
         request.predicate = NSPredicate(format: "%K = %@", attribute, value)
         request.sortDescriptors = sortDescriptors(sortTerms, ascending:ascending)
@@ -145,7 +145,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         return []
     }
     
-    public static func SK_first(_ context: NSManagedObjectContext) -> Self? {
+    static func SK_first(_ context: NSManagedObjectContext) -> Self? {
         let request = basicFetchRequestInContext(context)
         request.fetchLimit = 1
         request.fetchBatchSize = 1
@@ -160,7 +160,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         return nil
     }
     
-    public static func SK_first(_ attribute: String, isEqualTo value: String, context: NSManagedObjectContext) -> Self? {
+    static func SK_first(_ attribute: String, isEqualTo value: String, context: NSManagedObjectContext) -> Self? {
         let request = basicFetchRequestInContext(context)
         request.fetchLimit = 1
         request.fetchBatchSize = 1
@@ -176,7 +176,7 @@ public extension NSManagedObjectExtendable where Self:NSManagedObject {
         return nil
     }
     
-    public static func SK_first(_ predicate: NSPredicate, sortTerms: String, ascending: Bool, context: NSManagedObjectContext) -> Self? {
+    static func SK_first(_ predicate: NSPredicate, sortTerms: String, ascending: Bool, context: NSManagedObjectContext) -> Self? {
         let request = basicFetchRequestInContext(context)
         request.predicate = predicate
         request.fetchLimit = 1

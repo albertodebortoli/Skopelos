@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4A6CA04AEBAD4B825D75CD23CF36FD2B"
+               BuildableName = "Skopelos.framework"
                BlueprintName = "Skopelos"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "Skopelos.framework">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

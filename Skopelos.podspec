@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Skopelos'
-  s.version          = '2.3.1'
+  s.version          = '2.4.0'
   s.license          = { :type => 'Apache 2.0', :file => 'LICENSE' }
   s.summary          = 'Simply all you need for doing Core Data. Swift flavour.'
   s.description      = <<-DESC
@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   
   s.ios.deployment_target = '10.0'
   s.watchos.deployment_target = '4.0'
-  s.swift_version = '4.2'
+  s.swift_version = '5.0'
 
   s.source_files = 'Skopelos/Classes/**/*'
   s.resources = 'Skopelos/Classes/**/*'
