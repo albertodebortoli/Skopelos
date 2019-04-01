@@ -1,6 +1,6 @@
 {
   "name": "Skopelos",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -9,11 +9,11 @@
   "description": "A minimalistic, thread safe, non-boilerplate and super easy to use version of Active Record on Core Data. Simply all you need for doing Core Data. Swift flavour.",
   "homepage": "https://github.com/albertodebortoli/Skopelos",
   "authors": {
-    "Alberto De Bortoli": "albertodebortoli@gmail.com"
+    "Alberto De Bortoli": "albertodebortoli.website@gmail.com"
   },
   "source": {
     "git": "https://github.com/albertodebortoli/Skopelos.git",
-    "tag": "2.3.1"
+    "tag": "2.4.0"
   },
   "social_media_url": "https://twitter.com/albertodebo",
   "module_name": "Skopelos",
@@ -21,7 +21,7 @@
     "ios": "10.0",
     "watchos": "4.0"
   },
-  "swift_version": "4.2",
+  "swift_version": "5.0",
   "source_files": "Skopelos/Classes/**/*",
   "resources": "Skopelos/Classes/**/*",
   "frameworks": [
