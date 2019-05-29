@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		136C4C9D722B64C735269C43 /* Pods_Skopelos_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9108A5E099FBE804288CB921 /* Pods_Skopelos_Example.framework */; };
+		4F812ADF229E983700AAFF2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F812ADE229E983700AAFF2D /* Assets.xcassets */; };
 		4FB1E4602207793600644F62 /* NSManagedObject_SkopelosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB1E45E2207793600644F62 /* NSManagedObject_SkopelosTests.swift */; };
 		4FB1E4612207793600644F62 /* SkopelosSetupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB1E45F2207793600644F62 /* SkopelosSetupTests.swift */; };
 		4FB1E468220785E800644F62 /* SkopelosConcurrencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB1E467220785E800644F62 /* SkopelosConcurrencyTests.swift */; };
@@ -42,6 +43,7 @@
 		05B3F66EC0D69705A2E75AE9 /* Pods-Skopelos_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skopelos_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Skopelos_Example/Pods-Skopelos_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		247762A7AA6B0724E7A35D15 /* Pods-Skopelos_UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skopelos_UnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Skopelos_UnitTests/Pods-Skopelos_UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		381FC76A6276C87D8F9B60EF /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		4F812ADE229E983700AAFF2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		4FB1E453220778F900644F62 /* Skopelos_UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Skopelos_UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FB1E457220778F900644F62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FB1E45E2207793600644F62 /* NSManagedObject_SkopelosTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObject_SkopelosTests.swift; sourceTree = "<group>"; };
@@ -58,7 +60,7 @@
 		4FB69DEA220773C8004E4A1F /* Pet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		4FB69DEB220773C8004E4A1F /* Pet+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pet+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4FB69DF2220773DC004E4A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		607FACD01AFB9204008FA782 /* Skopelos_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skopelos_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACD01AFB9204008FA782 /* SkopelosExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = SkopelosExample.app; path = Skopelos_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -146,7 +148,7 @@
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD01AFB9204008FA782 /* Skopelos_Example.app */,
+				607FACD01AFB9204008FA782 /* SkopelosExample.app */,
 				4FB1E453220778F900644F62 /* Skopelos_UnitTests.xctest */,
 			);
 			name = Products;
@@ -155,6 +157,7 @@
 		607FACD21AFB9204008FA782 /* Example for Skopelos */ = {
 			isa = PBXGroup;
 			children = (
+				4F812ADE229E983700AAFF2D /* Assets.xcassets */,
 				4FB69DE5220773C8004E4A1F /* Model */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
@@ -238,7 +241,7 @@
 			);
 			name = Skopelos_Example;
 			productName = Skopelos;
-			productReference = 607FACD01AFB9204008FA782 /* Skopelos_Example.app */;
+			productReference = 607FACD01AFB9204008FA782 /* SkopelosExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -254,12 +257,14 @@
 				TargetAttributes = {
 					4FB1E452220778F900644F62 = {
 						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = ZQPG4YV673;
 						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = ZQPG4YV673;
 						LastSwiftMigration = 0900;
 					};
 				};
@@ -298,6 +303,7 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				4FB69DF3220773DC004E4A1F /* LaunchScreen.storyboard in Resources */,
+				4F812ADF229E983700AAFF2D /* Assets.xcassets in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -449,6 +455,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = ZQPG4YV673;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Skopelos_UnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -481,6 +488,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZQPG4YV673;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Skopelos_UnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -601,11 +609,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ./Skopelos/Skopelos.entitlements;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZQPG4YV673;
 				INFOPLIST_FILE = Skopelos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.albertodebortoli.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 			};
@@ -617,11 +625,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ./Skopelos/Skopelos.entitlements;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZQPG4YV673;
 				INFOPLIST_FILE = Skopelos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.albertodebortoli.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 			};

@@ -34,7 +34,7 @@ class SkopelosNukingTests: XCTestCase {
     
     func test_NukingSQLiteStackInSharedSpace() {
         let modelURL = Bundle.main.url(forResource: "DataModel", withExtension: "momd")!
-        let skopelos = Skopelos(sqliteStack: modelURL, securityApplicationGroupIdentifier: "group.com.skopelos")
+        let skopelos = Skopelos(sqliteStack: modelURL, securityApplicationGroupIdentifier: "group.com.skopelosExample")
         testNuke(skopelos)
     }
     

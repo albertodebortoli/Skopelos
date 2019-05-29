@@ -1,6 +1,6 @@
 {
   "name": "Skopelos",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -13,17 +13,16 @@
   },
   "source": {
     "git": "https://github.com/albertodebortoli/Skopelos.git",
-    "tag": "2.4.0"
+    "tag": "2.4.1"
   },
   "social_media_url": "https://twitter.com/albertodebo",
   "module_name": "Skopelos",
   "platforms": {
-    "ios": "10.0",
-    "watchos": "4.0"
+    "ios": "10.0"
   },
   "swift_version": "5.0",
   "source_files": "Skopelos/Classes/**/*",
-  "resources": "Skopelos/Classes/**/*",
+  "resources": "Skopelos/Assets/**/*",
   "frameworks": [
     "Foundation",
     "UIKit",
