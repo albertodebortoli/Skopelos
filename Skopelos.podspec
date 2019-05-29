@@ -30,7 +30,6 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
 
   s.source_files = 'Skopelos/Classes/**/*'
-  s.resources = 'Skopelos/Assets/**/*'
   s.frameworks = ["Foundation", "UIKit", "CoreData"]
   
 end
