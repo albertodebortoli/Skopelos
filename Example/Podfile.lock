@@ -1,5 +1,5 @@
 PODS:
-  - Skopelos (2.4.0)
+  - Skopelos (2.4.1)
 
 DEPENDENCIES:
   - Skopelos (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Skopelos: fec42040fad49a0fa2e52959e18178800e652aeb
+  Skopelos: 93b5990300f0c43fb956f86eed322cda72634f9d
 
 PODFILE CHECKSUM: a98061a7b34df316b0e9cf6cfeb958d787401759
 
