@@ -20,7 +20,7 @@ public final class CoreDataStack {
     public var rootContext: NSManagedObjectContext
     #if os(iOS)
     fileprivate let appStateReactor: AppStateReactor
-    var backgroundTask: UIBackgroundTaskIdentifier?
+    var backgroundTask = UIBackgroundTaskIdentifier.invalid
     #endif
     var modelURL: URL
     var securityApplicationGroupIdentifier: String?
@@ -143,6 +143,7 @@ public final class CoreDataStack {
 extension CoreDataStack: AppStateReactorDelegate {
 
     fileprivate func registerBackgroundTask() {
+        guard backgroundTask == .invalid else { return }
         backgroundTask = UIApplication.shared.beginBackgroundTask {
             [unowned self] in
             self.endBackgroundTask()
@@ -150,15 +151,16 @@ extension CoreDataStack: AppStateReactorDelegate {
     }
 
     fileprivate func endBackgroundTask() {
-        UIApplication.shared.endBackgroundTask(backgroundTask!)
-        backgroundTask = UIBackgroundTaskIdentifier(rawValue: UIBackgroundTaskIdentifier.invalid.rawValue)
+        guard backgroundTask != .invalid else { return }
+        UIApplication.shared.endBackgroundTask(backgroundTask)
+        backgroundTask = .invalid
     }
 
     public func didReceiveStateChange(_ appStateReactor: AppStateReactor) -> Void {
         registerBackgroundTask()
         return save({ (error: NSError?) in
             self.endBackgroundTask()
-            self.backgroundTask = UIBackgroundTaskIdentifier(rawValue: UIBackgroundTaskIdentifier.invalid.rawValue)
+            self.backgroundTask = .invalid
         })
     }
 }
