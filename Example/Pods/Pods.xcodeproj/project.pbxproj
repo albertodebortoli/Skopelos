@@ -6,29 +6,25 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		4A6CA04AEBAD4B825D75CD23CF36FD2B /* Skopelos */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = BF1C2DC612D6286C2F44559B1A85EB94 /* Build configuration list for PBXAggregateTarget "Skopelos" */;
+			buildPhases = (
+			);
+			dependencies = (
+			);
+			name = Skopelos;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
-		0E2BA880DD252C3F534C39C8840EDD35 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ED8A42BE575063526F675E7A204E422 /* CoreData.framework */; };
-		1416AD3B3E9AA038E9EF9C388B4DDF1C /* Skopelos-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D5C061833E78A96999D6A1978EB0DFA /* Skopelos-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		191D00A9A4F6CED3D535A420B610F6AF /* AppStateReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F52F704814358F7FA681C5FA77FF9B2 /* AppStateReactor.swift */; };
-		1B0964CC1A5EB65047E264F16B254CD7 /* Pods-Skopelos_UnitTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C672B9603828BCC12C177482261041C /* Pods-Skopelos_UnitTests-dummy.m */; };
-		1E752E4987C1DFA93F9E348410F221CD /* NSObject+Introspection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B35AA4DFC61F69AD78895A11E00242 /* NSObject+Introspection.swift */; };
-		26C846FA45513BD496DC84E79181C8CD /* Pods-Skopelos_UnitTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F17A4B51DF18D2AA99447A429397C3B /* Pods-Skopelos_UnitTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		282C36C2972560755AF7BE108D2314C6 /* String+Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F85484B6177802062F3E6CA45539552 /* String+Bool.swift */; };
-		33AD2F4AEE6E77BAB0E4F53253380211 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A5841BC2338E704EA7F240CCC6B64BD /* Foundation.framework */; };
-		4AD8562129584448C3566C17F42F5041 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A5841BC2338E704EA7F240CCC6B64BD /* Foundation.framework */; };
-		5E835B4C035C71BB1E903AE724B0FABF /* Skopelos-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F2928685D8DBE69E3B9C639C372DA9 /* Skopelos-dummy.m */; };
-		7C7511AD4BB0A865A32F5724549301B2 /* DALProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276550587A363809DF2A7E484018E77 /* DALProtocol.swift */; };
-		82517D29D374EBBADB3B19664EBDF100 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA526D4E1953093C9A49012FC1F9F9FA /* CoreDataStack.swift */; };
-		89E4AEF68AD5F5368AF7179FEDF28508 /* Pods-Skopelos_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AB9F8A256C42DF5D0A3069EDC6B42B9B /* Pods-Skopelos_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		95E8609F8D43F072A51F6509F19E4E56 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A5841BC2338E704EA7F240CCC6B64BD /* Foundation.framework */; };
-		9BD60941195E50C8FF6236757A386882 /* CommandModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D292CB00F01184C8A1FBD22C6246C /* CommandModelProtocol.swift */; };
-		B3CFD357AD9959604FF3A8C0082D9706 /* QueryModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB369580EF2FEEE03C766EE64311862F /* QueryModelProtocol.swift */; };
-		B7D9D6C2DFA6DE36307AEC1D38308B1E /* CoreDataStackProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD95474E85EA7CA5916627C5A11E2EF /* CoreDataStackProtocol.swift */; };
-		BAC9FD69F2722FCB2D684564681E9AB1 /* Pods-Skopelos_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A80F45BDA7B3BA44107225BFA9A38 /* Pods-Skopelos_Example-dummy.m */; };
-		C00D30D2592E1A150CE6206F99E4A24C /* NSManagedObject+Skopelos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A49DA2AEFDD11169A6F165F2E6F20AD /* NSManagedObject+Skopelos.swift */; };
-		C6F0AF61F183240246C846DD9ED9D125 /* Skopelos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7078E03B5840160BB38B25C857967EC2 /* Skopelos.swift */; };
-		D1A4DA0353FF08D0188927BA64C1C060 /* DALService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF92A08F1159EDD27365F22D0752F1CF /* DALService.swift */; };
-		E12C339FA4321E33C8D4A87CE9C0C295 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F83DED91DAB23FE55F9672B9F2183 /* UIKit.framework */; };
+		1B0964CC1A5EB65047E264F16B254CD7 /* Pods-Skopelos_UnitTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 30115A40286DD00F1CB681837CD24051 /* Pods-Skopelos_UnitTests-dummy.m */; };
+		26C846FA45513BD496DC84E79181C8CD /* Pods-Skopelos_UnitTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C18724FA9E84DA4507D1F0990614199 /* Pods-Skopelos_UnitTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4AD8562129584448C3566C17F42F5041 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		89E4AEF68AD5F5368AF7179FEDF28508 /* Pods-Skopelos_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BEF4901FA75666E21747BDFC6FCE088 /* Pods-Skopelos_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		95E8609F8D43F072A51F6509F19E4E56 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		BAC9FD69F2722FCB2D684564681E9AB1 /* Pods-Skopelos_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E25CAA668297FD2CF18E8E70FF9188BE /* Pods-Skopelos_Example-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,50 +45,30 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		096D7E069031792D36447F914AD23534 /* Pods-Skopelos_UnitTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Skopelos_UnitTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		0A49DA2AEFDD11169A6F165F2E6F20AD /* NSManagedObject+Skopelos.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Skopelos.swift"; sourceTree = "<group>"; };
-		1248D3631CBFD4F37A97C450F4E1FD35 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		1F52F704814358F7FA681C5FA77FF9B2 /* AppStateReactor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppStateReactor.swift; sourceTree = "<group>"; };
-		25935F09E524277AF3D235D28F3E63F8 /* Pods-Skopelos_UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Skopelos_UnitTests.release.xcconfig"; sourceTree = "<group>"; };
-		28027CDCC21BAE9741C2B3F069135406 /* Pods-Skopelos_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Skopelos_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		2DA5D46FDE902BEE03662A8C1E7A3C38 /* Skopelos.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Skopelos.xcconfig; sourceTree = "<group>"; };
-		2E3A80F45BDA7B3BA44107225BFA9A38 /* Pods-Skopelos_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Skopelos_Example-dummy.m"; sourceTree = "<group>"; };
-		2ED8A42BE575063526F675E7A204E422 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
-		2F85484B6177802062F3E6CA45539552 /* String+Bool.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "String+Bool.swift"; sourceTree = "<group>"; };
-		30C0844F98FFE6452E4FAFCBE2352743 /* Pods-Skopelos_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Skopelos_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		3C92C54F894AE8AE25D192BC9D272065 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
-		45A1BC5C155F3E5C656C6D4CECD89689 /* Skopelos-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Skopelos-Info.plist"; sourceTree = "<group>"; };
-		536C98FA7B5119973D85C0A080FF1493 /* Pods-Skopelos_UnitTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Skopelos_UnitTests-Info.plist"; sourceTree = "<group>"; };
-		5C672B9603828BCC12C177482261041C /* Pods-Skopelos_UnitTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Skopelos_UnitTests-dummy.m"; sourceTree = "<group>"; };
-		6A5841BC2338E704EA7F240CCC6B64BD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		6DD95474E85EA7CA5916627C5A11E2EF /* CoreDataStackProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CoreDataStackProtocol.swift; sourceTree = "<group>"; };
-		7078E03B5840160BB38B25C857967EC2 /* Skopelos.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Skopelos.swift; path = Skopelos/Classes/Skopelos.swift; sourceTree = "<group>"; };
-		76B4FE4C1DA3172C3A90A6D70E440767 /* Skopelos.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Skopelos.modulemap; sourceTree = "<group>"; };
-		7724DE5772CDCA1672930EE772F195C9 /* Pods_Skopelos_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Skopelos_Example.framework; path = "Pods-Skopelos_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		77BA2ED49135CBE40A4F7630723B081C /* Pods-Skopelos_UnitTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Skopelos_UnitTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		79C8A8283CCC5F830D795C4D6B17896A /* Skopelos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Skopelos.framework; path = Skopelos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7BA53F8A8340DE25829EA114A9626C9A /* Pods-Skopelos_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Skopelos_Example.modulemap"; sourceTree = "<group>"; };
-		7DE0D64EE8CA2B0ECDF7170E495FA527 /* Pods-Skopelos_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Skopelos_Example-Info.plist"; sourceTree = "<group>"; };
-		8D5C061833E78A96999D6A1978EB0DFA /* Skopelos-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Skopelos-umbrella.h"; sourceTree = "<group>"; };
-		9064530F6D908D82886108B01B6F3AAE /* Pods_Skopelos_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Skopelos_UnitTests.framework; path = "Pods-Skopelos_UnitTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		06490685BFB0AA038BCC7AADCC0A76E3 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		1793FBA87A0FA9C6A370F10C13DDF0B7 /* Pods-Skopelos_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Skopelos_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		203066737A86461CC3FD429B4FDD2E07 /* Pods-Skopelos_UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Skopelos_UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		23BFAA759F53EF78C6F548753B64E560 /* Skopelos.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = Skopelos.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		30115A40286DD00F1CB681837CD24051 /* Pods-Skopelos_UnitTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Skopelos_UnitTests-dummy.m"; sourceTree = "<group>"; };
+		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		33053FB1239B55FFF091E4DDEE880E0B /* Pods-Skopelos_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Skopelos_Example-Info.plist"; sourceTree = "<group>"; };
+		4B883D12D82CA26C40EA2E92FEEF4681 /* Pods-Skopelos_UnitTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Skopelos_UnitTests.modulemap"; sourceTree = "<group>"; };
+		5DE9EB0229DB19E7E17949D20699D63C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		63763C9899ED4FAF624431988CFF385F /* Pods-Skopelos_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Skopelos_Example.release.xcconfig"; sourceTree = "<group>"; };
+		63DB95902DDC3B05B5165CA38B54CA29 /* Pods_Skopelos_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Skopelos_UnitTests.framework; path = "Pods-Skopelos_UnitTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BEF4901FA75666E21747BDFC6FCE088 /* Pods-Skopelos_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Skopelos_Example-umbrella.h"; sourceTree = "<group>"; };
+		7C18724FA9E84DA4507D1F0990614199 /* Pods-Skopelos_UnitTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Skopelos_UnitTests-umbrella.h"; sourceTree = "<group>"; };
+		8C451AE61BB1656226B58949A148E1C1 /* Pods-Skopelos_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Skopelos_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		97B26534D36EF3278F3850B67B93B38A /* Pods-Skopelos_UnitTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Skopelos_UnitTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9F17A4B51DF18D2AA99447A429397C3B /* Pods-Skopelos_UnitTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Skopelos_UnitTests-umbrella.h"; sourceTree = "<group>"; };
-		AB9F8A256C42DF5D0A3069EDC6B42B9B /* Pods-Skopelos_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Skopelos_Example-umbrella.h"; sourceTree = "<group>"; };
-		B6F2928685D8DBE69E3B9C639C372DA9 /* Skopelos-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Skopelos-dummy.m"; sourceTree = "<group>"; };
-		BB14CD51DC9613C8675544A9239AB95C /* Pods-Skopelos_UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Skopelos_UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		BD30F53BC3BE70AE903FC103B47F81A8 /* Pods-Skopelos_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Skopelos_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		C13E0E6B7EBAFFA3A55AAB033529F185 /* Skopelos-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Skopelos-prefix.pch"; sourceTree = "<group>"; };
-		DA526D4E1953093C9A49012FC1F9F9FA /* CoreDataStack.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
-		DB369580EF2FEEE03C766EE64311862F /* QueryModelProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QueryModelProtocol.swift; sourceTree = "<group>"; };
-		E0B7753CC0EA4DF2F0D4BEDBC2D52438 /* Pods-Skopelos_UnitTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Skopelos_UnitTests.modulemap"; sourceTree = "<group>"; };
-		E14DE1F2C327EE2C6D42DF41E11FD2FD /* Pods-Skopelos_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Skopelos_Example.release.xcconfig"; sourceTree = "<group>"; };
-		E276550587A363809DF2A7E484018E77 /* DALProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DALProtocol.swift; sourceTree = "<group>"; };
-		E28D292CB00F01184C8A1FBD22C6246C /* CommandModelProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CommandModelProtocol.swift; sourceTree = "<group>"; };
-		E29F83DED91DAB23FE55F9672B9F2183 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		EC0F3C5F4985B82E443320E1682298CA /* Skopelos.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = Skopelos.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		EF92A08F1159EDD27365F22D0752F1CF /* DALService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DALService.swift; sourceTree = "<group>"; };
-		F2284038A8453342D3A4B6EA5A15F68E /* Pods-Skopelos_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Skopelos_Example-frameworks.sh"; sourceTree = "<group>"; };
-		F4B35AA4DFC61F69AD78895A11E00242 /* NSObject+Introspection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSObject+Introspection.swift"; sourceTree = "<group>"; };
+		9F3DFDA0F62D3878343CE9171B63ED54 /* Pods-Skopelos_UnitTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Skopelos_UnitTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		9F4F07929EE277227E024EE19C1D97B0 /* Pods-Skopelos_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Skopelos_Example.modulemap"; sourceTree = "<group>"; };
+		AC02BFA7B184E90573B1EC43891FD686 /* Pods-Skopelos_UnitTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Skopelos_UnitTests-Info.plist"; sourceTree = "<group>"; };
+		C778387B5B69489FEA1F193B9F062B6D /* Pods_Skopelos_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Skopelos_Example.framework; path = "Pods-Skopelos_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD6825ABF5E4502E394FDCE4C8B4495F /* Pods-Skopelos_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Skopelos_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
+		D6382117FF8135E04C6CFAE555AAED34 /* Skopelos.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Skopelos.xcconfig; sourceTree = "<group>"; };
+		E25CAA668297FD2CF18E8E70FF9188BE /* Pods-Skopelos_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Skopelos_Example-dummy.m"; sourceTree = "<group>"; };
+		F08C1E628AC34D257ABC16FBA47CB307 /* Pods-Skopelos_UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Skopelos_UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,16 +77,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AD8562129584448C3566C17F42F5041 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		62552F4F6BB8E48E70073DBCD49B488A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0E2BA880DD252C3F534C39C8840EDD35 /* CoreData.framework in Frameworks */,
-				33AD2F4AEE6E77BAB0E4F53253380211 /* Foundation.framework in Frameworks */,
-				E12C339FA4321E33C8D4A87CE9C0C295 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,178 +91,123 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		03C5C200A0787E300053CFA8F53CA094 /* Frameworks */ = {
+		22742CE818540D6F1600ACF1C5B8E597 /* Pods-Skopelos_Example */ = {
 			isa = PBXGroup;
 			children = (
-				73286783429FC5147ED7723DE6C6015C /* iOS */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		1E9C7AD30F64D394F752E8E3BEEF442C /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				3C92C54F894AE8AE25D192BC9D272065 /* LICENSE */,
-				1248D3631CBFD4F37A97C450F4E1FD35 /* README.md */,
-				EC0F3C5F4985B82E443320E1682298CA /* Skopelos.podspec */,
-			);
-			name = Pod;
-			sourceTree = "<group>";
-		};
-		5E1682538E381935344166A90DE00CEA /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				76B4FE4C1DA3172C3A90A6D70E440767 /* Skopelos.modulemap */,
-				2DA5D46FDE902BEE03662A8C1E7A3C38 /* Skopelos.xcconfig */,
-				B6F2928685D8DBE69E3B9C639C372DA9 /* Skopelos-dummy.m */,
-				45A1BC5C155F3E5C656C6D4CECD89689 /* Skopelos-Info.plist */,
-				C13E0E6B7EBAFFA3A55AAB033529F185 /* Skopelos-prefix.pch */,
-				8D5C061833E78A96999D6A1978EB0DFA /* Skopelos-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/Skopelos";
-			sourceTree = "<group>";
-		};
-		67864A444B97CC64B9D23ECFAD7C0A59 /* Development Pods */ = {
-			isa = PBXGroup;
-			children = (
-				CB0CDA75E0C0D6CEB791FA6A74620FE2 /* Skopelos */,
-			);
-			name = "Development Pods";
-			sourceTree = "<group>";
-		};
-		73286783429FC5147ED7723DE6C6015C /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				2ED8A42BE575063526F675E7A204E422 /* CoreData.framework */,
-				6A5841BC2338E704EA7F240CCC6B64BD /* Foundation.framework */,
-				E29F83DED91DAB23FE55F9672B9F2183 /* UIKit.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		954183176364625C51347B5D978E6FF0 /* Pods-Skopelos_UnitTests */ = {
-			isa = PBXGroup;
-			children = (
-				E0B7753CC0EA4DF2F0D4BEDBC2D52438 /* Pods-Skopelos_UnitTests.modulemap */,
-				77BA2ED49135CBE40A4F7630723B081C /* Pods-Skopelos_UnitTests-acknowledgements.markdown */,
-				096D7E069031792D36447F914AD23534 /* Pods-Skopelos_UnitTests-acknowledgements.plist */,
-				5C672B9603828BCC12C177482261041C /* Pods-Skopelos_UnitTests-dummy.m */,
-				536C98FA7B5119973D85C0A080FF1493 /* Pods-Skopelos_UnitTests-Info.plist */,
-				9F17A4B51DF18D2AA99447A429397C3B /* Pods-Skopelos_UnitTests-umbrella.h */,
-				BB14CD51DC9613C8675544A9239AB95C /* Pods-Skopelos_UnitTests.debug.xcconfig */,
-				25935F09E524277AF3D235D28F3E63F8 /* Pods-Skopelos_UnitTests.release.xcconfig */,
-			);
-			name = "Pods-Skopelos_UnitTests";
-			path = "Target Support Files/Pods-Skopelos_UnitTests";
-			sourceTree = "<group>";
-		};
-		AD733F1E287F8EE62C53AF728F8568CC /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				1F52F704814358F7FA681C5FA77FF9B2 /* AppStateReactor.swift */,
-				DA526D4E1953093C9A49012FC1F9F9FA /* CoreDataStack.swift */,
-				EF92A08F1159EDD27365F22D0752F1CF /* DALService.swift */,
-			);
-			name = Core;
-			path = Skopelos/Classes/Core;
-			sourceTree = "<group>";
-		};
-		B5224C57E111B7FF5F384C654B23AEF4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				7724DE5772CDCA1672930EE772F195C9 /* Pods_Skopelos_Example.framework */,
-				9064530F6D908D82886108B01B6F3AAE /* Pods_Skopelos_UnitTests.framework */,
-				79C8A8283CCC5F830D795C4D6B17896A /* Skopelos.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C1D605D9B5F48CAAB77E5816DB731452 /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				C5E9BBE02CC79004B818AFA135D084B9 /* Pods-Skopelos_Example */,
-				954183176364625C51347B5D978E6FF0 /* Pods-Skopelos_UnitTests */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		C57BEB500A653769A57A2442121EC93D /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				E28D292CB00F01184C8A1FBD22C6246C /* CommandModelProtocol.swift */,
-				6DD95474E85EA7CA5916627C5A11E2EF /* CoreDataStackProtocol.swift */,
-				E276550587A363809DF2A7E484018E77 /* DALProtocol.swift */,
-				DB369580EF2FEEE03C766EE64311862F /* QueryModelProtocol.swift */,
-			);
-			name = Protocols;
-			path = Skopelos/Classes/Protocols;
-			sourceTree = "<group>";
-		};
-		C5E9BBE02CC79004B818AFA135D084B9 /* Pods-Skopelos_Example */ = {
-			isa = PBXGroup;
-			children = (
-				7BA53F8A8340DE25829EA114A9626C9A /* Pods-Skopelos_Example.modulemap */,
-				30C0844F98FFE6452E4FAFCBE2352743 /* Pods-Skopelos_Example-acknowledgements.markdown */,
-				BD30F53BC3BE70AE903FC103B47F81A8 /* Pods-Skopelos_Example-acknowledgements.plist */,
-				2E3A80F45BDA7B3BA44107225BFA9A38 /* Pods-Skopelos_Example-dummy.m */,
-				F2284038A8453342D3A4B6EA5A15F68E /* Pods-Skopelos_Example-frameworks.sh */,
-				7DE0D64EE8CA2B0ECDF7170E495FA527 /* Pods-Skopelos_Example-Info.plist */,
-				AB9F8A256C42DF5D0A3069EDC6B42B9B /* Pods-Skopelos_Example-umbrella.h */,
-				28027CDCC21BAE9741C2B3F069135406 /* Pods-Skopelos_Example.debug.xcconfig */,
-				E14DE1F2C327EE2C6D42DF41E11FD2FD /* Pods-Skopelos_Example.release.xcconfig */,
+				9F4F07929EE277227E024EE19C1D97B0 /* Pods-Skopelos_Example.modulemap */,
+				CD6825ABF5E4502E394FDCE4C8B4495F /* Pods-Skopelos_Example-acknowledgements.markdown */,
+				1793FBA87A0FA9C6A370F10C13DDF0B7 /* Pods-Skopelos_Example-acknowledgements.plist */,
+				E25CAA668297FD2CF18E8E70FF9188BE /* Pods-Skopelos_Example-dummy.m */,
+				33053FB1239B55FFF091E4DDEE880E0B /* Pods-Skopelos_Example-Info.plist */,
+				6BEF4901FA75666E21747BDFC6FCE088 /* Pods-Skopelos_Example-umbrella.h */,
+				8C451AE61BB1656226B58949A148E1C1 /* Pods-Skopelos_Example.debug.xcconfig */,
+				63763C9899ED4FAF624431988CFF385F /* Pods-Skopelos_Example.release.xcconfig */,
 			);
 			name = "Pods-Skopelos_Example";
 			path = "Target Support Files/Pods-Skopelos_Example";
 			sourceTree = "<group>";
 		};
-		CB0CDA75E0C0D6CEB791FA6A74620FE2 /* Skopelos */ = {
+		378B5FC3AF2102E28B5B600CAAB88F74 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				7078E03B5840160BB38B25C857967EC2 /* Skopelos.swift */,
-				AD733F1E287F8EE62C53AF728F8568CC /* Core */,
-				D6CCDD2E38F55C7CC6C307E87D791693 /* Extensions */,
-				1E9C7AD30F64D394F752E8E3BEEF442C /* Pod */,
-				C57BEB500A653769A57A2442121EC93D /* Protocols */,
-				5E1682538E381935344166A90DE00CEA /* Support Files */,
+				5DE9EB0229DB19E7E17949D20699D63C /* LICENSE */,
+				06490685BFB0AA038BCC7AADCC0A76E3 /* README.md */,
+				23BFAA759F53EF78C6F548753B64E560 /* Skopelos.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		53AC070727C1960A06BE26F36C11CEA9 /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BA9754E7A74CA3DEBEB09079DBFB6B5F /* Skopelos */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		6096B8825168F40D552BDF8052D19533 /* Pods-Skopelos_UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				4B883D12D82CA26C40EA2E92FEEF4681 /* Pods-Skopelos_UnitTests.modulemap */,
+				9F3DFDA0F62D3878343CE9171B63ED54 /* Pods-Skopelos_UnitTests-acknowledgements.markdown */,
+				97B26534D36EF3278F3850B67B93B38A /* Pods-Skopelos_UnitTests-acknowledgements.plist */,
+				30115A40286DD00F1CB681837CD24051 /* Pods-Skopelos_UnitTests-dummy.m */,
+				AC02BFA7B184E90573B1EC43891FD686 /* Pods-Skopelos_UnitTests-Info.plist */,
+				7C18724FA9E84DA4507D1F0990614199 /* Pods-Skopelos_UnitTests-umbrella.h */,
+				203066737A86461CC3FD429B4FDD2E07 /* Pods-Skopelos_UnitTests.debug.xcconfig */,
+				F08C1E628AC34D257ABC16FBA47CB307 /* Pods-Skopelos_UnitTests.release.xcconfig */,
+			);
+			name = "Pods-Skopelos_UnitTests";
+			path = "Target Support Files/Pods-Skopelos_UnitTests";
+			sourceTree = "<group>";
+		};
+		846BF44F62CA334FB482D589AAA2BAE5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C778387B5B69489FEA1F193B9F062B6D /* Pods_Skopelos_Example.framework */,
+				63DB95902DDC3B05B5165CA38B54CA29 /* Pods_Skopelos_UnitTests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA9754E7A74CA3DEBEB09079DBFB6B5F /* Skopelos */ = {
+			isa = PBXGroup;
+			children = (
+				378B5FC3AF2102E28B5B600CAAB88F74 /* Pod */,
+				E9443271E17D1993C3C08337A2B9A619 /* Support Files */,
 			);
 			name = Skopelos;
 			path = ../..;
+			sourceTree = "<group>";
+		};
+		C05FC81F5B506F5B91232292BFBB9F78 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				22742CE818540D6F1600ACF1C5B8E597 /* Pods-Skopelos_Example */,
+				6096B8825168F40D552BDF8052D19533 /* Pods-Skopelos_UnitTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		C0834CEBB1379A84116EF29F93051C60 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
-				67864A444B97CC64B9D23ECFAD7C0A59 /* Development Pods */,
-				03C5C200A0787E300053CFA8F53CA094 /* Frameworks */,
-				B5224C57E111B7FF5F384C654B23AEF4 /* Products */,
-				C1D605D9B5F48CAAB77E5816DB731452 /* Targets Support Files */,
+				53AC070727C1960A06BE26F36C11CEA9 /* Development Pods */,
+				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
+				846BF44F62CA334FB482D589AAA2BAE5 /* Products */,
+				C05FC81F5B506F5B91232292BFBB9F78 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		D6CCDD2E38F55C7CC6C307E87D791693 /* Extensions */ = {
+		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0A49DA2AEFDD11169A6F165F2E6F20AD /* NSManagedObject+Skopelos.swift */,
-				F4B35AA4DFC61F69AD78895A11E00242 /* NSObject+Introspection.swift */,
-				2F85484B6177802062F3E6CA45539552 /* String+Bool.swift */,
+				C0834CEBB1379A84116EF29F93051C60 /* iOS */,
 			);
-			name = Extensions;
-			path = Skopelos/Classes/Extensions;
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E9443271E17D1993C3C08337A2B9A619 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				D6382117FF8135E04C6CFAE555AAED34 /* Skopelos.xcconfig */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/Skopelos";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		35A36F8B3DEE918548EB8EA79463C1AA /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1416AD3B3E9AA038E9EF9C388B4DDF1C /* Skopelos-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A394A44C89AE05E80E6F0339D90C7969 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -332,25 +243,7 @@
 			);
 			name = "Pods-Skopelos_UnitTests";
 			productName = "Pods-Skopelos_UnitTests";
-			productReference = 9064530F6D908D82886108B01B6F3AAE /* Pods_Skopelos_UnitTests.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		4A6CA04AEBAD4B825D75CD23CF36FD2B /* Skopelos */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BF1C2DC612D6286C2F44559B1A85EB94 /* Build configuration list for PBXNativeTarget "Skopelos" */;
-			buildPhases = (
-				35A36F8B3DEE918548EB8EA79463C1AA /* Headers */,
-				C82A3312E2315DFF5D7E35CFC9730228 /* Sources */,
-				62552F4F6BB8E48E70073DBCD49B488A /* Frameworks */,
-				CDDBEDD63F4C50446C7EA8A22D97E62F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Skopelos;
-			productName = Skopelos;
-			productReference = 79C8A8283CCC5F830D795C4D6B17896A /* Skopelos.framework */;
+			productReference = 63DB95902DDC3B05B5165CA38B54CA29 /* Pods_Skopelos_UnitTests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		7339F7B0706A2706ABCC2CB3E44E9ACB /* Pods-Skopelos_Example */ = {
@@ -369,7 +262,7 @@
 			);
 			name = "Pods-Skopelos_Example";
 			productName = "Pods-Skopelos_Example";
-			productReference = 7724DE5772CDCA1672930EE772F195C9 /* Pods_Skopelos_Example.framework */;
+			productReference = C778387B5B69489FEA1F193B9F062B6D /* Pods_Skopelos_Example.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -389,7 +282,7 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = B5224C57E111B7FF5F384C654B23AEF4 /* Products */;
+			productRefGroup = 846BF44F62CA334FB482D589AAA2BAE5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -415,13 +308,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CDDBEDD63F4C50446C7EA8A22D97E62F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -438,25 +324,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAC9FD69F2722FCB2D684564681E9AB1 /* Pods-Skopelos_Example-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C82A3312E2315DFF5D7E35CFC9730228 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				191D00A9A4F6CED3D535A420B610F6AF /* AppStateReactor.swift in Sources */,
-				9BD60941195E50C8FF6236757A386882 /* CommandModelProtocol.swift in Sources */,
-				82517D29D374EBBADB3B19664EBDF100 /* CoreDataStack.swift in Sources */,
-				B7D9D6C2DFA6DE36307AEC1D38308B1E /* CoreDataStackProtocol.swift in Sources */,
-				7C7511AD4BB0A865A32F5724549301B2 /* DALProtocol.swift in Sources */,
-				D1A4DA0353FF08D0188927BA64C1C060 /* DALService.swift in Sources */,
-				C00D30D2592E1A150CE6206F99E4A24C /* NSManagedObject+Skopelos.swift in Sources */,
-				1E752E4987C1DFA93F9E348410F221CD /* NSObject+Introspection.swift in Sources */,
-				B3CFD357AD9959604FF3A8C0082D9706 /* QueryModelProtocol.swift in Sources */,
-				5E835B4C035C71BB1E903AE724B0FABF /* Skopelos-dummy.m in Sources */,
-				C6F0AF61F183240246C846DD9ED9D125 /* Skopelos.swift in Sources */,
-				282C36C2972560755AF7BE108D2314C6 /* String+Bool.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,39 +345,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		16D78C5CF4FD2E98F85055D61F01EBB8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2DA5D46FDE902BEE03662A8C1E7A3C38 /* Skopelos.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/Skopelos/Skopelos-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Skopelos/Skopelos-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Skopelos/Skopelos.modulemap";
-				PRODUCT_MODULE_NAME = Skopelos;
-				PRODUCT_NAME = Skopelos;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		196DFA3E4A09A28224918543529A1885 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -575,9 +409,23 @@
 			};
 			name = Debug;
 		};
+		39609E6BC9A50128B5628C0EDA1E037F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D6382117FF8135E04C6CFAE555AAED34 /* Skopelos.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		3A790E4E62BD3E10B3DDE275224772FE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BB14CD51DC9613C8675544A9239AB95C /* Pods-Skopelos_UnitTests.debug.xcconfig */;
+			baseConfigurationReference = 203066737A86461CC3FD429B4FDD2E07 /* Pods-Skopelos_UnitTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -609,41 +457,9 @@
 			};
 			name = Debug;
 		};
-		730CEB6388F7B82A7AD4CEEFAEC98DBF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2DA5D46FDE902BEE03662A8C1E7A3C38 /* Skopelos.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/Skopelos/Skopelos-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Skopelos/Skopelos-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Skopelos/Skopelos.modulemap";
-				PRODUCT_MODULE_NAME = Skopelos;
-				PRODUCT_NAME = Skopelos;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		74F3FB96AE6B52B1B0D2C52BB598092D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 25935F09E524277AF3D235D28F3E63F8 /* Pods-Skopelos_UnitTests.release.xcconfig */;
+			baseConfigurationReference = F08C1E628AC34D257ABC16FBA47CB307 /* Pods-Skopelos_UnitTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -678,7 +494,7 @@
 		};
 		8A5C2BFCCF118A5E8C6BAA8986296E45 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 28027CDCC21BAE9741C2B3F069135406 /* Pods-Skopelos_Example.debug.xcconfig */;
+			baseConfigurationReference = 8C451AE61BB1656226B58949A148E1C1 /* Pods-Skopelos_Example.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -712,7 +528,7 @@
 		};
 		AB0F9A59FF1B4F1BBD54FF65222523DC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E14DE1F2C327EE2C6D42DF41E11FD2FD /* Pods-Skopelos_Example.release.xcconfig */;
+			baseConfigurationReference = 63763C9899ED4FAF624431988CFF385F /* Pods-Skopelos_Example.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -805,6 +621,21 @@
 			};
 			name = Release;
 		};
+		BA468EC72AA0C958522C13B566F22751 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D6382117FF8135E04C6CFAE555AAED34 /* Skopelos.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -826,11 +657,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BF1C2DC612D6286C2F44559B1A85EB94 /* Build configuration list for PBXNativeTarget "Skopelos" */ = {
+		BF1C2DC612D6286C2F44559B1A85EB94 /* Build configuration list for PBXAggregateTarget "Skopelos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				730CEB6388F7B82A7AD4CEEFAEC98DBF /* Debug */,
-				16D78C5CF4FD2E98F85055D61F01EBB8 /* Release */,
+				39609E6BC9A50128B5628C0EDA1E037F /* Debug */,
+				BA468EC72AA0C958522C13B566F22751 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,6 +1,6 @@
 {
   "name": "Skopelos",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/albertodebortoli/Skopelos.git",
-    "tag": "2.4.2"
+    "tag": "2.4.3"
   },
   "social_media_url": "https://twitter.com/albertodebo",
   "module_name": "Skopelos",
