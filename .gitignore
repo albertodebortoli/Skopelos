@@ -3,6 +3,7 @@
 
 # Xcode
 build/
+/.build
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -13,11 +14,13 @@ build/
 !default.perspectivev3
 xcuserdata/
 *.xccheckout
+*.xcworkspacedata
 profile
 *.moved-aside
 DerivedData
 *.hmap
 *.ipa
+/Packages
 
 # Bundler
 .bundle
